@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/forms/sign_up_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/widgets/alert_dialog.dart';
 import 'package:fudi_app/src/widgets/back_button.dart';
@@ -58,9 +59,10 @@ class ForgotPasswordPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Column(
-                          children: [
-                            _emailInput(),
-                            _buttonRecover(context),
+                          children: const [
+                            SignUpForm(
+                              key: ValueKey('sign-up-form'),
+                            ),
                           ],
                         )
                       ],
@@ -95,48 +97,4 @@ class ForgotPasswordPage extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buttonRecover(BuildContext context){
-    return Container(
-      margin: const EdgeInsets.only(top: 15),
-      height: 45.0,
-      child: RaisedButton(
-        onPressed: (){
-          if(!emailValue.contains('@') || !emailValue.contains('.')){
-
-          }
-          Navigator.pushNamed(context, 'login');
-          showAlertDialog(context, Icons.mark_email_read,
-            'Email enviado', 
-            'El correo de recuperación ha sido enviado. Revise su bandeja de entrada o su carpeta de \'spam\'.', 
-            'Aceptar');
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Theme.of(context).accentColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            /*Image(
-              image: AssetImage('../assets/facebook.png'),
-            ),*/ // This in case an image will be added later...
-            Text(
-              'Recuperar contraseña',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-void forgotPasswordAction(BuildContext context){
-
-  
-  Navigator.pop(context);
 }

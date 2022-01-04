@@ -34,10 +34,15 @@ class SignUpFormState extends State<SignUpForm> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) => input.toString().isValidEmail() ? null : "Email no valido.",
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
+            cursorColor: accentColorApp,
+
+            decoration: const InputDecoration(
+              fillColor: textFieldColorApp,
               hintText: 'Email',
               border: OutlineInputBorder(
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30.0),
+                ),
               ),
             ),
           ),
