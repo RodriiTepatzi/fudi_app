@@ -4,8 +4,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/pages/login_page.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
 
 class WelcomePage extends StatelessWidget {
+  
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class WelcomePage extends StatelessWidget {
                     );
                   },
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(roundedCornersValue),
                   ),
                   color: Theme.of(context).accentColor,
                   child: Row(
@@ -94,7 +96,7 @@ class WelcomePage extends StatelessWidget {
                     
                   },
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(roundedCornersValue),
                   ),
                   color: Theme.of(context).buttonColor,
                   child: Row(

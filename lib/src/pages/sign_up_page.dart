@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/forms/sign_up_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/back_button.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -33,12 +35,10 @@ class SignUpPage extends StatelessWidget {
                     fontSize: 28.0,
                   ),
                 ),
-                _usernameInput(context),
-                _emailInput(context),
-                _phoneInput(context),
-                _dateOfBirthInput(context),
-                _passwordInput(context),
-                _signUpButton(context),
+                const SizedBox(height: heightFormFieldValue,),
+                const SignUpForm(
+                  key: ValueKey('sign-up-form'),
+                ),
                 Center(
                   child: Container(
                     margin: const EdgeInsets.only(top: 15.0),

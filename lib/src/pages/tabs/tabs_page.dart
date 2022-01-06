@@ -21,7 +21,7 @@ class _TabsPageState extends State<TabsPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    /*Future.delayed(Duration.zero, () async {
       final statusLocation = await Permission.location.request();
       if (statusLocation == PermissionStatus.granted){
 
@@ -32,7 +32,7 @@ class _TabsPageState extends State<TabsPage> {
       else if(statusLocation == PermissionStatus.permanentlyDenied){
         _askLocation(context);
       }
-    });
+    });*/
   }
 
   List<Widget> widgetsOptions = [

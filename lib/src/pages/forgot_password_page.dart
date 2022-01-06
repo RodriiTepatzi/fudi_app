@@ -1,8 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/forms/sign_up_form.dart';
+import 'package:fudi_app/src/forms/forgot_password_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/alert_dialog.dart';
 import 'package:fudi_app/src/widgets/back_button.dart';
 import 'package:fudi_app/src/widgets/header.dart';
@@ -60,8 +61,8 @@ class ForgotPasswordPage extends StatelessWidget {
                       children: [
                         Column(
                           children: const [
-                            SignUpForm(
-                              key: ValueKey('sign-up-form'),
+                            ForgotPasswordForm(
+                              key: ValueKey('forgot-password-form'),
                             ),
                           ],
                         )
@@ -74,27 +75,6 @@ class ForgotPasswordPage extends StatelessWidget {
           ),
         ],
       )
-    );
-  }
-  Widget _emailInput(){
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0),
-      padding: const EdgeInsets.only(left: 20.0),
-      decoration: BoxDecoration(
-        color: textFieldColorApp,
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      child: TextFormField(
-        autovalidate: true,
-        validator: (input) => input.toString().isValidEmail() ? null : "Email no valido.",
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          hintText: 'Email',
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-          ),
-        ),
-      ),
     );
   }
 }
