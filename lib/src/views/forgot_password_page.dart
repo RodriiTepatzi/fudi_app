@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/forms/forgot_password_form.dart';
+import 'package:fudi_app/src/views/forms/forgot_password_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/alert_dialog.dart';

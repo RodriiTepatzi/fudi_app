@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/forms/sign_up_form.dart';
+import 'package:fudi_app/src/views/forms/sign_up_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/back_button.dart';

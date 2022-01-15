@@ -9,3 +9,5 @@ const Color bgInputsApp = Color.fromRGBO(247, 248, 250, 1.0);
 const Color selectedItemBarApp = accentColorApp;
 const Color unselectedItemBarApp = Color.fromRGBO(180, 180, 180, 1.0);
 const Color bgBarApp = Color.fromRGBO(220, 220, 220, 1.0);
+const Color bgApp = Color.fromRGBO(245, 245, 245, 1.0);
+const Color bgCardApp = Color.fromRGBO(255, 255, 255, 1.0);

@@ -2,10 +2,10 @@
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/pages/tabs/explore_tab.dart';
-import 'package:fudi_app/src/pages/tabs/favorites_tab.dart';
-import 'package:fudi_app/src/pages/tabs/my_order_tab.dart';
-import 'package:fudi_app/src/pages/tabs/profile_tab.dart';
+import 'package:fudi_app/src/views/tabs/explore_tab.dart';
+import 'package:fudi_app/src/views/tabs/favorites_tab.dart';
+import 'package:fudi_app/src/views/tabs/my_order_tab.dart';
+import 'package:fudi_app/src/views/tabs/profile_tab.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/widgets/alert_dialog.dart';
 

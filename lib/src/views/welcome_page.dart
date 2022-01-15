@@ -3,7 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/pages/login_page.dart';
+import 'package:fudi_app/src/views/login_page.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
 class WelcomePage extends StatelessWidget {

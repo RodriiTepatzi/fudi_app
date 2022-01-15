@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 // Pages 
 
-import 'package:fudi_app/src/pages/forgot_password_page.dart';
-import 'package:fudi_app/src/pages/search_page.dart';
-import 'package:fudi_app/src/pages/sign_up_page.dart';
-import 'package:fudi_app/src/pages/tabs/tabs_page.dart';
-import 'package:fudi_app/src/pages/welcome_page.dart';
-import 'package:fudi_app/src/pages/login_page.dart';
+import 'package:fudi_app/src/views/forgot_password_page.dart';
+import 'package:fudi_app/src/views/search_page.dart';
+import 'package:fudi_app/src/views/sign_up_page.dart';
+import 'package:fudi_app/src/views/tabs_page.dart';
+import 'package:fudi_app/src/views/welcome_page.dart';
+import 'package:fudi_app/src/views/login_page.dart';
 
 final routes = <String,WidgetBuilder>{
   'welcome' : (BuildContext context) => WelcomePage(),
