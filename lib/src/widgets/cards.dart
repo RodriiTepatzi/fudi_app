@@ -86,7 +86,7 @@ Widget LargeRestaurantCard(BuildContext context){
   );
 }
 
-Widget SmallRestaurantCard(BuildContext context, String restaurantName, String restaurantAddress, String imageURL, String starsValue){
+Widget SmallRestaurantCard(BuildContext context, String restaurantName, String restaurantAddress, String imageURL, String starsValue, String ratingValue, String categoryValue, String costValue){
   return Row(
     children: [
       Container(
@@ -109,58 +109,95 @@ Widget SmallRestaurantCard(BuildContext context, String restaurantName, String r
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 15.0),
+                  width: MediaQuery.of(context).size.width - 158,
+                  margin: const EdgeInsets.only(left: marginWidget),
                   child: Text(
                     restaurantName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
                     ),
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 15.0),
-                  child: Text(
-                    restaurantAddress,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.0,
-                    ),
+                  height: 30,
+                  margin: const EdgeInsets.only(left: marginWidget),
+                  width: MediaQuery.of(context).size.width - 158,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
+                        child: Text(
+                          restaurantAddress,
+                          style: const TextStyle(
+                            color: textColorApp,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                      _dotSpacer(),
+                      Container(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 2.0),
+                        margin: const EdgeInsets.only(left: marginTag),
+                        child: const Icon(
+                          Icons.star_outline_outlined,
+                          color: accentColorApp,
+                          size: 14.0,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
+                        child: Text(
+                          starsValue,
+                          style: const TextStyle(
+                            color: textColorApp,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                      _dotSpacer(),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          costValue,
+                          style: const TextStyle(
+                            color: textColorApp,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                      _dotSpacer(),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          categoryValue,
+                          style: const TextStyle(
+                            color: textColorApp,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 15.0),
+                  margin: const EdgeInsets.only(left: marginWidget),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 16.0,
-                      ),
-                      Text(
-                        "4.8",
-                        style: TextStyle(
-                          color: accentColorApp,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13.0,
-                        ),
-                      ),
-                      Text(
-                        "(223 ratings)",
-                        style: TextStyle(
-                          color: accentColorApp,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13.0,
-                        ),
-                      ),
+                    children: [
+                      _discountTicket('2 x 1'),
+                      _discountTicket('Ahorra hasta un 30%'),
                     ],
                   ),
                 ),
@@ -170,5 +207,40 @@ Widget SmallRestaurantCard(BuildContext context, String restaurantName, String r
         ),
       ),
     ],
+  );
+}
+
+Widget _dotSpacer(){
+  return Container(
+    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+    child: const Text(
+      '•',
+      style: TextStyle(
+        color: disabledColorApp,
+        fontWeight: FontWeight.w400,
+        fontSize: 14.0,
+      ),
+    ),
+  );
+}
+
+Widget _discountTicket(String ticketText){
+  return IntrinsicWidth(
+    child: Container(
+      margin: const EdgeInsets.only(right: marginTag),
+      padding: const EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        color: accentColorOpaApp,
+        borderRadius: BorderRadius.circular(roundedCornersValue),
+      ),
+      child: Text(
+        ticketText,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w400,
+          fontSize: 12.0
+        ),
+      ),
+    ),
   );
 }

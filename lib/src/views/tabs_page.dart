@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, non_constant_identifier_names, prefer_const_constructors_in_immutables
 
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/tabs/explore_tab.dart';
@@ -52,6 +53,14 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: bgApp,
+      )
+    );
+
     return Scaffold(
       body: widgetsOptions.elementAt(_selectedWidgetIndex),
       bottomNavigationBar: _bottomNavigationBar(context),

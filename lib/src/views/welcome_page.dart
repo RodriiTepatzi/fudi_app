@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fudi_app/src/views/login_page.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
@@ -11,6 +12,14 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      )
+    );
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,

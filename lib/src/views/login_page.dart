@@ -9,9 +9,17 @@ import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/back_button.dart';
 
 class LoginPage extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context){
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      )
+    );
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -31,7 +39,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 25.0),
-                      child: backButton(context, Colors.white),
+                      child: backButtonTransparent(context, Colors.white),
                     )
                   ],
                 ),

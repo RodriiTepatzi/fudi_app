@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fudi_app/src/views/forms/forgot_password_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
@@ -14,13 +15,21 @@ class ForgotPasswordPage extends StatelessWidget {
   String emailValue = "";
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: bgApp,
+      )
+    );
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: bgApp,
         elevation: 0.0,
         leading: Builder( 
           builder: (BuildContext context){
-            return backButton(context, Colors.black);
+            return backButtonTransparent(context, Colors.black);
           }
         ),
       ),

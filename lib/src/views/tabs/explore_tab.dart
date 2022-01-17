@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, avoid_unnecessary_containers, deprecated_member_use, import_of_legacy_library_into_null_safe
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/widgets/cards.dart';
 import 'package:fudi_app/src/widgets/header.dart';
 
@@ -22,16 +25,18 @@ class ExploreTab extends StatelessWidget {
                 child: Column(
                   children: [
                     _topBar(context),
+                    _navBar(context),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20.0),
                       alignment: Alignment.centerLeft,
                       child: headerText('Descubre lugares nuevos', Colors.black, 30.0, FontWeight.bold)
                     ),
+                    
                     _sliderLargeCards(),
                     _headers(context, 'Populares esta semana', 'Mostrar todo'),
-                    SmallRestaurantCard(context, 'Hot Dogs\' Restaurant', 'Calle 5 de Mayo #10','https://media.istockphoto.com/photos/hot-dogs-for-game-day-picture-id1326146587?b=1&k=20&m=1326146587&s=170667a&w=0&h=PXRYyxj4ZN5HXPzQIRG8t5a-B4Np0z-vqVWlRYDQ7g4=', '4.0'),
-                    SmallRestaurantCard(context, 'Another Restaurant', 'Address Example 2','https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60', '4.7'),
-                    SmallRestaurantCard(context, 'Lincon Restaurant', 'Address Example 3','https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60', '5.0'),
+                    SmallRestaurantCard(context, 'Hot Dogs\' Restaurant', 'Calle 5 de Mayo #10','https://media.istockphoto.com/photos/hot-dogs-for-game-day-picture-id1326146587?b=1&k=20&m=1326146587&s=170667a&w=0&h=PXRYyxj4ZN5HXPzQIRG8t5a-B4Np0z-vqVWlRYDQ7g4=', '4.0', '100', 'Pizza', '\$'),
+                    SmallRestaurantCard(context, 'Another Restaurant', 'Address Example 2','https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60', '4.7', '105', 'Categoria', '\$\$'),
+                    SmallRestaurantCard(context, 'Lincon Restaurant', 'Address Example 3','https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60', '5.0', '125', 'Categoria', '\$\$\$'),
                     _headers(context, 'Categorias', 'Mostrar todo'),
                     _sliderCollections(context, 'https://media.istockphoto.com/photos/closeup-of-home-made-tasty-burger-on-wooden-table-picture-id1300482641?b=1&k=20&m=1300482641&s=170667a&w=0&h=4wmDNS7Y3X_bxnUXUNykuLDf7yt_4ZhbqP3bPkhWFsg='),
                   ],
@@ -56,10 +61,11 @@ Widget _topBar(BuildContext context){
           width: MediaQuery.of(context).size.width - 84,
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
+            color: textFieldColorApp,
             border: Border.all(
-              color: const Color.fromRGBO(234, 236, 239, 1.0),
+              color: textFieldColorApp,
             ),
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(roundedCornersValue),
           ),
           child: Row(
             children: [
@@ -102,6 +108,53 @@ Widget _topBar(BuildContext context){
         ),
       ),
     ],
+  );
+}
+
+Widget _navBar(BuildContext context){
+  return Container(
+    margin: const EdgeInsets.only(top: marginWidget*2),
+    height: 30.0,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: accentColorApp,
+            borderRadius: BorderRadius.circular(roundedCornersValue),
+          ),
+          child: const Icon(
+            Icons.tune,
+            size: 20.0,
+            color: Colors.white,
+          )
+          
+          /*Text(
+            'Categoria',
+            style: const TextStyle(
+              fontSize: 14.0,
+              color: Colors.white
+            ),
+          ),*/
+        ),
+        Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(left: marginWidget,),
+          padding: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            color: accentColorApp,
+            borderRadius: BorderRadius.circular(roundedCornersValue),
+          ),
+          child: const Icon(
+            Icons.home,
+            size: 20.0,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    ),
   );
 }
 
@@ -148,99 +201,6 @@ Widget _headers(BuildContext context, String textHeader, String textAction){
               const Icon(Icons.play_arrow),
             ],
           ),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _populares(BuildContext context, String restaurantName, String restaurantAddress, String imageURL){
-  return Column(
-    children: [
-      Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image(
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                image: NetworkImage(imageURL),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 15.0),
-                  child: Text(
-                    restaurantName,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 15.0),
-                  child: Text(
-                    restaurantAddress,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.0,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 16.0,
-                      ),
-                      const Text(
-                        "4.8",
-                        style: TextStyle(
-                          color: accentColorApp,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13.0,
-                        ),
-                      ),
-                      const Text(
-                        "(223 ratings)",
-                        style: TextStyle(
-                          color: accentColorApp,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13.0,
-                        ),
-                      ),
-                      Container(
-                        width: 80.0,
-                        height: 20.0,
-                        child: RaisedButton(
-                          elevation: 0.5,
-                          shape: const StadiumBorder(),
-                          color: accentColorApp,
-                          textColor: Colors.white,
-                          onPressed: (){ },
-                          child: const Text('Ver', style: TextStyle(fontSize: 11.0)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     ],

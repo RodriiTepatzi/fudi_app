@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/forms/search_form.dart';
 import 'package:fudi_app/src/widgets/header.dart';
 
@@ -10,7 +11,7 @@ class SearchPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: bgApp,
             leading: IconButton(
               onPressed: (){
                 Navigator.pop(context);
