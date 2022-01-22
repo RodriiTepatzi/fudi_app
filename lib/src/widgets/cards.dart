@@ -8,7 +8,7 @@ Widget LargeRestaurantCard(BuildContext context){
     child: Column(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(roundedCornersValue),
           child: const Image(
             width: 200.0,
             height: 250.0,
