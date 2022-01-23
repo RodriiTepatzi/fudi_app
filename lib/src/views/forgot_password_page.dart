@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:fudi_app/src/views/forms/forgot_password_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/widgets/alert_dialog.dart';
-import 'package:fudi_app/src/widgets/back_button.dart';
-import 'package:fudi_app/src/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
+import 'package:fudi_app/src/views/widgets/back_button.dart';
+import 'package:fudi_app/src/views/widgets/header.dart';
 import 'package:fudi_app/src/services/extensions.dart';
 
 class ForgotPasswordPage extends StatelessWidget {

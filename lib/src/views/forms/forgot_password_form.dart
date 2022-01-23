@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/widgets/alert_dialog.dart';
+import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 // Define a custom Form widget.
 class ForgotPasswordForm extends StatefulWidget {

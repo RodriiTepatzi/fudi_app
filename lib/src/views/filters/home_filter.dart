@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:fudi_app/src/widgets/cards.dart';
-import 'package:fudi_app/src/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/cards.dart';
+import 'package:fudi_app/src/views/widgets/header.dart';
 
 class HomeFilter extends StatelessWidget {
   const HomeFilter({Key? key}) : super(key: key);

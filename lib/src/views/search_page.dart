@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/forms/search_form.dart';
-import 'package:fudi_app/src/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/header.dart';
 
 class SearchPage extends StatelessWidget {
 

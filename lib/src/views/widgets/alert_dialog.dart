@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/static/colors.dart';
-import 'package:fudi_app/src/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/header.dart';
 
 void showAlertDialog(BuildContext context, 
   //ImageProvider<Object> imagePath,

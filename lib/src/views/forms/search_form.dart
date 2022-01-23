@@ -3,8 +3,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/widgets/alert_dialog.dart';
-import 'package:fudi_app/src/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
+import 'package:fudi_app/src/views/widgets/header.dart';
 
 // Define a custom Form widget.
 class SearchForm extends StatefulWidget {

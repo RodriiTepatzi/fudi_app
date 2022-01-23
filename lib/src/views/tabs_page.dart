@@ -8,7 +8,7 @@ import 'package:fudi_app/src/views/tabs/favorites_tab.dart';
 import 'package:fudi_app/src/views/tabs/my_order_tab.dart';
 import 'package:fudi_app/src/views/tabs/profile_tab.dart';
 import 'package:fudi_app/src/static/colors.dart';
-import 'package:fudi_app/src/widgets/alert_dialog.dart';
+import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 class TabsPage extends StatefulWidget {
   TabsPage({Key? key}) : super(key: key);

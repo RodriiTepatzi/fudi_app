@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fudi_app/src/routes/routes.dart';
 import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/views/routes/routes.dart';
 
 void main() => runApp(MyApp());
 

@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/filters/category_filter.dart';
+import 'package:fudi_app/src/views/filters/category_view.dart';
 import 'package:fudi_app/src/views/filters/home_filter.dart';
-import 'package:fudi_app/src/widgets/navbar_items.dart';
+import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
+import 'package:fudi_app/tests_vars.dart';
 
 
 class ExploreTab extends StatefulWidget {
@@ -23,7 +24,6 @@ class _ExploreTabState extends State<ExploreTab> {
 
   List<Widget> filterSelectionWidget = [
     HomeFilter(),
-    
   ];
 
   void setFilterIndex(int index){
@@ -32,13 +32,9 @@ class _ExploreTabState extends State<ExploreTab> {
     });
   }
 
-  Function()? callSetFilterIndex(int index){
-    setFilterIndex(index);
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -60,7 +56,6 @@ class _ExploreTabState extends State<ExploreTab> {
       ),
     );
   }
-
 
   Widget _topBar(BuildContext context){
     return Row(
@@ -123,7 +118,6 @@ class _ExploreTabState extends State<ExploreTab> {
   }
 
   Widget _navBar(BuildContext context){
-    var categoriesWidgets = generateCategories();
     return Container(
       margin: const EdgeInsets.only(top: marginWidget*2),
       height: 34.0,
@@ -173,28 +167,33 @@ class _ExploreTabState extends State<ExploreTab> {
   List<Widget> generateCategories(){
     
     List<CategoryModel> categories = <CategoryModel>[
-      CategoryModel(categoryName: "Categoria 1"),
-      CategoryModel(categoryName: "Categoria 2"),
-      CategoryModel(categoryName: "Categoria 3"),
-      CategoryModel(categoryName: "Categoria 4"),
-      CategoryModel(categoryName: "Categoria 5"),
-      CategoryModel(categoryName: "Categoria 6")
+      CategoryModel(categoryName: "Pizzas", items: getTestCards(context, "Pizzas")),
+      CategoryModel(categoryName: "Hamburguesas", items: getTestCards(context, "Hamburguesas")),
+      CategoryModel(categoryName: "Comida Mexicana", items: getTestCards(context, "Comida Mexicana")),
+      CategoryModel(categoryName: "Categoria 4", items: getTestCards(context, "Categoria 4")),
+      CategoryModel(categoryName: "Categoria 5", items: getTestCards(context, "Categoria 5")),
+      CategoryModel(categoryName: "Categoria 6", items: getTestCards(context, "Categoria 6"))
     ];
 
     List<Widget> categoryItems = <Widget>[];
     int counter = 1;
 
     for (var item in categories) {
-      categoryItems.add(CategoryItem(item.categoryName, counter, callSetFilterIndex(counter)));
+      categoryItems.add(NavbarCategoryButton(
+        item.categoryName,
+        counter, 
+        setFilterIndex)
+      );
       counter++;
     }
 
+    _generateCategoriesFilters(categories);
     return categoryItems;
   }
 
-  void generateCategoriesFilters(List<CategoryModel> categories){
+  void _generateCategoriesFilters(List<CategoryModel> categories){
     for (var item in categories) {
-      filterSelectionWidget.add(CategoryFilter(categoryName: item.categoryName));
+      filterSelectionWidget.add(CategoryView(categoryModel: item));
     }
   }
 }
