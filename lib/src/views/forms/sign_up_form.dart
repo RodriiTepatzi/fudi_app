@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/services/validations.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 // Define a custom Form widget.
 class SignUpForm extends StatefulWidget {
@@ -132,7 +130,7 @@ class SignUpFormState extends State<SignUpForm> {
                 borderRadius: BorderRadius.circular(roundedCornersValue),
               ),
               primary: accentColorApp,
-              minimumSize: Size(double.infinity, heightFormFieldValue),
+              minimumSize: const Size(double.infinity, heightFormFieldValue),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

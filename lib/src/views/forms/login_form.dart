@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 // Define a custom Form widget.
 class LoginForm extends StatefulWidget {
@@ -17,8 +15,8 @@ class LoginForm extends StatefulWidget {
 
 class LoginFormState extends State<LoginForm> {
   
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -71,8 +69,8 @@ class LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: (){  
               if (_formKey.currentState!.validate()) {
-                String email = _emailController.text;
-                String password = _passwordController.text;
+                /*String email = _emailController.text;
+                String password = _passwordController.text;*/
                 
 
                 Navigator.pushNamed(context, 'tabs');

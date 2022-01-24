@@ -7,7 +7,6 @@ import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/filters/category_view.dart';
 import 'package:fudi_app/src/views/filters/home_filter.dart';
 import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
-import 'package:fudi_app/tests_vars.dart';
 
 
 class ExploreTab extends StatefulWidget {
@@ -23,7 +22,7 @@ class _ExploreTabState extends State<ExploreTab> {
   int _filterItemSelected = 0;
 
   List<Widget> filterSelectionWidget = [
-    HomeFilter(),
+    const HomeFilter(),
   ];
 
   void setFilterIndex(int index){
@@ -167,12 +166,12 @@ class _ExploreTabState extends State<ExploreTab> {
   List<Widget> generateCategories(){
     
     List<CategoryModel> categories = <CategoryModel>[
-      CategoryModel(categoryName: "Pizzas", items: getTestCards(context, "Pizzas")),
-      CategoryModel(categoryName: "Hamburguesas", items: getTestCards(context, "Hamburguesas")),
-      CategoryModel(categoryName: "Comida Mexicana", items: getTestCards(context, "Comida Mexicana")),
-      CategoryModel(categoryName: "Categoria 4", items: getTestCards(context, "Categoria 4")),
-      CategoryModel(categoryName: "Categoria 5", items: getTestCards(context, "Categoria 5")),
-      CategoryModel(categoryName: "Categoria 6", items: getTestCards(context, "Categoria 6"))
+      CategoryModel(categoryName: "Pizzas"),
+      CategoryModel(categoryName: "Hamburguesas"),
+      CategoryModel(categoryName: "Comida Mexicana"),
+      CategoryModel(categoryName: "Categoria 4"),
+      CategoryModel(categoryName: "Categoria 5"),
+      CategoryModel(categoryName: "Categoria 6")
     ];
 
     List<Widget> categoryItems = <Widget>[];

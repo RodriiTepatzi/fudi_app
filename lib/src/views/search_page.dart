@@ -4,6 +4,8 @@ import 'package:fudi_app/src/views/forms/search_form.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 
 class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class SearchPage extends StatelessWidget {
               onPressed: (){
                 Navigator.pop(context);
               }, 
-              icon: Icon(
+              icon: const Icon(
                 Icons.close,
                 color: Colors.black,
                 size: 40.0,

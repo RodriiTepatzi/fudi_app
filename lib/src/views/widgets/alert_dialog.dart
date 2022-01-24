@@ -21,35 +21,33 @@ async {
             Radius.circular(20.0),
           ),
         ),
-        content: Container(
-          child: IntrinsicHeight(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Icon(
-                    icon,
-                    size: 80,
-                    color: accentColorApp,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(10.0),
-                    child: headerTextCentered(headerTitle, primaryColorApp, 24.0, FontWeight.bold),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(10.0),
-                    child: Text(
-                      headerSubtitle,
-                      textAlign: TextAlign.justify,
-                      style: const TextStyle(
-                        color: primaryColorApp,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15.0,
-                      ),
+        content: IntrinsicHeight(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Icon(
+                  icon,
+                  size: 80,
+                  color: accentColorApp,
+                ),
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: headerTextCentered(headerTitle, primaryColorApp, 24.0, FontWeight.bold),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: Text(
+                    headerSubtitle,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      color: primaryColorApp,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15.0,
                     ),
                   ),
-                  _doneButton(context, labelButton),
-                ],
-              ),
+                ),
+                _doneButton(context, labelButton),
+              ],
             ),
           ),
         ),

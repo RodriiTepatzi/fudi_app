@@ -35,20 +35,18 @@ Widget headerWithActionIcon(BuildContext context, String textHeader, String text
       const Spacer(),
       GestureDetector(
         onTap: action,
-        child: Container(
-          child: Row(
-            children: [
-              Text(
-                textAction,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15.0,
-                ),
+        child: Row(
+          children: [
+            Text(
+              textAction,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 15.0,
               ),
-              Icon(iconAction),
-            ],
-          ),
+            ),
+            Icon(iconAction),
+          ],
         ),
       ),
     ],
@@ -67,19 +65,17 @@ Widget headerWithAction(BuildContext context, String textHeader, String textActi
       const Spacer(),
       GestureDetector(
         onTap: action,
-        child: Container(
-          child: Row(
-            children: [
-              Text(
-                textAction,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15.0,
-                ),
+        child: Row(
+          children: [
+            Text(
+              textAction,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 15.0,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     ],

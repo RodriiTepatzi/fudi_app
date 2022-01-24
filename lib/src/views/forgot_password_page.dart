@@ -4,15 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/src/views/forms/forgot_password_form.dart';
 import 'package:fudi_app/src/static/colors.dart';
-import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
-import 'package:fudi_app/src/views/widgets/header.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
 
-  String emailValue = "";
+  final String emailValue = "";
   @override
   Widget build(BuildContext context) {
 
@@ -41,15 +37,13 @@ class ForgotPasswordPage extends StatelessWidget {
               child: 
               Column(
                 children: [
-                  Container(
-                    child: Text(
-                      'Recuperar contraseña',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28.0,
-                      ),
+                  Text(
+                    'Recuperar contraseña',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28.0,
                     ),
                   ),
                   Container(

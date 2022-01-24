@@ -1,9 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 
 // Define a custom Form widget.
@@ -60,7 +60,7 @@ class SearchFormState extends State<SearchForm> {
   }
 
   Widget _sliderCards(){
-  return Container(
+  return SizedBox(
     height: 350.0,
     child: Swiper(
       itemCount: 4,
@@ -91,7 +91,7 @@ class SearchFormState extends State<SearchForm> {
             image: NetworkImage('https://media.istockphoto.com/photos/fresh-homemade-pizza-margherita-picture-id1278998606?b=1&k=20&m=1278998606&s=170667a&w=0&h=BlXvVFfwLwD4ckIF_7sg_mis8ULaqy9sdPgA6grpSo4='),
           ),
         ),
-        Container(
+        SizedBox(
           width: 150.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,14 +107,12 @@ class SearchFormState extends State<SearchForm> {
                   ),
                 ),
               ),
-              Container(
-                child: const Text(
-                  'Calle Número 10, Tlaxcala, Tlax',
-                  style: TextStyle(
-                    color: disabledColorApp,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13.0,
-                  ),
+              const Text(
+                'Calle Número 10, Tlaxcala, Tlax',
+                style: TextStyle(
+                  color: disabledColorApp,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13.0,
                 ),
               ),
             ],
@@ -149,7 +147,7 @@ class SearchFormState extends State<SearchForm> {
                   margin: const EdgeInsets.only(left: 15.0),
                   child: Text(
                     restaurantName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 17.0,
@@ -194,7 +192,7 @@ class SearchFormState extends State<SearchForm> {
                           fontSize: 13.0,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 80.0,
                         height: 20.0,
                         child: RaisedButton(

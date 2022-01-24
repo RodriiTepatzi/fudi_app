@@ -1,65 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/product.dart';
+import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 
-List<Widget> getTestCards(BuildContext context,String category){
-  List<Widget> restaurantCardTest = [
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-    SmallRestaurantCard(context, 
-    "Restaurant test", 
-    "Restaurant address test", 
-    "https://cdn-icons.flaticon.com/png/512/2098/premium/2098318.png?token=exp=1642909503~hmac=ae8e90b4e4ba65d47d85af2a498eff2c", 
-    "5.0", 
-    "222", 
-    category,
-    "\$"),
-  ];
-  return restaurantCardTest;
-}
+  RestaurantModel restaurantModel = RestaurantModel(restaurantName: "Restaurant test", 
+    restaurantAddress: "Restaurant address test", 
+    restaurantSlogan: "Restaurant slogan test", 
+    restaurantUrl: "/assets/images/restaurante.png", 
+    stars: "5.0", cost: "\$\$\$", category: "Here goes category"
+  );
 
+  List<Widget> getTestCards(BuildContext context,String category){
+    List<Widget> restaurantCardTest = [
+      SmallRestaurantCard(context, restaurantModel),
+      SmallRestaurantCard(context, restaurantModel),
+      SmallRestaurantCard(context, restaurantModel),
+      SmallRestaurantCard(context, restaurantModel),
+      SmallRestaurantCard(context, restaurantModel),
+      SmallRestaurantCard(context, restaurantModel),
+    ];
+    return restaurantCardTest;
+  }
+
+
+  Product productModel = Product(
+    "Product Test",
+    10.0,
+    "/assets/images/food.png",
+    "5.0",
+    "10",
+    ["Ingrediente 1", "Ingrediente 2", "Ingrediente 3"],
+    "pz"
+
+  );
+
+  List<Product> getTestProducts(){
+    return [productModel, productModel, productModel];
+  }
