@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
@@ -253,6 +254,166 @@ Widget _discountTicket(String ticketText){
           fontSize: 12.0
         ),
       ),
+    ),
+  );
+}
+
+Widget ProductCard(BuildContext context, Product product){
+  return GestureDetector(
+    onTap: (){
+      showModalBottomSheet(
+        isScrollControlled: true,
+        elevation: 1,
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(roundedCornersValue),
+              topRight: Radius.circular(roundedCornersValue)),
+        ),
+        builder: (context){
+          return FractionallySizedBox(
+            heightFactor: 0.8,
+            child: ListView(
+              children: [
+                Container(
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(roundedCornersValue),
+                        child: Image(
+                          width: MediaQuery.of(context).size.width,
+                          height: 250.0,
+                          fit: BoxFit.cover,
+                          image: NetworkImage(product.productUrl),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(marginWidget),
+                        child: Text(
+                          product.productName,
+                          style: const TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+      );
+    },
+    child: Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: bgCardApp,
+            borderRadius: BorderRadius.circular(roundedCornersValue),
+          ),
+          width: MediaQuery.of(context).size.width - 32,
+          margin: const EdgeInsets.symmetric(vertical: 5.0),
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(roundedCornersValue),
+                child: Image(
+                  width: 100,
+                  height: 75,
+                  fit: BoxFit.cover,
+                  image: NetworkImage(product.productUrl),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width - 158,
+                    margin: const EdgeInsets.only(left: marginWidget),
+                    child: Text(
+                      product.productName,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    height: 30,
+                    margin: const EdgeInsets.only(left: marginWidget),
+                    width: MediaQuery.of(context).size.width - 158,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
+                          child: Text(
+                            "\$" + product.productPrice.toString(),
+                            style: const TextStyle(
+                              color: textColorApp,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ),
+                        _dotSpacer(),
+                        Container(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 2.0),
+                          margin: const EdgeInsets.only(left: marginTag),
+                          child: const Icon(
+                            Icons.favorite,
+                            color: accentColorApp,
+                            size: 14.0,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
+                          child: Text(
+                            product.productLikes,
+                            style: const TextStyle(
+                              color: textColorApp,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ),
+                        _dotSpacer(),
+                        Container(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            product.productUnit,
+                            style: const TextStyle(
+                              color: textColorApp,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: marginWidget),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _discountTicket('2 x 1'),
+                        _discountTicket('Ahorra hasta un 30%'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     ),
   );
 }

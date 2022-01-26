@@ -1,5 +1,6 @@
 class Product{
   String productName;
+  String productDescription;
   double productPrice;
   String productUrl;
   String productRating;
@@ -9,6 +10,7 @@ class Product{
 
   Product(
     this.productName,
+    this.productDescription,
     this.productPrice,
     this.productUrl,
     this.productRating,

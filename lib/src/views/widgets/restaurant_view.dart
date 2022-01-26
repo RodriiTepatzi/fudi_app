@@ -7,7 +7,7 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
 import 'package:fudi_app/tests_vars.dart';
-
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 class RestaurantView extends StatelessWidget {
   const RestaurantView({Key? key, required this.restaurant, required this.products}) : super(key: key);
   final RestaurantModel restaurant;
@@ -60,74 +60,102 @@ class RestaurantView extends StatelessWidget {
               ],
             ),
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            child: Transform.translate(
-              offset: const Offset(0.0, -20.0),
-              child: Column(
-                children: [
-                  Transform.translate(
-                    offset: const Offset(0.0, -60.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: marginWidget),
-                          alignment: Alignment.center,
-                          child: ClipRRect(
-                            clipBehavior: Clip.hardEdge,
-                            borderRadius: BorderRadius.circular(roundedCornersValue),
-                            child: Container(
-                              color: Colors.white,
-                              child: Image(
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                image: NetworkImage(restaurant.restaurantUrl),
+          Transform.translate(
+            offset: const Offset(0.0, -20.0),
+            child: Column(
+              children: [
+                Transform.translate(
+                  offset: const Offset(0.0, -60.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: marginWidget),
+                        alignment: Alignment.center,
+                        child: AnimationLimiter(
+                          child: AnimationConfiguration.synchronized(
+                            child: ScaleAnimation(
+                              duration: animationDuration,
+                              child: FadeInAnimation(
+                                duration: animationDuration,
+                                child: ClipRRect(
+                                  clipBehavior: Clip.hardEdge,
+                                  borderRadius: BorderRadius.circular(roundedCornersValue),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Image(
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(restaurant.restaurantUrl),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            restaurant.restaurantName,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28.0,
+                      ),
+                      AnimationLimiter(
+                        child: AnimationConfiguration.synchronized(
+                          child: ScaleAnimation(
+                            child: FadeInAnimation(
+                              duration: animationDuration,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  restaurant.restaurantName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28.0,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: marginWidget),
-                          alignment: Alignment.center,
-                          child: Text(
-                            restaurant.restaurantAddress,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: marginWidget),
+                        alignment: Alignment.center,
+                        child: Text(
+                          restaurant.restaurantAddress,
+                        ),
+                      ),
+                      IntrinsicHeight(
+                        child: Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height - 90,
+                          decoration: BoxDecoration(
+                            color: bgApp,  
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: AnimationLimiter(
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: 5,
+                                itemBuilder: (BuildContext context, int index){
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index, 
+                                    duration: Duration(milliseconds: 500 + index*20) ,
+                                    child: SlideAnimation(
+                                      horizontalOffset: 50.0,
+                                      child: FadeInAnimation(
+                                        child: getSingleCardProduct(context),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  IntrinsicHeight(
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height - 200,
-                      decoration: BoxDecoration(
-                        color: Colors.white,  
-                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ListView(
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            ...getTestCards(context, "category"),
-                          ],
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

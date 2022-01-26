@@ -7,7 +7,7 @@ import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/filters/category_view.dart';
 import 'package:fudi_app/src/views/filters/home_filter.dart';
 import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
-
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class ExploreTab extends StatefulWidget {
   ExploreTab({Key? key}) : super(key: key);
@@ -41,12 +41,25 @@ class _ExploreTabState extends State<ExploreTab> {
             delegate: SliverChildListDelegate([
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    _topBar(context),
-                    _navBar(context),
-                    filterSelectionWidget.elementAt(_filterItemSelected),
-                  ],
+                child: AnimationLimiter(
+                  child: Column(
+                    children: [
+                      ...AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 100),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: widget,
+                          )
+                        ),
+                        children: [
+                          _topBar(context),
+                          _navBar(context),
+                          filterSelectionWidget.elementAt(_filterItemSelected),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],),
