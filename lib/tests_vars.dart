@@ -14,7 +14,7 @@ import 'package:fudi_app/src/views/widgets/cards.dart';
       "Pizza",
       "La mejor pizza de todas",
       15.0,
-      "https://media.istockphoto.com/photos/slice-of-pizza-isolated-on-white-background-picture-id1295596568?b=1&k=20&m=1295596568&s=170667a&w=0&h=iYtQ3yZhbJ7Qo_qFpZDN3KIJ5zkhiJGqo2OjL6aHyzE=",
+      "https://media.istockphoto.com/photos/fresh-homemade-pizza-margherita-picture-id1278998606?b=1&k=20&m=1278998606&s=170667a&w=0&h=BlXvVFfwLwD4ckIF_7sg_mis8ULaqy9sdPgA6grpSo4=",
       "5.0",
       "117",
       ["Tomate", "Cheese", "Pepperonni"],

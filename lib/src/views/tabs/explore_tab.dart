@@ -116,8 +116,8 @@ class _ExploreTabState extends State<ExploreTab> {
           ),
           child: IconButton(
             icon: const Icon(
-              Icons.filter_list,
-              size: 25.0,
+              Icons.shopping_cart,
+              size: 20.0,
               color: Colors.white
             ),
             onPressed: (){

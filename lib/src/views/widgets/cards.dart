@@ -5,6 +5,7 @@ import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/views/forms/quantity_form.dart';
 import 'package:fudi_app/src/views/widgets/restaurant_view.dart';
 import 'package:fudi_app/tests_vars.dart';
 
@@ -259,6 +260,7 @@ Widget _discountTicket(String ticketText){
 }
 
 Widget ProductCard(BuildContext context, Product product){
+  
   return GestureDetector(
     onTap: (){
       showModalBottomSheet(
@@ -267,42 +269,12 @@ Widget ProductCard(BuildContext context, Product product){
         context: context,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(roundedCornersValue),
-              topRight: Radius.circular(roundedCornersValue)),
+            topLeft: Radius.circular(roundedCornersValue),
+            topRight: Radius.circular(roundedCornersValue)
+          ),
         ),
         builder: (context){
-          return FractionallySizedBox(
-            heightFactor: 0.8,
-            child: ListView(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(roundedCornersValue),
-                        child: Image(
-                          width: MediaQuery.of(context).size.width,
-                          height: 250.0,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(product.productUrl),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(marginWidget),
-                        child: Text(
-                          product.productName,
-                          style: const TextStyle(
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
+          return QuantityForm(product: product);
         }
       );
     },
