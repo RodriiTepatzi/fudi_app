@@ -6,6 +6,7 @@ class RestaurantModel {
   String stars;
   String cost;
   String category;
+  String status;
 
   RestaurantModel({
     required this.restaurantName, 
@@ -14,7 +15,10 @@ class RestaurantModel {
     required this.restaurantUrl,
     required this.stars,
     required this.cost,
-    required this.category});
+    required this.category,
+    required this.status,
+    }
+    );
 
 
 }

@@ -4,12 +4,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fudi_app/src/views/login_page.dart';
+import 'package:fudi_app/src/views/pages/login_page.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
 class WelcomePage extends StatelessWidget {
   
-
   @override
   Widget build(BuildContext context) {
 
@@ -21,8 +20,6 @@ class WelcomePage extends StatelessWidget {
     );
 
     return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Container(
