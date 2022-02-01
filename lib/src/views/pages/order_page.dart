@@ -10,6 +10,6 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OrderPageController().getWidgetByStatus(order);
+    return OrderPageController().getWidgetByStatus(context, order);
   }
 }

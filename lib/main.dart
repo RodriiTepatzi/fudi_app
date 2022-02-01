@@ -24,11 +24,6 @@ class MyApp extends StatelessWidget {
         buttonColor: buttonColorApp,
         disabledColor: disabledColorApp,
         scaffoldBackgroundColor: bgApp,
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(
-            color:Colors.black,
-          ),
-        ),
       ),
     );
   }

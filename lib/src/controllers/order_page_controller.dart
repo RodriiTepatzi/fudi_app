@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/order_product.dart';
@@ -11,20 +9,21 @@ import 'package:fudi_app/src/views/widgets/back_button.dart';
 
 class OrderPageController{
 
-  int total = 0;
+  double total = 0;
+  double totalRestaurant = 0;
 
-  Widget getWidgetByStatus(Order order){
+  Widget getWidgetByStatus(BuildContext context, Order order){
     if(order.orderStatus == orderCompleted){
-      return orderCompletedOrCanceledView(order);
+      return orderCompletedOrCanceledView(context, order);
     }
     else if(order.orderStatus == orderCanceled){
-      return orderCompletedOrCanceledView(order);
+      return orderCompletedOrCanceledView(context, order);
     }
 
     return Container();
   }
 
-  Widget orderCompletedOrCanceledView(Order order){
+  Widget orderCompletedOrCanceledView(BuildContext context, Order order){
     return Scaffold(
       appBar: AppBar(
         backgroundColor: bgApp,
@@ -47,7 +46,7 @@ class OrderPageController{
               ),
             ),
           ),
-          ...getRestaurants(order),
+          ...getRestaurants(context, order),
           Container(
             margin: const EdgeInsets.all(marginWidget),
             decoration: BoxDecoration(
@@ -57,7 +56,11 @@ class OrderPageController{
             child: Container(
               margin: const EdgeInsets.all(marginWidget),
               child: Text(
-                "Total" + total.toString(),
+                "Total: MXN \$" + total.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0
+                ),
               ),
             ),
           )
@@ -66,16 +69,58 @@ class OrderPageController{
     );
   }
 
-  List<Widget> getProducts(List<OrderProduct> products){
+  List<Widget> getProducts(BuildContext context, List<OrderProduct> products){
     List<Widget> widgets = [];
+
     for (var item in products) {
-      
+      total += item.product.productPrice * item.quantity;
+      totalRestaurant += item.product.productPrice * item.quantity;
+
+      widgets.add(
+        Container(
+          decoration: BoxDecoration(
+            color: bgApp,
+            borderRadius: BorderRadius.circular(roundedCornersValue),
+          ),
+          margin: const EdgeInsets.only(bottom: marginWidget),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(marginWidget),              
+                    alignment: Alignment.centerLeft,
+                    width: (MediaQuery.of(context).size.width - 80) / 3,
+                    child: Text(
+                      item.product.productName,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(marginWidget),
+                    child: Text(
+                      "\$" + item.product.productPrice.toString() + "x" + item.quantity.toString(),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(marginWidget),
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "\$" + (item.quantity * item.product.productPrice).toString(),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      );
     }
 
-    return [];
+    return widgets;
   }
 
-  List<Widget> getRestaurants(Order order){
+  List<Widget> getRestaurants(BuildContext context, Order order){
     
     List<Widget> widgets = [];
 
@@ -90,7 +135,7 @@ class OrderPageController{
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.all(marginWidget),
+                margin: const EdgeInsets.only(top: marginWidget, left: marginWidget, right: marginWidget),
                 child: Column(
                   children: [
                     Row(
@@ -125,19 +170,18 @@ class OrderPageController{
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: marginWidget),
-                      decoration: BoxDecoration(
-                        color: bgApp,
-                        borderRadius: BorderRadius.circular(roundedCornersValue),
-                      ),
                       alignment: Alignment.topLeft,
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              "aaa"
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        children: [
+                          ...getProducts(context, item.products),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(marginWidget),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        "MXN \$" + totalRestaurant.toString(),
                       ),
                     ),
                   ],
@@ -147,6 +191,7 @@ class OrderPageController{
           ),
         ),
       );
+      totalRestaurant = 0;
     }
     return widgets;
   }

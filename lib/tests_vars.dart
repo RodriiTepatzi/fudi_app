@@ -10,7 +10,7 @@ import 'src/models/order.dart';
   RestaurantModel restaurantModel = RestaurantModel(restaurantName: "Restaurant test", 
     restaurantAddress: "Restaurant address test", 
     restaurantSlogan: "Restaurant slogan test", 
-    restaurantUrl: "/assets/images/restaurante.png", 
+    restaurantUrl: "https://images.unsplash.com/photo-1554679665-f5537f187268?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cmVzdGF1cmFudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60", 
     stars: "5.0", cost: "\$\$\$", category: "Here goes category",
     status: "Abierto"
   );
