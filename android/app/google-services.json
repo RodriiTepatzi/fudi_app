@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "90468952347",
+    "firebase_url": "https://fudiapp-default-rtdb.firebaseio.com",
+    "project_id": "fudiapp",
+    "storage_bucket": "fudiapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90468952347:android:9cbf20f7857dab55a3cbbe",
+        "android_client_info": {
+          "package_name": "com.tepatzi.fudi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90468952347-bubl7i2jt3i8f8p707klue55cc374692.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3a_ywAOOoac6njl5f5O1uai1rIur4NWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90468952347-bubl7i2jt3i8f8p707klue55cc374692.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

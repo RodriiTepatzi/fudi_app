@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/services/validations.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/services/auth_service.dart';
 
 // Define a custom Form widget.
 class SignUpForm extends StatefulWidget {
@@ -19,7 +21,12 @@ class SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController telephoneController = TextEditingController();
+    TextEditingController birthdayController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -27,6 +34,7 @@ class SignUpFormState extends State<SignUpForm> {
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) => Validations().validateUsername(input.toString()),
+            controller: usernameController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
             decoration: const InputDecoration(
@@ -45,6 +53,7 @@ class SignUpFormState extends State<SignUpForm> {
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             //validator: (input) => Validations().validateUsername(input.toString()),
+            controller: emailController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
             decoration: const InputDecoration(
@@ -65,6 +74,7 @@ class SignUpFormState extends State<SignUpForm> {
             //validator: (input) => Validations().validateUsername(input.toString()),
             keyboardType: TextInputType.phone,
             cursorColor: accentColorApp,
+            controller: telephoneController,
             decoration: const InputDecoration(
               filled: true,
               fillColor: textFieldColorApp,
@@ -101,6 +111,7 @@ class SignUpFormState extends State<SignUpForm> {
             validator: (input) => Validations().validateUsername(input.toString()),
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
+            controller: passwordController,
             cursorColor: accentColorApp,
             decoration: const InputDecoration(
               filled: true,
@@ -117,11 +128,19 @@ class SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: formFieldHeightGap),
           ElevatedButton(
             onPressed: (){
-              if (_formKey.currentState!.validate()) {
-                // If the form is valid, display a snackbar. In the real world,
-                // you'd often call a server or save the information in a database.
-
-                // IF something happens then log in
+              if (_formKey.currentState!.validate()){
+                FirebaseAuth.instance.verifyPhoneNumber(
+                  phoneNumber: telephoneController.text,
+                  verificationCompleted: (PhoneAuthCredential credential) {
+                    FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+                  },
+                  verificationFailed: (FirebaseAuthException e) {},
+                  codeSent: (String verificationId, int? resendToken) {},
+                  codeAutoRetrievalTimeout: (String verificationId) {},
+                );
+                FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+                
+                
                 Navigator.pushNamed(context, 'tabs');
               }
             },

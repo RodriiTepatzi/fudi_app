@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/map_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/order_product.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/order_status.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/views/pages/map_view.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
 
 class OrderPageController{
@@ -19,8 +21,15 @@ class OrderPageController{
     else if(order.orderStatus == orderCanceled){
       return orderCompletedOrCanceledView(context, order);
     }
+    else if(order.orderStatus == orderPreparing){
+      return preparingOrderView();
+    }
 
     return Container();
+  }
+
+  Widget preparingOrderView(){
+    return MapView();
   }
 
   Widget orderCompletedOrCanceledView(BuildContext context, Order order){
@@ -54,6 +63,7 @@ class OrderPageController{
             borderRadius: BorderRadius.circular(roundedCornersValue),
             ),
             child: Container(
+              alignment: Alignment.centerRight,
               margin: const EdgeInsets.all(marginWidget),
               child: Text(
                 "Total: MXN \$" + total.toString(),
@@ -78,11 +88,11 @@ class OrderPageController{
 
       widgets.add(
         Container(
-          decoration: BoxDecoration(
+          /*decoration: BoxDecoration(
             color: bgApp,
             borderRadius: BorderRadius.circular(roundedCornersValue),
           ),
-          margin: const EdgeInsets.only(bottom: marginWidget),
+          margin: const EdgeInsets.only(bottom: marginWidget),*/
           child: Column(
             children: [
               Row(
@@ -94,6 +104,9 @@ class OrderPageController{
                     width: (MediaQuery.of(context).size.width - 80) / 3,
                     child: Text(
                       item.product.productName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
                   Container(

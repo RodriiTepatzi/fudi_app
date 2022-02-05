@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 import 'package:fudi_app/tests_vars.dart';
@@ -14,10 +15,64 @@ class HomeFilter extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(vertical: 20.0),
           alignment: Alignment.centerLeft,
+          child: headerText('Ofertas', Colors.black, 30.0, FontWeight.bold)
+        ),
+        Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: marginWidget),
+              width: MediaQuery.of(context).size.width,
+              height: 150,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(roundedCornersValue),
+                child: const Image(
+                  fit: BoxFit.cover,
+                  image: NetworkImage("https://images.unsplash.com/photo-1559613671-dfe2fb6a7680?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(marginWidget),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 150,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(roundedCornersValue),
+                      child: const Image(
+                        fit: BoxFit.cover,
+                        image: NetworkImage("https://images.unsplash.com/photo-1559613671-dfe2fb6a7680?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(roundedCornersValue),
+                      child: const Image(
+                        fit: BoxFit.cover,
+                        image: NetworkImage("https://images.unsplash.com/photo-1559613671-dfe2fb6a7680?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 20.0),
+          alignment: Alignment.centerLeft,
           child: headerText('Descubre lugares nuevos', Colors.black, 30.0, FontWeight.bold)
         ),
         _sliderLargeCards(),
         _headers(context, 'Populares esta semana', 'Mostrar todo'),
+        SmallRestaurantCard(context, restaurantModel),
+        SmallRestaurantCard(context, restaurantModel),
+        SmallRestaurantCard(context, restaurantModel),
+        _headers(context, 'Nuestra selección', 'Mostrar todo'),
         SmallRestaurantCard(context, restaurantModel),
         SmallRestaurantCard(context, restaurantModel),
         SmallRestaurantCard(context, restaurantModel),

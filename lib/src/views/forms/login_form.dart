@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/views/pages/otp_page.dart';
 
 // Define a custom Form widget.
 class LoginForm extends StatefulWidget {
@@ -68,13 +70,16 @@ class LoginFormState extends State<LoginForm> {
           const SizedBox(height: formFieldHeightGap),
           ElevatedButton(
             onPressed: (){  
-              if (_formKey.currentState!.validate()) {
-                /*String email = _emailController.text;
-                String password = _passwordController.text;*/
-                
+              Navigator.pushNamed(context, "otp-code");
+              /*if (_formKey.currentState!.validate()) {
+                String email = _emailController.text;
+                String password = _passwordController.text;
 
+                FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                
+                
                 Navigator.pushNamed(context, 'tabs');
-              }
+              }*/
             },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

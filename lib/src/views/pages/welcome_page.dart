@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fudi_app/src/views/pages/login_page.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
@@ -13,7 +14,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
+      SystemUiOverlayStyle.dark.copyWith(
         statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
       )
@@ -113,13 +114,22 @@ class WelcomePage extends StatelessWidget {
                         width: 25,
                         height: 25,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10.0),
-                        child: const Text(
-                          'Entrar con Facebook',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
+                      AnimationLimiter(
+                        child: AnimationConfiguration.synchronized(
+                          child: ScaleAnimation(
+                            child: FadeInAnimation(
+                              duration: animationDuration,
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 10.0),
+                                child: const Text(
+                                  'Entrar con Facebook',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
