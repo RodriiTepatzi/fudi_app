@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
+import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 
 class OTPCodeForm extends StatefulWidget {
@@ -11,79 +14,39 @@ class OTPCodeForm extends StatefulWidget {
 class _OTPCodeFormState extends State<OTPCodeForm> {
 
   final formKey = new GlobalKey<FormState>();
-  late String phoneNo, verificationId, smsCode;
+  late String code;
   bool codeSent = false;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(hintText: 'Enter phone number'),
-                    onChanged: (val) {
-                      setState(() {
-                        this.phoneNo = val;
-                      });
-                    },
-                  )),
-              codeSent ? Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(hintText: 'Enter OTP'),
-                    onChanged: (val) {
-                      setState(() {
-                        this.smsCode = val;
-                      });
-                    },
-                  )) : Container(),
-              Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                  child: RaisedButton(
-                      child: Center(child: codeSent ? Text('Login'):Text('Verify')),
-                      onPressed: () {
-                        codeSent ? AuthService().signInWithOTP(smsCode, verificationId):verifyPhone(phoneNo);
-                      }))
-            ],
-          )),
+      body: SizedBox(
+        child: OtpTextField(
+          numberOfFields: 5,
+          fieldWidth: 40,
+          margin: const EdgeInsets.all(marginWidget),
+          cursorColor: accentColorApp,
+          borderColor: accentColorApp,
+          focusedBorderColor: accentColorApp,
+          showFieldAsBox: true, 
+          autoFocus: true,
+          onCodeChanged: (String code) {
+            this.code = code;
+          },
+          onSubmit: (String verificationCode){
+            showDialog(
+                context: context,
+                builder: (context){
+                return AlertDialog(
+                    title: Text("Verification Code"),
+                    content: Text('Code entered is $verificationCode'),
+                );
+                }
+            );
+          },
+        ),
+      ),
     );
   }
-
-  Future<void> verifyPhone(phoneNo) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
-    };
-
-    final PhoneVerificationFailed verificationfailed =
-        (FirebaseAuthException authException) {
-      print('${authException.message}');
-    };
-
-    final PhoneCodeSent smsSent = (String verId, int? forceResend) {
-      this.verificationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
-    };
-
-    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-      this.verificationId = verId;
-    };
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneNo,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verified,
-        verificationFailed: verificationfailed,
-        codeSent: smsSent,
-        codeAutoRetrievalTimeout: autoTimeout);
-  }
-
 }

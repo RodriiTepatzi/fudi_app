@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/pages/login_page.dart';
+import 'package:fudi_app/src/views/pages/otp_page.dart';
 import 'package:fudi_app/src/views/pages/tabs_page.dart';
 import 'package:fudi_app/src/views/pages/welcome_page.dart';
 
@@ -16,7 +17,13 @@ class LoginController extends StatelessWidget {
         
       } 
       else {
-        TabsPage();
+        if(user.emailVerified){
+          TabsPage();
+        }
+        else{
+          const OTPPage();
+        }
+        
       }
     });
 
@@ -25,7 +32,20 @@ class LoginController extends StatelessWidget {
       builder: (context, userSnapshot) {
         if (userSnapshot.connectionState == ConnectionState.active) {
           final bool signedIn = userSnapshot.hasData;
-          return signedIn ? TabsPage() : WelcomePage();
+          User? user = FirebaseAuth.instance.currentUser;
+          if(signedIn){
+            if(user != null){
+              if(user.emailVerified){
+                return TabsPage();
+              }
+              else{
+                return const OTPPage();
+              }
+            }
+          }
+          else{
+            return WelcomePage();
+          }
         }
         return Container(
           color: Colors.black,
