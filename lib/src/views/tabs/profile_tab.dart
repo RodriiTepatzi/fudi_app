@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
@@ -59,6 +60,14 @@ class _ProfileTabState extends State<ProfileTab> {
                     Container(
                       child: Text(
                         "Marco Rodrigo Flores Tepatzi",
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: AuthService().signOut(),
+                      child: Container(
+                        child: Text(
+                          "Salir"
+                        ),
                       ),
                     )
                   ],

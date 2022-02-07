@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/controllers/map_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/order_product.dart';
-import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/order_status.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
@@ -87,45 +85,38 @@ class OrderPageController{
       totalRestaurant += item.product.productPrice * item.quantity;
 
       widgets.add(
-        Container(
-          /*decoration: BoxDecoration(
-            color: bgApp,
-            borderRadius: BorderRadius.circular(roundedCornersValue),
-          ),
-          margin: const EdgeInsets.only(bottom: marginWidget),*/
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(marginWidget),              
-                    alignment: Alignment.centerLeft,
-                    width: (MediaQuery.of(context).size.width - 80) / 3,
-                    child: Text(
-                      item.product.productName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(marginWidget),              
+                  alignment: Alignment.centerLeft,
+                  width: (MediaQuery.of(context).size.width - 80) / 3,
+                  child: Text(
+                    item.product.productName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(marginWidget),
-                    child: Text(
-                      "\$" + item.product.productPrice.toString() + "x" + item.quantity.toString(),
-                    ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(marginWidget),
+                  child: Text(
+                    "\$" + item.product.productPrice.toString() + "x" + item.quantity.toString(),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(marginWidget),
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "\$" + (item.quantity * item.product.productPrice).toString(),
-                    ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(marginWidget),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "\$" + (item.quantity * item.product.productPrice).toString(),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         )
       );
     }

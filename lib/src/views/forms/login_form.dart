@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/pages/otp_page.dart';
@@ -19,11 +20,18 @@ class LoginFormState extends State<LoginForm> {
   
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  String errorMessage = "aaa";
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    errorMessage = "";
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
@@ -67,19 +75,29 @@ class LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
-          const SizedBox(height: formFieldHeightGap),
+          //const SizedBox(height: formFieldHeightGap),
+          Container(
+            margin: const EdgeInsets.all(marginWidget),
+            child: Text(
+              errorMessage,
+              style: const TextStyle(
+                color: Colors.red
+              ),
+            ),
+          ),
           ElevatedButton(
             onPressed: (){  
-              Navigator.pushNamed(context, "otp-code");
-              /*if (_formKey.currentState!.validate()) {
+              if (_formKey.currentState!.validate()){
                 String email = _emailController.text;
                 String password = _passwordController.text;
 
-                FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                setState(() {
+                  AuthService().signInWithEmail(email, password).then((value) => errorMessage = value.toString());
+                });
                 
                 
-                Navigator.pushNamed(context, 'tabs');
-              }*/
+                //Navigator.pushNamed(context, 'tabs');
+              }
             },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

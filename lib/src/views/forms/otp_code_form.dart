@@ -1,29 +1,55 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-
+import 'package:fudi_app/src/views/pages/tabs_page.dart';
 
 class OTPCodeForm extends StatefulWidget {
+
+  final String phoneNumber;
+  OTPCodeForm(this.phoneNumber);
+
   @override
   _OTPCodeFormState createState() => _OTPCodeFormState();
 }
 
 class _OTPCodeFormState extends State<OTPCodeForm> {
 
-  final formKey = new GlobalKey<FormState>();
-  late String code;
+  late String phoneNo = widget.phoneNumber, verificationId, smsCode, code;
   bool codeSent = false;
 
+  final formKey = GlobalKey<FormState>();
+  
+  
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
+    FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNo,
+      verificationCompleted: (PhoneAuthCredential credential){
+        FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        this.verificationId = verificationId;
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+
+        FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        this.verificationId = verificationId;
+      },
+    );
 
     return Scaffold(
       body: SizedBox(
         child: OtpTextField(
-          numberOfFields: 5,
+          numberOfFields: 6,
           fieldWidth: 40,
           margin: const EdgeInsets.all(marginWidget),
           cursorColor: accentColorApp,
@@ -32,18 +58,39 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
           showFieldAsBox: true, 
           autoFocus: true,
           onCodeChanged: (String code) {
-            this.code = code;
+            setState(() {
+              smsCode = code;  
+            });
           },
-          onSubmit: (String verificationCode){
-            showDialog(
-                context: context,
-                builder: (context){
-                return AlertDialog(
-                    title: Text("Verification Code"),
-                    content: Text('Code entered is $verificationCode'),
+          onSubmit: (String verificationCode) {
+            smsCode = verificationCode;
+
+            User? user = FirebaseAuth.instance.currentUser;
+            if(user!=null){
+              if(user.phoneNumber!.isNotEmpty){
+                Navigator.pushAndRemoveUntil(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => TabsPage()
+                  ), 
+                 ModalRoute.withName("/")
                 );
-                }
-            );
+              }
+              else{
+                PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
+                FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+                Navigator.pushAndRemoveUntil(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => TabsPage()
+                  ), 
+                 ModalRoute.withName("/")
+                );
+              }
+            }
+            else{
+              //Navigator.of(context).pop();
+            }
           },
         ),
       ),

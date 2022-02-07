@@ -1,13 +1,17 @@
 class Validations {
 
   String? validateUsername(String input){
-    if(!Validations().validateMinLength(input)){
-      return "Minímo 8 caracteres";
+    if(input.isNotEmpty){
+
+      if(input.length < 8){
+        return "Minímo 8 carácteres";
+      }
+      
+      if(Validations().validateSpecialChars(input)){
+        return "Sólo se permiten los caracteres !, @, #, \\, \$, &, *, ~";
+      }
     }
 
-    if(Validations().validateSpecialChars(input)){
-      return "Sólo se permiten los caracteres !, @, #, \\, \$, &, *, ~";
-    }
 
     return null;
   }

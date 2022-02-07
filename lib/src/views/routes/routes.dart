@@ -17,5 +17,5 @@ final routes = <String,WidgetBuilder>{
   'forgot-password' : (BuildContext context) => ForgotPasswordPage(),
   'tabs' : (BuildContext context) => TabsPage(),
   'search' : (BuildContext context) => const SearchPage(),
-  'otp-code' : (BuildContext context) => const OTPPage(),
+  'otp-code' : (BuildContext context) => OTPPage(),
 };

@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/services/validations.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
-
 // Define a custom Form widget.
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -18,10 +17,18 @@ class SignUpForm extends StatefulWidget {
 class SignUpFormState extends State<SignUpForm> {
   
   final _formKey = GlobalKey<FormState>();
+  String errorMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    errorMessage = "";
     TextEditingController usernameController = TextEditingController();
+    TextEditingController fullnameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController telephoneController = TextEditingController();
     TextEditingController birthdayController = TextEditingController();
@@ -52,7 +59,32 @@ class SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            //validator: (input) => Validations().validateUsername(input.toString()),
+            validator: (input) => Validations().validateUsername(input.toString()),
+            controller: fullnameController,
+            keyboardType: TextInputType.text,
+            cursorColor: accentColorApp,
+            decoration: const InputDecoration(
+              filled: true,
+              fillColor: textFieldColorApp,
+              hintText: 'Nombre completo',
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(roundedCornersValue),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: formFieldHeightGap,),
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (input){
+              if(input != null)  {
+                if(!input.toString().isValidEmail()){
+                  "Formato no valido.";
+                }
+              }
+            },
             controller: emailController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
@@ -71,7 +103,6 @@ class SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            //validator: (input) => Validations().validateUsername(input.toString()),
             keyboardType: TextInputType.phone,
             cursorColor: accentColorApp,
             controller: telephoneController,
@@ -126,22 +157,30 @@ class SignUpFormState extends State<SignUpForm> {
             ),
           ),
           const SizedBox(height: formFieldHeightGap),
+          Container(
+            padding: const EdgeInsets.all(marginWidget),
+            child: Text(
+              errorMessage,
+              style: const TextStyle(
+                color: Colors.red,
+              ),
+            ),
+          ),
           ElevatedButton(
             onPressed: (){
               if (_formKey.currentState!.validate()){
-                FirebaseAuth.instance.verifyPhoneNumber(
-                  phoneNumber: telephoneController.text,
-                  verificationCompleted: (PhoneAuthCredential credential) {
-                    FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-                  },
-                  verificationFailed: (FirebaseAuthException e) {},
-                  codeSent: (String verificationId, int? resendToken) {},
-                  codeAutoRetrievalTimeout: (String verificationId) {},
-                );
-                FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-                
-                
-                Navigator.pushNamed(context, 'tabs');
+                setState(() {
+                  (AuthService().createNewUser(
+                    context,
+                    emailController.text, 
+                    fullnameController.text,
+                    usernameController.text, 
+                    telephoneController.text, 
+                    DateTime.now(),
+                    passwordController.text,
+                  )
+                  ).then((value) => errorMessage = value.toString());
+                });
               }
             },
             style: ElevatedButton.styleFrom(
@@ -155,7 +194,7 @@ class SignUpFormState extends State<SignUpForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  'Iniciar sesión',
+                  'Crear cuenta',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15.0,

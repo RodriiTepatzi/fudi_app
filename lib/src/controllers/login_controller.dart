@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/views/pages/login_page.dart';
 import 'package:fudi_app/src/views/pages/otp_page.dart';
 import 'package:fudi_app/src/views/pages/tabs_page.dart';
@@ -10,23 +11,7 @@ class LoginController extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance
-    .authStateChanges()
-    .listen((User? user) {
-      if (user == null) {
-        
-      } 
-      else {
-        if(user.emailVerified){
-          TabsPage();
-        }
-        else{
-          const OTPPage();
-        }
-        
-      }
-    });
-
+    AuthService().handleAuth(context);
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, userSnapshot) {
@@ -39,7 +24,7 @@ class LoginController extends StatelessWidget {
                 return TabsPage();
               }
               else{
-                return const OTPPage();
+                return OTPPage();
               }
             }
           }
