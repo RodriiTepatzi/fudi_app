@@ -24,8 +24,6 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
 
   final formKey = GlobalKey<FormState>();
   
-  
-
   @override
   Widget build(BuildContext context){
 
@@ -33,17 +31,19 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
       phoneNumber: phoneNo,
       verificationCompleted: (PhoneAuthCredential credential){
         FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+        AuthService().handleAuth(context);
       },
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-
         FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+        AuthService().handleAuth(context);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;
       },
+      timeout: const Duration(seconds: 120),
     );
 
     return Scaffold(
@@ -66,8 +66,9 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
             smsCode = verificationCode;
 
             User? user = FirebaseAuth.instance.currentUser;
-            if(user!=null){
-              if(user.phoneNumber!.isNotEmpty){
+
+            if(user != null){
+              if(user.phoneNumber != null){
                 Navigator.pushAndRemoveUntil(
                   context, 
                   MaterialPageRoute(
@@ -79,17 +80,11 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
               else{
                 PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
                 FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-                Navigator.pushAndRemoveUntil(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) => TabsPage()
-                  ), 
-                 ModalRoute.withName("/")
-                );
+                AuthService().handleAuth(context);
               }
             }
             else{
-              //Navigator.of(context).pop();
+
             }
           },
         ),

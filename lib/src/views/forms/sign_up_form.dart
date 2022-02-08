@@ -4,6 +4,8 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
+import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 // Define a custom Form widget.
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -30,6 +32,8 @@ class SignUpFormState extends State<SignUpForm> {
     TextEditingController usernameController = TextEditingController();
     TextEditingController fullnameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+    String flag = "";
+    String telephone = "";
     TextEditingController telephoneController = TextEditingController();
     TextEditingController birthdayController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
@@ -118,6 +122,26 @@ class SignUpFormState extends State<SignUpForm> {
               ),
             ),
           ),
+          /*IntlPhoneField(
+            onSaved: (phone){
+              setState(() {
+                  telephone = phone.completeNumber;
+              });
+            },
+            searchText: "Busque un país o por código",
+            decoration: const InputDecoration(
+                labelText: 'Número de telefono',
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                ),
+            ),
+            initialCountryCode: 'MX',
+            onChanged: (phone) {
+                setState(() {
+                  telephone = phone.completeNumber;
+                });
+            },
+          ),*/
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -135,6 +159,22 @@ class SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context, //context of current state
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                  lastDate: DateTime(2101)
+              );
+
+              if(pickedDate != null ){
+                  print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  print(formattedDate); //formatted date output using intl package =>  2021-03-16
+              }else{
+                  print("Date is not selected");
+              }
+            },
           ),
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(

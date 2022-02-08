@@ -61,7 +61,7 @@ class _OTPPageState extends State<OTPPage> {
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
                 height: 120,
                 width: MediaQuery.of(context).size.width,
-                child: phoneNumber.isNotEmpty ?  OTPCodeForm(phoneNumber) : getTelephone(),
+                child: phoneNumber.isNotEmpty ? OTPCodeForm(phoneNumber) : getTelephone(),
               ),
             ],
           ),

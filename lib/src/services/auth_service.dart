@@ -60,37 +60,35 @@ class AuthService{
     UserCredential userCredential;
     bool usernameAvailable = false;
 
-
     (await checkUsername(username).then((value) => usernameAvailable = value));
     
     //if(usernameAvailable){
 
-      try{
-        user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
-        //FirebaseAuth.instance.currentUser.updatePhoneNumber(phoneCredential);
-        setDataToCollection(UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone));
-        Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) => OTPPage(user: user,)
-            ), 
-           ModalRoute.withName("/")
-        );
-      }on FirebaseAuthException catch (e) {
-        if(e.code == "email-already-in-use"){
-          return "El email ya esta en uso.";
-        }
-        else if(e.code == "weak-password"){
-          return "Contraseña muy débil.";
-        }
+    try{
+      user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
+      //FirebaseAuth.instance.currentUser.updatePhoneNumber(phoneCredential);
+      setDataToCollection(UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone));
+      Navigator.pushAndRemoveUntil(
+          context, 
+          MaterialPageRoute(
+            builder: (context) => OTPPage(user: user,)
+          ), 
+         ModalRoute.withName("/")
+      );
+    }on FirebaseAuthException catch (e) {
+      if(e.code == "email-already-in-use"){
+        return "El email ya esta en uso.";
       }
-
-      if (user != null) {
-        AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
-        FirebaseAuth.instance.signInWithCredential(credential);
-      }  else {
-        
+      else if(e.code == "weak-password"){
+        return "Contraseña muy débil.";
       }
+    }
+    if (user != null) {
+      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      FirebaseAuth.instance.signInWithCredential(credential);
+    }  else {
+      
+    }
     /*}
     else{
       return "Nombre de usuario en uso.";
@@ -119,12 +117,10 @@ class AuthService{
 
   }
 
-  //Sign out
   signOut() {
     FirebaseAuth.instance.signOut();
   }
 
-  //SignIn
   signInWithCredentials(AuthCredential authCreds) {
     FirebaseAuth.instance.signInWithCredential(authCreds);
   }

@@ -13,8 +13,11 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+
   @override
   Widget build(BuildContext context) {
+
+    //AuthService().signOut();
     return Column(
       children: [
         Container(
@@ -63,7 +66,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: AuthService().signOut(),
+                      //onTap: AuthService().signOut(),
                       child: Container(
                         child: Text(
                           "Salir"
