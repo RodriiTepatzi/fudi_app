@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/user_app.dart';
+import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/views/pages/otp_page.dart';
 import 'package:fudi_app/src/views/pages/tabs_page.dart';
 import 'package:fudi_app/src/views/pages/welcome_page.dart';
@@ -11,7 +12,7 @@ import 'package:fudi_app/src/views/pages/welcome_page.dart';
 
 class AuthService{
   
-  handleAuth(BuildContext context){
+  static handleAuth(BuildContext context){
     FirebaseAuth.instance
     .authStateChanges()
     .listen((User? user) {
@@ -67,7 +68,7 @@ class AuthService{
     try{
       user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
       //FirebaseAuth.instance.currentUser.updatePhoneNumber(phoneCredential);
-      setDataToCollection(UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone));
+      UserService.createUser(UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone));
       Navigator.pushAndRemoveUntil(
           context, 
           MaterialPageRoute(
@@ -95,26 +96,6 @@ class AuthService{
     }*/
 
     //FirebaseAuth.instance.currentUser?.updateDisplayName(fullname);  
-  }
-
-  setDataToCollection(UserApp userApp) async {
-    final usersRef = FirebaseFirestore.instance.collection('users').withConverter<UserApp>(
-      fromFirestore: (snapshot, _) => UserApp.fromJson(snapshot.data()!),
-      toFirestore: (user, _) => user.toJson(),
-    );
-    
-    await usersRef.add(
-      UserApp(
-        uid: userApp.uid,
-        username: userApp.username,
-        fullname: userApp.fullname,
-        birthday: userApp.birthday,
-        email: userApp.email,
-        photoURL: userApp.photoURL,
-        telephone: userApp.telephone,
-      ),
-    );
-
   }
 
   signOut() {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
+import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -31,14 +32,14 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
       phoneNumber: phoneNo,
       verificationCompleted: (PhoneAuthCredential credential){
         FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-        AuthService().handleAuth(context);
+        AuthService.handleAuth(context);
       },
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
         FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-        AuthService().handleAuth(context);
+        AuthService.handleAuth(context);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;
@@ -80,11 +81,11 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
               else{
                 PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
                 FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-                AuthService().handleAuth(context);
+                AuthService.handleAuth(context);
               }
             }
             else{
-
+              
             }
           },
         ),

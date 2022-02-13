@@ -219,7 +219,9 @@ class SignUpFormState extends State<SignUpForm> {
                     DateTime.now(),
                     passwordController.text,
                   )
-                  ).then((value) => errorMessage = value.toString());
+                  ).then(
+                    (value) => errorMessage = value.toString()
+                  );
                 });
               }
             },

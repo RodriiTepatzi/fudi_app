@@ -43,5 +43,4 @@ class UserApp{
       'telephone' : telephone,
     };
   }
-  
 }

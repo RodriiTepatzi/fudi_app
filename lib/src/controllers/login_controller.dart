@@ -11,7 +11,7 @@ class LoginController extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    AuthService().handleAuth(context);
+    AuthService.handleAuth(context);
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, userSnapshot) {

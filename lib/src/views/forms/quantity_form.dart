@@ -19,8 +19,6 @@ class _QuantityFormState extends State<QuantityForm> {
 
   int _quantityValue = 1;
 
-
-
   void changeQuantityValue(int value){
     setState(() {
       _quantityValue = value;
