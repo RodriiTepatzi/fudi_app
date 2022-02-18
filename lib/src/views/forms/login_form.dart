@@ -91,12 +91,12 @@ class LoginFormState extends State<LoginForm> {
                 String email = _emailController.text;
                 String password = _passwordController.text;
 
-                setState(() {
-                  AuthService().signInWithEmail(email, password).then((value) => errorMessage = value.toString());
+                AuthService.signInWithEmail(email, password).then((value) {
+                  setState(() {
+                    errorMessage = value.toString();
+                  });
                 });
                 
-                
-                //Navigator.pushNamed(context, 'tabs');
               }
             },
             style: ElevatedButton.styleFrom(

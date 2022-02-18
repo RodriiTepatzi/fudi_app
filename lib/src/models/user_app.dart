@@ -8,7 +8,7 @@ class UserApp{
   String photoURL;
   String fullname; 
   String email;
-  DateTime birthday;
+  String birthday;
 
   UserApp({
     required this.uid,
@@ -23,16 +23,16 @@ class UserApp{
 
   UserApp.fromJson(Map<String, Object?> json)
     : this(
-      uid: json['uid']! as String,
-      username: json['username']! as String,
-      fullname: json['fullname']! as String,
-      birthday: json['birthday']! as DateTime,
-      email: json['email']! as String,
-      photoURL: json['photoURL']! as String,
-      telephone: json['telephone']! as String,
+      uid: json['uid'] as String,
+      username: json['username'] as String,
+      fullname: json['fullname'] as String,
+      birthday: json['birthday'] as String,
+      email: json['email'] as String,
+      photoURL: json['photoURL'] as String,
+      telephone: json['telephone'] as String,
     );
 
-  Map<String, Object?> toJson(){
+  Map<String, dynamic> toJson(){
     return{
       'uid' : uid,
       'username' : username,

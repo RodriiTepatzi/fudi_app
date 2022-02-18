@@ -12,8 +12,11 @@ import 'package:fudi_app/src/views/pages/welcome_page.dart';
 
 class AuthService{
   
+  static final _auth = FirebaseAuth.instance;
+
   static handleAuth(BuildContext context){
-    FirebaseAuth.instance
+
+    _auth
     .authStateChanges()
     .listen((User? user) {
       if (user == null) {
@@ -24,9 +27,9 @@ class AuthService{
           ), 
          ModalRoute.withName("/")
         );
-      } 
+      }
       else {
-        if(user.phoneNumber!.isNotEmpty){
+        if(user.phoneNumber != null && user.phoneNumber.toString().isNotEmpty){
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
@@ -35,13 +38,13 @@ class AuthService{
            ModalRoute.withName("/")
           );
         }
-        else{
+        else {
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
               builder: (context) => OTPPage(user: user,)
             ), 
-           ModalRoute.withName("/")
+            ModalRoute.withName("/")
           );
         }
       }
@@ -56,54 +59,45 @@ class AuthService{
     }
   }
 
-  Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, DateTime birthday, String password) async {
+  static Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, String birthday, String password) async {
     User? user;
     UserCredential userCredential;
-    bool usernameAvailable = false;
-
-    (await checkUsername(username).then((value) => usernameAvailable = value));
+    bool usernameAvailable = await UserService.checkUsername(username);
     
     //if(usernameAvailable){
-
-    try{
-      user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)).user;
-      //FirebaseAuth.instance.currentUser.updatePhoneNumber(phoneCredential);
-      UserService.createUser(UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone));
-      Navigator.pushAndRemoveUntil(
-          context, 
-          MaterialPageRoute(
-            builder: (context) => OTPPage(user: user,)
-          ), 
-         ModalRoute.withName("/")
-      );
-    }on FirebaseAuthException catch (e) {
-      if(e.code == "email-already-in-use"){
-        return "El email ya esta en uso.";
+      try{
+        user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
+        UserApp userApp = UserApp(uid: user!.uid, username: username, fullname: fullname, birthday: birthday, email: email, photoURL: "", telephone: telephone);
+        UserService.createUser(userApp).whenComplete((){
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => OTPPage(user: user,)
+            ), 
+            ModalRoute.withName("/")
+          );
+        });
+        
+      }on FirebaseAuthException catch (e) {
+        if(e.code == "email-already-in-use"){
+          return "El email ya esta en uso.";
+        }
+        else if(e.code == "weak-password"){
+          return "Contraseña muy débil.";
+        }
       }
-      else if(e.code == "weak-password"){
-        return "Contraseña muy débil.";
-      }
-    }
-    if (user != null) {
-      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
-      FirebaseAuth.instance.signInWithCredential(credential);
-    }  else {
-      
-    }
     /*}
     else{
       return "Nombre de usuario en uso.";
     }*/
-
-    //FirebaseAuth.instance.currentUser?.updateDisplayName(fullname);  
   }
 
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  static signOut() {
+    _auth.signOut();
   }
 
   signInWithCredentials(AuthCredential authCreds) {
-    FirebaseAuth.instance.signInWithCredential(authCreds);
+    _auth.signInWithCredential(authCreds);
   }
 
   signInWithOTP(smsCode, verId) {
@@ -112,9 +106,9 @@ class AuthService{
     signInWithCredentials(authCreds);
   }
 
-  Future<String?> signInWithEmail(String email, String password) async {
+  static Future<String?> signInWithEmail(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password
       );
@@ -127,31 +121,4 @@ class AuthService{
     }
   }
 
-  // returns true if is empty
-  Future<bool> checkUsername(String username) async {
-    var data = FirebaseFirestore.instance.collection("users").where('username', isEqualTo: username).get();
-
-    return await data.asStream().isEmpty;
-  }
-
-  Future<String> getTelephoneInCollection(User? user) async{
-    /*final usersRef = FirebaseFirestore.instance.collection('users').withConverter<UserApp>(
-      fromFirestore: (snapshot, _) => UserApp.fromJson(snapshot.data()!),
-      toFirestore: (user, _) => user.toJson(),
-    );*/
-
-    String telephoneNumber = "";
-
-
-    List<Map<dynamic,dynamic>> listUser = await FirebaseFirestore.instance.collection('users')
-      .where('uid', isEqualTo: user?.uid)
-      .get()
-      .then((snapshot) => snapshot.docs.map((doc) => doc.data() ).toList());
-
-    if(listUser.length == 1){
-      return listUser.first['telephone'];
-    }
-
-    return "";
-  }
 }

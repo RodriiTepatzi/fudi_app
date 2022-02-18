@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
+import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/forms/otp_code_form.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
@@ -16,17 +18,9 @@ class OTPPage extends StatefulWidget {
 class _OTPPageState extends State<OTPPage> {
   String phoneNumber = "";
 
-  getTelephone(){
-    AuthService().getTelephoneInCollection(widget.user).then((value){
-      setState(() {
-        phoneNumber = value;  
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    //AuthService().signOut();
+    //AuthService.signOut();
     getTelephone();
     return Scaffold(
       body: Column(
@@ -61,12 +55,20 @@ class _OTPPageState extends State<OTPPage> {
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
                 height: 120,
                 width: MediaQuery.of(context).size.width,
-                child: phoneNumber.isNotEmpty ? OTPCodeForm(phoneNumber) : getTelephone(),
+                child: phoneNumber.isNotEmpty ? OTPCodeForm(phoneNumber) : Container(),
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Future<void> getTelephone() async{
+    String phone = "";
+    await UserService().fetchUser(widget.user!.uid).then((value) => phone = value.telephone);
+    setState(() {
+      phoneNumber = phone;
+    });
   }
 }

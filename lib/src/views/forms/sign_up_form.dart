@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/services/validations.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
@@ -146,6 +147,7 @@ class SignUpFormState extends State<SignUpForm> {
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             //validator: (input) => Validations().validateUsername(input.toString()),
+            controller: birthdayController,
             keyboardType: TextInputType.datetime,
             cursorColor: accentColorApp,
             decoration: const InputDecoration(
@@ -209,20 +211,18 @@ class SignUpFormState extends State<SignUpForm> {
           ElevatedButton(
             onPressed: (){
               if (_formKey.currentState!.validate()){
-                setState(() {
-                  (AuthService().createNewUser(
+                  (AuthService.createNewUser(
                     context,
                     emailController.text, 
                     fullnameController.text,
                     usernameController.text, 
                     telephoneController.text, 
-                    DateTime.now(),
+                    birthdayController.text,
                     passwordController.text,
                   )
                   ).then(
                     (value) => errorMessage = value.toString()
                   );
-                });
               }
             },
             style: ElevatedButton.styleFrom(

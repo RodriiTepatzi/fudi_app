@@ -1,1 +1,1 @@
-const String apiUrl = "https://localhost:44370/api/";
+const String apiUrl = "https://fudiwebapp.azurewebsites.net/api";

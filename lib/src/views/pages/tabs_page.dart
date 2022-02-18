@@ -15,6 +15,7 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 class TabsPage extends StatefulWidget {
+
   TabsPage({Key? key}) : super(key: key);
 
   @override
@@ -23,17 +24,31 @@ class TabsPage extends StatefulWidget {
 
 class _TabsPageState extends State<TabsPage> {
 
-  User? userFire;
-  UserApp? userData;
+  final _auth = FirebaseAuth.instance;
+  int _selectedWidgetIndex = 0;
+  List<Widget> _widgetsOptions = [];
+  late UserApp _userApp;
+  
+  Future setData() async{
+
+    await UserService().getUser(_auth.currentUser!.uid).then((value) => _userApp = value).whenComplete((){
+      setState(() {
+        _widgetsOptions = [
+          ExploreTab(),
+          MyOrderTab(),
+          FavoritesTab(),
+          ProfileTab(userApp: _userApp),
+        ];
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    if(FirebaseAuth.instance.currentUser != null){
-      UserService.fetchUser(FirebaseAuth.instance.currentUser!.uid).then((value) => userData = value);
-    }
+  }
 
-    
+  
     /*Future.delayed(Duration.zero, () async {
       final statusLocation = await Permission.location.request();
       if (statusLocation == PermissionStatus.granted){
@@ -46,16 +61,8 @@ class _TabsPageState extends State<TabsPage> {
         _askLocation(context);
       }
     });*/
-  }
 
-  List<Widget> widgetsOptions = [
-    ExploreTab(),
-    MyOrderTab(),
-    FavoritesTab(),
-    ProfileTab(),
-  ];
-
-  int _selectedWidgetIndex = 0;
+  
 
   void ChangeWidget(int index){
     setState(() {
@@ -65,6 +72,7 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
+    setData();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
         statusBarIconBrightness: Brightness.dark,
@@ -72,10 +80,15 @@ class _TabsPageState extends State<TabsPage> {
       )
     );
 
-    return Scaffold(
-      body: widgetsOptions.elementAt(_selectedWidgetIndex),
-      bottomNavigationBar: _bottomNavigationBar(context),
-    );
+    if(_widgetsOptions.isNotEmpty){
+      return Scaffold(
+        body: _widgetsOptions.elementAt(_selectedWidgetIndex),
+        bottomNavigationBar: _bottomNavigationBar(context),
+      );
+    }
+    else{
+      return Container();
+    }
   }
 
   Widget _bottomNavigationBar(BuildContext context){
@@ -113,6 +126,5 @@ class _TabsPageState extends State<TabsPage> {
     showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
     Permission.location.request();
   }
-  
 }
 

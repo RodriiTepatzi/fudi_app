@@ -1,12 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
 class ProfileTab extends StatefulWidget {
-  ProfileTab({Key? key}) : super(key: key);
+  final UserApp userApp;
+  ProfileTab({Key? key, required this.userApp}) : super(key: key);
 
   @override
   _ProfileTabState createState() => _ProfileTabState();
@@ -16,8 +18,6 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-
-    //AuthService().signOut();
     return Column(
       children: [
         Container(
@@ -62,11 +62,13 @@ class _ProfileTabState extends State<ProfileTab> {
                     ),
                     Container(
                       child: Text(
-                        "Marco Rodrigo Flores Tepatzi",
+                        widget.userApp.fullname,
                       ),
                     ),
                     GestureDetector(
-                      //onTap: AuthService().signOut(),
+                      onTap: (){
+                        AuthService.signOut();
+                      },
                       child: Container(
                         child: Text(
                           "Salir"

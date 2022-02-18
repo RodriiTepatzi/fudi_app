@@ -20,25 +20,26 @@ class OTPCodeForm extends StatefulWidget {
 
 class _OTPCodeFormState extends State<OTPCodeForm> {
 
-  late String phoneNo = widget.phoneNumber, verificationId, smsCode, code;
-  bool codeSent = false;
+  late String phoneNo = widget.phoneNumber;    
+  late String smsCode;    
+  late String verificationId;    
+  String errorMessage = '';   
+  final _auth = FirebaseAuth.instance;   
 
   final formKey = GlobalKey<FormState>();
-  
-  @override
-  Widget build(BuildContext context){
 
-    FirebaseAuth.instance.verifyPhoneNumber(
+  Future<void> verifyPhone() async{
+    _auth.verifyPhoneNumber(
       phoneNumber: phoneNo,
       verificationCompleted: (PhoneAuthCredential credential){
-        FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+        _auth.currentUser?.linkWithCredential(credential);
         AuthService.handleAuth(context);
       },
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-        FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
+        _auth.currentUser?.linkWithCredential(credential);
         AuthService.handleAuth(context);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
@@ -46,6 +47,11 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
       },
       timeout: const Duration(seconds: 120),
     );
+  }
+
+  @override
+  Widget build(BuildContext context){
+    //AuthService.signOut();
 
     return Scaffold(
       body: SizedBox(
@@ -59,33 +65,16 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
           showFieldAsBox: true, 
           autoFocus: true,
           onCodeChanged: (String code) {
-            setState(() {
-              smsCode = code;  
-            });
+            
           },
           onSubmit: (String verificationCode) {
-            smsCode = verificationCode;
-
-            User? user = FirebaseAuth.instance.currentUser;
-
+            setState(() {
+              smsCode = verificationCode;
+            });
+            verifyPhone();
+            User? user = _auth.currentUser;
             if(user != null){
-              if(user.phoneNumber != null){
-                Navigator.pushAndRemoveUntil(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) => TabsPage()
-                  ), 
-                 ModalRoute.withName("/")
-                );
-              }
-              else{
-                PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
-                FirebaseAuth.instance.currentUser?.updatePhoneNumber(credential);
-                AuthService.handleAuth(context);
-              }
-            }
-            else{
-              
+              AuthService.handleAuth(context);
             }
           },
         ),
