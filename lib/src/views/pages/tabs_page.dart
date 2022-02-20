@@ -27,27 +27,35 @@ class _TabsPageState extends State<TabsPage> {
   final _auth = FirebaseAuth.instance;
   int _selectedWidgetIndex = 0;
   List<Widget> _widgetsOptions = [];
+
+
   late UserApp _userApp;
   
-  Future setData() async{
-
-    await UserService().getUser(_auth.currentUser!.uid).then((value) => _userApp = value).whenComplete((){
-      setState(() {
-        _widgetsOptions = [
-          ExploreTab(),
-          MyOrderTab(),
-          FavoritesTab(),
-          ProfileTab(userApp: _userApp),
-        ];
-      });
-    });
-  }
-
   @override
   void initState() {
+    User? userData = _auth.currentUser;
+    if(userData != null){
+      if(userData.uid != null){
+        UserService().getUser(userData.uid.toString()).then((value){
+          setState(() {
+            _userApp = value;
+          });
+        }).whenComplete((){
+          setState(() {
+            if(_userApp != null){
+              _widgetsOptions = [
+                ExploreTab(),
+                MyOrderTab(),
+                FavoritesTab(),
+                ProfileTab(userApp: _userApp),
+              ];
+            }
+          });
+        });
+      }
+    }
     super.initState();
   }
-
   
     /*Future.delayed(Duration.zero, () async {
       final statusLocation = await Permission.location.request();
@@ -72,7 +80,6 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
-    setData();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
         statusBarIconBrightness: Brightness.dark,

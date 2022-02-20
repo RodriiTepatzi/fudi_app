@@ -20,7 +20,6 @@ class _OTPPageState extends State<OTPPage> {
 
   @override
   Widget build(BuildContext context) {
-    //AuthService.signOut();
     getTelephone();
     return Scaffold(
       body: Column(
@@ -66,9 +65,14 @@ class _OTPPageState extends State<OTPPage> {
 
   Future<void> getTelephone() async{
     String phone = "";
-    await UserService().fetchUser(widget.user!.uid).then((value) => phone = value.telephone);
-    setState(() {
-      phoneNumber = phone;
-    });
+    var data = widget.user;
+    if(data != null){
+      if(data.uid != null){
+        await UserService().fetchUser(data.uid).then((value) => phone = value.telephone);
+        setState(() {
+          phoneNumber = phone;
+        });
+      }
+    }
   }
 }

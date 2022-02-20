@@ -23,7 +23,7 @@ class _ProfileTabState extends State<ProfileTab> {
         Container(
           alignment: Alignment.topLeft,
           height: 60,
-          padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
+          padding: EdgeInsets.only(top: marginWidget*2, left: marginWidget),
           child: Text(
             'Perfil',
             style: TextStyle(
@@ -39,7 +39,6 @@ class _ProfileTabState extends State<ProfileTab> {
           child: ListView(
             children: [
               Container(
-                margin: const EdgeInsets.all(marginWidget),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(roundedCornersValue),
@@ -51,18 +50,83 @@ class _ProfileTabState extends State<ProfileTab> {
                       margin: const EdgeInsets.all(marginWidget),
                       child: ClipRRect(
                         clipBehavior: Clip.hardEdge,
-                        borderRadius: BorderRadius.circular(roundedCornersValue),
-                        child: Image(
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          image: NetworkImage("https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=399&q=80"),
-                        ),
+                        borderRadius: BorderRadius.circular(100),
+                        child: widget.userApp.photoURL.isNotEmpty ? Image(width: 100, height: 100, fit: BoxFit.cover, image: NetworkImage(widget.userApp.photoURL)) : 
+                          Image(width: 100, height: 100, fit: BoxFit.cover, image: AssetImage("assets/images/user.png"))
                       ),
                     ),
                     Container(
                       child: Text(
                         widget.userApp.fullname,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: marginWidget),
+                      child: Text(
+                        widget.userApp.email,
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        widget.userApp.telephone,
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){},
+                      child: Container(
+                        margin: const EdgeInsets.only(top: marginWidget, bottom: marginWidget),
+                        padding: const EdgeInsets.all(marginWidget),
+                        decoration: BoxDecoration(
+                          color: accentColorApp,
+                          borderRadius: BorderRadius.circular(roundedCornersValue)
+                        ),
+                        child: Text(
+                          "Editar perfil",
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(marginWidget),
+                /*decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(roundedCornersValue),
+                ),*/
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        print("object");
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: marginWidget),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          children:  [
+                            Container(
+                              margin: const EdgeInsets.all(marginWidget),
+                              child: Text("Ordenes")
+                            ),
+                            Spacer(),
+                            Icon(Icons.arrow_right)
+                          ],
+                        ),
                       ),
                     ),
                     GestureDetector(
@@ -70,11 +134,23 @@ class _ProfileTabState extends State<ProfileTab> {
                         AuthService.signOut();
                       },
                       child: Container(
-                        child: Text(
-                          "Salir"
+                        margin: const EdgeInsets.only(top: marginWidget),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(marginWidget),
+                              child: Text(
+                                "Salir"
+                              ),
+                            ),
+                            Spacer(),
+                          ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
