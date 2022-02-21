@@ -32,7 +32,7 @@ async {
                 ),
                 Container(
                   margin: const EdgeInsets.all(10.0),
-                  child: headerTextCentered(headerTitle, primaryColorApp, 24.0, FontWeight.bold),
+                  child: headerTextCentered(headerTitle, textColorApp, 24.0, FontWeight.bold),
                 ),
                 Container(
                   margin: const EdgeInsets.all(10.0),
@@ -40,7 +40,7 @@ async {
                     headerSubtitle,
                     textAlign: TextAlign.justify,
                     style: const TextStyle(
-                      color: primaryColorApp,
+                      color: textColorApp,
                       fontWeight: FontWeight.w400,
                       fontSize: 15.0,
                     ),

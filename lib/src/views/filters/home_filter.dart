@@ -48,7 +48,7 @@ class HomeFilter extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 150,
+                    height: 100,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(roundedCornersValue),
                       child: const Image(
@@ -83,18 +83,19 @@ class HomeFilter extends StatelessWidget {
 
 Widget _sliderLargeCards(){
   return SizedBox(
-    height: 350.0,
+    height: 260.0,
     child: Swiper(
       itemCount: 4,
-      layout: SwiperLayout.DEFAULT,
       itemBuilder: (BuildContext context, int index){
-        return ListView.builder(
+        return LargeRestaurantCard(context);/*ListView.builder(
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index){
             return LargeRestaurantCard(context);
           },
-        );
+        );*/
       },
+      viewportFraction: 0.7,
+      scale: 0.9,
     ),
   );
 }

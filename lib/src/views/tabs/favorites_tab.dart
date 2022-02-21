@@ -27,7 +27,7 @@ class _FavoritesTabState extends State<FavoritesTab> {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 120,
+          height: MediaQuery.of(context).size.height - 135,
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [

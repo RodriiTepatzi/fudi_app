@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
         accentColor: accentColorApp,
-        primaryColor: primaryColorApp,
         buttonColor: buttonColorApp,
         disabledColor: disabledColorApp,
         scaffoldBackgroundColor: bgApp,

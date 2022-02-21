@@ -1,10 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, non_constant_identifier_names, prefer_const_constructors_in_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:fudi_app/src/models/user_app.dart';
-import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/services/user_service.dart';
+import 'package:fudi_app/src/views/tabs/search_tab.dart';
+import 'package:fudi_app/src/views/widgets/bottombar_item.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/tabs/explore_tab.dart';
@@ -22,11 +22,46 @@ class TabsPage extends StatefulWidget {
   _TabsPageState createState() => _TabsPageState();
 }
 
-class _TabsPageState extends State<TabsPage> {
+class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
 
   final _auth = FirebaseAuth.instance;
   int _selectedWidgetIndex = 0;
-  List<Widget> _widgetsOptions = [];
+  List barItems = [
+    {
+      "icon" : "assets/icons/home.svg",
+      "active_icon" : "assets/icons/home.svg",
+      "page" : Container(),
+    },
+    {
+      "icon" : "assets/icons/search.svg",
+      "active_icon" : "assets/icons/search.svg",
+      "page" : Container(),
+    },
+    {
+      "icon" : "assets/icons/bag.svg",
+      "active_icon" : "assets/icons/bag.svg",
+      "page" : Container(),
+    },
+    {
+      "icon" : "assets/icons/heart.svg",
+      "active_icon" : "assets/icons/heart.svg",
+      "page" : Container(),
+    },
+    {
+      "icon" : "assets/icons/profile.svg",
+      "active_icon" : "assets/icons/profile.svg",
+      "page" : Container(),
+    },
+  ];
+
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  );
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.fastOutSlowIn,
+  );
 
 
   late UserApp _userApp;
@@ -43,18 +78,44 @@ class _TabsPageState extends State<TabsPage> {
         }).whenComplete((){
           setState(() {
             if(_userApp != null){
-              _widgetsOptions = [
-                ExploreTab(),
-                MyOrderTab(),
-                FavoritesTab(),
-                ProfileTab(userApp: _userApp),
+              barItems = [
+                {
+                  "icon" : "assets/icons/home.svg",
+                  "active_icon" : "assets/icons/home.svg",
+                  "page" : ExploreTab(userApp: _userApp),
+                },
+                {
+                  "icon" : "assets/icons/search.svg",
+                  "active_icon" : "assets/icons/search.svg",
+                  "page" : const SearchTab(),
+                },
+                {
+                  "icon" : "assets/icons/bag.svg",
+                  "active_icon" : "assets/icons/bag.svg",
+                  "page" : MyOrderTab(),
+                },
+                {
+                  "icon" : "assets/icons/heart.svg",
+                  "active_icon" : "assets/icons/heart.svg",
+                  "page" : FavoritesTab(),
+                },
+                {
+                  "icon" : "assets/icons/profile.svg",
+                  "active_icon" : "assets/icons/profile.svg",
+                  "page" : ProfileTab(userApp: _userApp),
+                },
               ];
+              
+              
+                //MyOrderTab(),
+                
             }
           });
         });
       }
     }
     super.initState();
+    _controller.forward();
   }
   
     /*Future.delayed(Duration.zero, () async {
@@ -70,7 +131,27 @@ class _TabsPageState extends State<TabsPage> {
       }
     });*/
 
-  
+  @override
+  void dispose() {
+    _controller.stop();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  animatedPage(page){
+    return FadeTransition(
+      child: page,
+      opacity: _animation
+    );
+  }
+
+  void onPageChanged(int index) {
+    _controller.reset();
+    setState(() {
+      _selectedWidgetIndex = index;
+    });
+    _controller.forward();
+  }
 
   void ChangeWidget(int index){
     setState(() {
@@ -80,52 +161,56 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: bgApp,
-      )
+    return Scaffold(
+      backgroundColor: bgApp,
+      bottomNavigationBar: getBottomBar(),
+      body: getBarPage()
     );
-
-    if(_widgetsOptions.isNotEmpty){
-      return Scaffold(
-        body: _widgetsOptions.elementAt(_selectedWidgetIndex),
-        bottomNavigationBar: _bottomNavigationBar(context),
-      );
-    }
-    else{
-      return Container();
-    }
   }
 
-  Widget _bottomNavigationBar(BuildContext context){
-  return BottomNavigationBar(
-    type: BottomNavigationBarType.shifting,
-    //backgroundColor: bgBarApp,
-    selectedItemColor: selectedItemBarApp,
-    unselectedItemColor: unselectedItemBarApp,
-    currentIndex: _selectedWidgetIndex,
-    showSelectedLabels: true,
-    showUnselectedLabels: true,
-    onTap: ChangeWidget,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.explore),
-          label: 'Explorar',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.assignment),
-          label: 'Mis ordenes',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.book),
-          label: 'Favoritos',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_pin),
-          label: 'Perfil',
-        ),
-      ],
+  Widget getBarPage(){
+    return 
+      IndexedStack(
+        index: _selectedWidgetIndex,
+        children: 
+          List.generate(barItems.length, 
+            (index) => animatedPage(barItems[index]["page"])
+          )
+      );
+  }
+
+  Widget getBottomBar() {
+    return Container(
+      height: 75,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: bgCardApp,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25), 
+          topRight: Radius.circular(25)
+        ), 
+        boxShadow: [
+          BoxShadow(
+            color: accentColorApp.withOpacity(0.1),
+            blurRadius: 1,
+            spreadRadius: 1,
+            offset: Offset(1, 1)
+          )
+        ]
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15,),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(barItems.length, 
+            (index) => BottomBarItem(barItems[index]["icon"], isActive: _selectedWidgetIndex == index, activeColor: accentColorApp,
+              onTap: (){
+                onPageChanged(index);
+              },
+            )
+          )
+        )
+      ),
     );
   }
 

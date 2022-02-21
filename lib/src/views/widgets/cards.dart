@@ -13,85 +13,78 @@ import 'package:fudi_app/tests_vars.dart';
 import 'package:intl/intl.dart';
 
 Widget LargeRestaurantCard(BuildContext context){
-  return Container(
-    margin: const EdgeInsets.all(10.0),
-    child: Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(roundedCornersValue),
-          child: const Image(
-            width: 200.0,
-            height: 250.0,
-            fit: BoxFit.cover,
-            image: NetworkImage('https://media.istockphoto.com/photos/fresh-homemade-pizza-margherita-picture-id1278998606?b=1&k=20&m=1278998606&s=170667a&w=0&h=BlXvVFfwLwD4ckIF_7sg_mis8ULaqy9sdPgA6grpSo4='),
+  return IntrinsicHeight(
+    child: Container(
+      padding: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: bgCardApp,
+        borderRadius: BorderRadius.circular(roundedCornersValue),
+        boxShadow: [ 
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: const Offset(1, 1), // changes position of shadow
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 10.0),
-              child: const Text(
-                'Pizza & Pizza Restaurante',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
-                ),
-              ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(roundedCornersValue),
+            child: const Image(
+              width: 300.0,
+              height: 150.0,
+              fit: BoxFit.cover,
+              image: NetworkImage('https://media.istockphoto.com/photos/fresh-homemade-pizza-margherita-picture-id1278998606?b=1&k=20&m=1278998606&s=170667a&w=0&h=BlXvVFfwLwD4ckIF_7sg_mis8ULaqy9sdPgA6grpSo4='),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10.0),
-              child: const Text(
-                'Calle Número 10, Tlaxcala, Tlax',
-                style: TextStyle(
-                  color: disabledColorApp,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13.0,
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.star,
-                  color: Colors.yellow,
-                  size: 16.0,
-                ),
-                const Text(
-                  "4.8",
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10.0),
+                child: const Text(
+                  'Pizza & Pizza Restaurante',
                   style: TextStyle(
-                    color: accentColorApp,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10.0),
+                child: const Text(
+                  'Calle Número 10, Tlaxcala, Tlax',
+                  style: TextStyle(
+                    color: disabledColorApp,
                     fontWeight: FontWeight.w500,
                     fontSize: 13.0,
                   ),
                 ),
-                const Text(
-                  "(223 ratings)",
-                  style: TextStyle(
-                    color: accentColorApp,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13.0,
+              ),
+              /*Row(
+                children: const[
+                  Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: 16.0,
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                  width: 80.0,
-                  height: 20.0,
-                  child: RaisedButton(
-                    elevation: 0.5,
-                    shape: const StadiumBorder(),
-                    color: accentColorApp,
-                    textColor: Colors.white,
-                    onPressed: (){ },
-                    child: const Text('Agregar', style: TextStyle(fontSize: 11.0)),
+                  Text(
+                    "4.8",
+                    style: TextStyle(
+                      color: accentColorApp,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13.0,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
+                ],
+              ),*/
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -108,6 +101,14 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
           decoration: BoxDecoration(
             color: bgCardApp,
             borderRadius: BorderRadius.circular(roundedCornersValue),
+            boxShadow: [ 
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(1, 1), // changes position of shadow
+              ),
+            ],
           ),
           width: MediaQuery.of(context).size.width - 32,
           margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -118,7 +119,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                 borderRadius: BorderRadius.circular(roundedCornersValue),
                 child: Image(
                   width: 100,
-                  height: 75,
+                  height: 100,
                   fit: BoxFit.cover,
                   image: NetworkImage(restaurant.restaurantUrl),
                 ),
@@ -152,7 +153,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                           child: Text(
                             restaurant.restaurantAddress,
                             style: const TextStyle(
-                              color: textColorApp,
+                              color: textColorApp2,
                               fontWeight: FontWeight.w400,
                               fontSize: 14.0,
                             ),
@@ -163,7 +164,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                           padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 2.0),
                           margin: const EdgeInsets.only(left: marginTag),
                           child: const Icon(
-                            Icons.star_outline_outlined,
+                            Icons.star,
                             color: accentColorApp,
                             size: 14.0,
                           ),
@@ -173,7 +174,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                           child: Text(
                             restaurant.stars,
                             style: const TextStyle(
-                              color: textColorApp,
+                              color: textColorApp2,
                               fontWeight: FontWeight.w400,
                               fontSize: 14.0,
                             ),
@@ -185,7 +186,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                           child: Text(
                             restaurant.cost,
                             style: const TextStyle(
-                              color: textColorApp,
+                              color: textColorApp2,
                               fontWeight: FontWeight.w400,
                               fontSize: 14.0,
                             ),
@@ -197,7 +198,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                           child: Text(
                             restaurant.category,
                             style: const TextStyle(
-                              color: textColorApp,
+                              color: textColorApp2,
                               fontWeight: FontWeight.w400,
                               fontSize: 14.0,
                             ),
