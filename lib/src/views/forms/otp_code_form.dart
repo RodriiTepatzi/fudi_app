@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
-import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:fudi_app/src/views/pages/tabs_page.dart';
 
 class OTPCodeForm extends StatefulWidget {
 

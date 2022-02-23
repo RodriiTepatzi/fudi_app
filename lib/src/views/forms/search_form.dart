@@ -16,45 +16,41 @@ class SearchForm extends StatefulWidget {
   }
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
 class SearchFormState extends State<SearchForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          const SizedBox(height: formFieldHeightGap,),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: null,
-            keyboardType: TextInputType.emailAddress,
-            cursorColor: accentColorApp,
-            decoration: const InputDecoration(
-              filled: true,
-              fillColor: textFieldColorApp,
-              hintText: 'Buscar',
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(roundedCornersValue),
+    return Container(
+      margin: const EdgeInsets.only(top: marginWidget * 2),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: formFieldHeightGap,),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: null,
+              keyboardType: TextInputType.emailAddress,
+              cursorColor: accentColorApp,
+              decoration: const InputDecoration(
+                filled: true,
+                fillColor: bgInputsApp,
+                hintText: 'Buscar',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(roundedCornersValue),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: formFieldHeightGap,),
-          headerWithAction(context, 'Recientes', 'Limpiar', (){}),
-          _sliderCards(),
-        ],
+            const SizedBox(height: formFieldHeightGap,),
+            headerWithAction(context, 'Recientes', 'Limpiar', (){}),
+            _sliderCards(),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +60,6 @@ class SearchFormState extends State<SearchForm> {
     height: 350.0,
     child: Swiper(
       itemCount: 4,
-      layout: SwiperLayout.DEFAULT,
       itemBuilder: (BuildContext context, int index){
         return ListView.builder(
           scrollDirection: Axis.horizontal,

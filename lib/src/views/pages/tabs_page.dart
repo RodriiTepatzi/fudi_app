@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use, non_constant_identifier_names, prefer_const_constructors_in_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/views/tabs/search_tab.dart';
@@ -159,8 +160,22 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
     });
   }
 
+  void changeColorBar(){
+    setState(() {
+      if(_selectedWidgetIndex == 1 || _selectedWidgetIndex == 2 || _selectedWidgetIndex == 3 || _selectedWidgetIndex == 4){
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle.light.copyWith(
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.transparent
+          )
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    changeColorBar();
     return Scaffold(
       backgroundColor: bgApp,
       bottomNavigationBar: getBottomBar(),
@@ -185,7 +200,7 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
       width: double.infinity,
       decoration: BoxDecoration(
         color: bgCardApp,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25), 
           topRight: Radius.circular(25)
         ), 
@@ -194,9 +209,9 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
             color: accentColorApp.withOpacity(0.1),
             blurRadius: 1,
             spreadRadius: 1,
-            offset: Offset(1, 1)
-          )
-        ]
+            offset: const Offset(1, 1)
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15,),

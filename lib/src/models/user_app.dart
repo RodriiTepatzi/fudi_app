@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+/// This user class contains all the fields that are stored in the FireStore Database.
+/// 
+/// This should be exactly the same as the API model.
 
 class UserApp{
-
-  String username;
   String uid;
+  String username;
   String telephone;
   String photoURL;
   String fullname; 

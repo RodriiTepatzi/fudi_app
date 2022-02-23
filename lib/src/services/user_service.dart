@@ -6,7 +6,24 @@ import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/api_url.dart';
 import 'package:http/http.dart' as http;
 
+/// This class provides the connection to API.
+/// 
+/// Supported methods are:
+/// 
+/// - To get an user: 
+/// ```dart
+/// Future<UserApp> fetchUser(String uid)
+/// ```
+/// - To create an user: 
+/// ```dart
+/// Future<UserApp> createUser(UserApp data)
+/// ```
+/// - To update an user: 
+/// ```dart
+/// Future<UserApp> updateUser(UserApp user)
+/// ```
 class UserService{
+  /// This method gets the data as json and return a Future<UserApp>
   Future<UserApp> fetchUser(String uid) async{
     final response = await http.get(Uri.parse(apiUrl + '/users/$uid'));
     if(response.statusCode == 200){
@@ -17,11 +34,19 @@ class UserService{
     }
   }
 
+  /// This method gets the UserApp from so this method should be called 
+  /// to get the user as UserApp properly since using the other method can cause errors.
+  /// ```
+  /// Future<UserApp> fetchUser(String uid)
+  /// ```
   Future<UserApp> getUser(String uid) async {
     UserApp userApp = await fetchUser(uid);
     return userApp;
   }
 
+  /// This method creates a new user in the database.
+  /// 
+  /// `UserApp data` is required to convert it into json inside this method to send the POST call to API
   static Future<UserApp> createUser(UserApp data) async{
     final jsonData = data.toJson();
     final response = await http.post(Uri.parse(apiUrl + '/users'),
@@ -39,6 +64,9 @@ class UserService{
     }
   }
 
+  /// This method updates the current user in the database.
+  /// 
+  /// `UserApp user` is required to convert it into json inside this method to send the PUT call to API
   static Future<UserApp> updateUser(UserApp user) async{
     final response = await http.put(Uri.parse(apiUrl + '/users/${user.uid}/'),
       headers: <String, String> {

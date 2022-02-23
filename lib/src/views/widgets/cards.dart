@@ -267,6 +267,7 @@ Widget ProductCard(BuildContext context, Product product){
   return GestureDetector(
     onTap: (){
       showModalBottomSheet(
+        enableDrag: true,
         isScrollControlled: true,
         elevation: 1,
         context: context,

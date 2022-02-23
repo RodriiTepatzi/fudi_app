@@ -1,3 +1,9 @@
+import 'package:fudi_app/src/models/product.dart';
+
+/// This model is the one used to represent a restaurant and its products.
+/// 
+/// List of [Products] should be filled separately after getting restaurant data.
+/// 
 class RestaurantModel {
   String? id;
   String restaurantName;
@@ -9,6 +15,7 @@ class RestaurantModel {
   String category;
   String status;
   DateTime startDate;
+  List<Product>? products;
 
 
   RestaurantModel({
@@ -22,6 +29,7 @@ class RestaurantModel {
     required this.category,
     required this.status,
     required this.startDate,
+    this.products,
   });
 
   RestaurantModel.fromJson(Map<String, Object?> json)

@@ -37,8 +37,8 @@ class _ExploreTabState extends State<ExploreTab> {
       setState(() {
         SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle.light.copyWith(
-            statusBarIconBrightness: Brightness.light,
-            statusBarColor: bgApp,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.transparent
           )
         );
       });
@@ -219,7 +219,6 @@ class _ExploreTabState extends State<ExploreTab> {
   }
 
   List<Widget> generateCategories(){
-    
     List<CategoryModel> categories = <CategoryModel>[
       CategoryModel(categoryName: "Pizzas"),
       CategoryModel(categoryName: "Hamburguesas"),

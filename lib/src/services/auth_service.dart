@@ -9,13 +9,32 @@ import 'package:fudi_app/src/views/pages/otp_page.dart';
 import 'package:fudi_app/src/views/pages/tabs_page.dart';
 import 'package:fudi_app/src/views/pages/welcome_page.dart';
 
+/// AuthService contains methods to handle the authentication.
+/// 
+/// - To handle authentication this method should be called: 
+/// ```dart
+/// AuthService.handleAuth(BuildContext context)
+/// ```
+/// 
+/// - To log-out should be done using:
+/// ```dart
+/// AuthService.signOut();
+/// ```
 
 class AuthService{
   
   static final _auth = FirebaseAuth.instance;
 
+  /// - If the user is logged in and its `phoneNumber` is verified, the method will redirect to TabsPage. 
+  /// 
+  /// - If the user is logged in and the `phoneNumber` is not verified, the method will redirect to OTPPage
+  /// 
+  /// - so the user can verify the OTP code.
+  /// 
+  /// - If the user is logged out or logs out, the method will redirect to WelcomePage.
+  /// 
+  /// - `BuildContext context` is required to create builder from wherever this method is called. 
   static handleAuth(BuildContext context){
-
     _auth
     .authStateChanges()
     .listen((User? user) {
@@ -51,6 +70,7 @@ class AuthService{
     });
   }
 
+  /// This method should be called whenever needs to prompt a Email Verification.
   void sendVerificationEmail(User? user) async{
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -59,6 +79,7 @@ class AuthService{
     }
   }
 
+  /// This methods creates a new user and return a success or error messages as `String`.
   static Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, String birthday, String password) async {
     User? user;
     UserCredential userCredential;
@@ -92,6 +113,7 @@ class AuthService{
     }*/
   }
 
+  /// This method logs-out the current user.
   static signOut() {
     _auth.signOut();
   }
@@ -106,6 +128,7 @@ class AuthService{
     signInWithCredentials(authCreds);
   }
 
+  /// This method should be called, when trying to login with email and password.
   static Future<String?> signInWithEmail(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/services/validations.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
@@ -170,11 +169,8 @@ class SignUpFormState extends State<SignUpForm> {
               );
 
               if(pickedDate != null ){
-                  print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
                   String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                  print(formattedDate); //formatted date output using intl package =>  2021-03-16
               }else{
-                  print("Date is not selected");
               }
             },
           ),

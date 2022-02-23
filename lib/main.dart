@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       )
     );
 
+    // Here we start the App, calling LoginController()    
 
     return MaterialApp(
       routes: routes,
@@ -43,7 +44,10 @@ class MyApp extends StatelessWidget {
         disabledColor: disabledColorApp,
         scaffoldBackgroundColor: bgApp,
       ),
-      home: const LoginController(),
+      
+      // LoginController() will detect either the user has logged in or not returning a widget.
+      // LoginController() can be find at Controllers.
+      home: const LoginController(), 
     );
   }
 }

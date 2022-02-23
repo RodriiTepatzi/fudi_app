@@ -1,9 +1,13 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 import 'package:fudi_app/tests_vars.dart';
+
+// This widget represents the HomeFilter button.
 
 class HomeFilter extends StatelessWidget {
   const HomeFilter({Key? key}) : super(key: key);
@@ -37,7 +41,7 @@ class HomeFilter extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 150,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(roundedCornersValue),
@@ -47,7 +51,7 @@ class HomeFilter extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 100,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(roundedCornersValue),

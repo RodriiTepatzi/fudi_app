@@ -110,7 +110,6 @@ class _ProfileTabState extends State<ProfileTab> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        print("object");
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: marginWidget),

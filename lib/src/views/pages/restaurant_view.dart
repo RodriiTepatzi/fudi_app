@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/colors.dart';
@@ -15,7 +16,15 @@ class RestaurantView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle.dark.copyWith(
+            statusBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.transparent
+          )
+        );
+
     return Scaffold(
+      
       /*appBar: AppBar(
         backgroundColor: bgApp,
         elevation: 0.0,
@@ -26,6 +35,7 @@ class RestaurantView extends StatelessWidget {
         ),
       ),*/
       body: ListView(
+        padding: const EdgeInsets.all(0.0),
         scrollDirection: Axis.vertical,
         children: [
           Container(
