@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
-import 'package:fudi_app/tests_vars.dart';
-
 // This class represents the partial-view when clicking on x category button at ExploreTab()
 
 class CategoryView extends StatelessWidget {
@@ -25,7 +23,7 @@ class CategoryView extends StatelessWidget {
         //...categoryModel.items,
 
         // Here we get the widgets to display. It must be all the restaurants that match this category.
-        ...getTestCards(context, categoryModel.categoryName),
+        //...getTestCards(context, categoryModel.categoryName),
       ],
     );
   }

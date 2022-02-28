@@ -81,8 +81,8 @@ class OrderPageController{
     List<Widget> widgets = [];
 
     for (var item in products) {
-      total += item.product.productPrice * item.quantity;
-      totalRestaurant += item.product.productPrice * item.quantity;
+      total += double.parse(item.product.productPrice) * item.quantity;
+      totalRestaurant += double.parse(item.product.productPrice) * item.quantity;
 
       widgets.add(
         Column(
@@ -111,7 +111,7 @@ class OrderPageController{
                   padding: const EdgeInsets.all(marginWidget),
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "\$" + (item.quantity * item.product.productPrice).toString(),
+                    "\$" + (item.quantity /*item.product.productPrice*/).toString(),
                   ),
                 ),
               ],

@@ -1,21 +1,30 @@
 class Product{
+  String productId;
   String productName;
   String productDescription;
-  double productPrice;
+  String productPrice;
   String productUrl;
-  String productRating;
   String productLikes;
-  List<String> productIngredients;
   String productUnit;
 
-  Product(
-    this.productName,
-    this.productDescription,
-    this.productPrice,
-    this.productUrl,
-    this.productRating,
-    this.productLikes,
-    this.productIngredients,
-    this.productUnit
+  Product({
+    required this.productId,
+    required this.productName,
+    required this.productDescription,
+    required this.productPrice,
+    required this.productUrl,
+    required this.productLikes,
+    required this.productUnit,
+    }
+  );
+
+  Product.fromJson(Map<String, dynamic> json) : this(
+    productId : json['productId']! as String,
+    productName : json['productName'] as String,
+    productDescription : json['productDescription']! as String,
+    productPrice : json['productPrice']! as String,
+    productUrl : json['productUrl']! as String,
+    productLikes : json['productLikes']! as String,
+    productUnit : json['productUnit']! as String,
   );
 }

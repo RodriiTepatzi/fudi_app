@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fudi_app/src/models/product.dart';
 
 /// This model is the one used to represent a restaurant and its products.
@@ -5,7 +7,7 @@ import 'package:fudi_app/src/models/product.dart';
 /// List of [Products] should be filled separately after getting restaurant data.
 /// 
 class RestaurantModel {
-  String? id;
+  String? uid;
   String restaurantName;
   String restaurantAddress;
   String restaurantUrl;
@@ -14,12 +16,12 @@ class RestaurantModel {
   String cost;
   String category;
   String status;
-  DateTime startDate;
+  String startDate;
   List<Product>? products;
 
 
   RestaurantModel({
-    this.id,
+    this.uid,
     required this.restaurantName, 
     required this.restaurantAddress, 
     required this.restaurantSlogan, 
@@ -32,18 +34,18 @@ class RestaurantModel {
     this.products,
   });
 
-  RestaurantModel.fromJson(Map<String, Object?> json)
+  RestaurantModel.fromJson(Map<String, dynamic> jsonData)
     : this(
-      id : json['id']! as String,
-      restaurantName: json['restaurantName']! as String,
-      restaurantAddress: json['restaurantAddress']! as String,
-      restaurantSlogan: json['restaurantSlogan']! as String,
-      restaurantUrl: json['restaurantUrl']! as String,
-      stars: json['stars']! as String,
-      cost: json['cost']! as String,
-      category: json['category']! as String,
-      status: json['status']! as String,
-      startDate: json['startDate']! as DateTime,
+      uid : jsonData['uid'],
+      restaurantName: jsonData['restaurantName']!,
+      restaurantAddress: jsonData['restaurantAddress']!,
+      restaurantSlogan: jsonData['restaurantSlogan']!,
+      restaurantUrl: jsonData['restaurantUrl']!,
+      stars: jsonData['stars']!,
+      cost: jsonData['cost']! ,
+      category: jsonData['category']!,
+      status: jsonData['status']!,
+      startDate: jsonData['startDate']!,
     );
 
   Map<String, Object?> toJson(){

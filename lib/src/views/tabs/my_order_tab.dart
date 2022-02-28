@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
-import 'package:fudi_app/tests_vars.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MyOrderTab extends StatefulWidget {
@@ -18,7 +17,7 @@ class MyOrderTab extends StatefulWidget {
 
 class _MyOrderTabState extends State<MyOrderTab> {
 
-  List<Order> orders = [getSingleOrder()];
+  //List<Order> orders = [getSingleOrder()];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class _MyOrderTabState extends State<MyOrderTab> {
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
-              ...getOrderCards(getOrders()),
+              //...getOrderCards(getOrders()),
             ],
           ),
         )

@@ -9,7 +9,6 @@ import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/forms/quantity_form.dart';
 import 'package:fudi_app/src/views/pages/order_page.dart';
 import 'package:fudi_app/src/views/pages/restaurant_view.dart';
-import 'package:fudi_app/tests_vars.dart';
 import 'package:intl/intl.dart';
 
 Widget LargeRestaurantCard(BuildContext context){
@@ -92,7 +91,7 @@ Widget LargeRestaurantCard(BuildContext context){
 Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
   return GestureDetector(
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: getTestProducts())));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: [])));
 
     },
     child: Row(

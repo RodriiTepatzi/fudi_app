@@ -2,18 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
-import 'package:fudi_app/tests_vars.dart';
 
 // This widget represents the HomeFilter button.
 
 class HomeFilter extends StatelessWidget {
   const HomeFilter({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+    List<RestaurantModel> popular = [];
+    List<RestaurantModel> recomendations = [];
     return Column(
       children: [
         Container(
@@ -73,13 +77,13 @@ class HomeFilter extends StatelessWidget {
         ),
         _sliderLargeCards(),
         _headers(context, 'Populares esta semana', 'Mostrar todo'),
-        SmallRestaurantCard(context, restaurantModel),
-        SmallRestaurantCard(context, restaurantModel),
-        SmallRestaurantCard(context, restaurantModel),
+        SmallRestaurantCard(context, popular[0]),
+        SmallRestaurantCard(context, popular[1]),
+        SmallRestaurantCard(context, popular[2]),
         _headers(context, 'Nuestra selección', 'Mostrar todo'),
-        SmallRestaurantCard(context, restaurantModel),
-        SmallRestaurantCard(context, restaurantModel),
-        SmallRestaurantCard(context, restaurantModel),
+        SmallRestaurantCard(context, recomendations[0]),
+        SmallRestaurantCard(context, recomendations[1]),
+        SmallRestaurantCard(context, recomendations[2]),
       ],
     );
   }

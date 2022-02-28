@@ -7,7 +7,6 @@ import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
-import 'package:fudi_app/tests_vars.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 class RestaurantView extends StatelessWidget {
   const RestaurantView({Key? key, required this.restaurant, required this.products}) : super(key: key);
@@ -152,7 +151,7 @@ class RestaurantView extends StatelessWidget {
                                     child: SlideAnimation(
                                       horizontalOffset: 50.0,
                                       child: FadeInAnimation(
-                                        child: getSingleCardProduct(context),
+                                        child: Container(),
                                       ),
                                     ),
                                   );

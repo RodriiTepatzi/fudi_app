@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/firebase_options.dart';
 import 'package:fudi_app/src/controllers/login_controller.dart';
+import 'package:fudi_app/src/models/restaurant.dart';
+import 'package:fudi_app/src/services/restaurant_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/routes/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -15,6 +16,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  List<RestaurantModel> restaurantTemp = await RestaurantService().getAllRestaurants();
+
   runApp(MyApp());
 }
 
@@ -29,6 +33,8 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.transparent,
       )
     );
+
+    
 
     // Here we start the App, calling LoginController()    
 
