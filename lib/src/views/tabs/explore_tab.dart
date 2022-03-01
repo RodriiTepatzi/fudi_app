@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fudi_app/src/controllers/explore_controller.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/filters/category_view.dart';
-import 'package:fudi_app/src/views/filters/home_filter.dart';
+import 'package:fudi_app/src/views/tabs/filters/home_filter.dart';
 import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -15,16 +16,45 @@ class ExploreTab extends StatefulWidget {
 
   @override
   _ExploreTabState createState() => _ExploreTabState();
-  
 }
 
 class _ExploreTabState extends State<ExploreTab> {
 
   int _filterItemSelected = 0;
   final ScrollController _scrollController = ScrollController();
-  List<Widget> filterSelectionWidget = [
-    const HomeFilter(),
-  ];
+  bool _alreadySet = false;
+  List<Widget> _recomended = [];
+  List<Widget> _popular = [];
+  List<Widget> filterSelectionWidget = [Container()];
+  
+  @override
+  void initState(){ 
+    if(_recomended.isNotEmpty && _popular.isNotEmpty){
+      filterSelectionWidget = [
+        HomeFilter(popular: _popular, recomended: _recomended,),
+      ];  
+    }
+    _scrollController.addListener(_scrollListener);
+    setBar();
+    super.initState();
+  }
+
+  Future setData(BuildContext context) async{
+    if(!_alreadySet){
+      var temp = await ExploreController().getRecomendations(context);
+      var temp2 = await ExploreController().getRecomendations(context);
+      setState(() {
+        _recomended = temp;
+        _popular = temp2;  
+        if(_recomended.isNotEmpty && _popular.isNotEmpty){
+          filterSelectionWidget = [
+            HomeFilter(popular: _popular, recomended: _recomended,),
+          ];  
+          _alreadySet = true;
+        }
+      });
+    }
+  }
 
   void setFilterIndex(int index){
     setState(() {
@@ -48,14 +78,6 @@ class _ExploreTabState extends State<ExploreTab> {
     }
   }
 
-  @override
-  void initState() {
-    _scrollController.addListener(_scrollListener);
-    setBar();
-    super.initState();
-    
-  }
-
   void setBar(){
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
@@ -67,14 +89,15 @@ class _ExploreTabState extends State<ExploreTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                child: AnimationLimiter(
+    setData(context);
+    if(_popular.isNotEmpty && _recomended.isNotEmpty){
+      return SafeArea(
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverList(
+              delegate: SliverChildListDelegate([
+                AnimationLimiter(
                   child: Column(
                     children: [
                       ...AnimationConfiguration.toStaggeredList(
@@ -100,12 +123,15 @@ class _ExploreTabState extends State<ExploreTab> {
                     ],
                   ),
                 ),
-              ),
-            ],),
-          ),
-        ],
-      ),
-    );
+              ],),
+            ),
+          ],
+        ),
+      );
+    }
+    else{
+      return Container();
+    }
   }
 
   Widget _topBar(BuildContext context){
@@ -118,7 +144,7 @@ class _ExploreTabState extends State<ExploreTab> {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width - 50,
                 child: Container(
                   margin: const EdgeInsets.only(top: marginWidget * 3, bottom: marginWidget * 3, left: marginWidget * 2, right: marginWidget * 2),

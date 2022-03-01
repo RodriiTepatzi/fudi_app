@@ -14,7 +14,6 @@ class LoginController extends StatelessWidget {
   Widget build(BuildContext context) {
 
     AuthService.handleAuth(context);
-    
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, userSnapshot) {
@@ -23,7 +22,7 @@ class LoginController extends StatelessWidget {
           User? user = FirebaseAuth.instance.currentUser;
           if(signedIn){
             if(user != null){
-              if(user.emailVerified){
+              if(user.phoneNumber.toString().isNotEmpty && user.phoneNumber != null){
                 return TabsPage();
               }
               else{

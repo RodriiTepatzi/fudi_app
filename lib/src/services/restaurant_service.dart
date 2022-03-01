@@ -27,7 +27,7 @@ class RestaurantService{
   /// All these methos are async.
   /// 
 
-  Future<List<RestaurantModel>> getAllRestaurants() async{
+  Future<List<RestaurantModel>> _getAllRestaurants() async{
     // We make the call to the API
     final response = await http.get(Uri.parse(apiUrl + '/restaurants/'));
 
@@ -75,8 +75,13 @@ class RestaurantService{
     }
     else{
       // If not then we throw and exception.
-      throw Exception("Failed on getting the user data from API");
+      throw Exception("Failed on getting the restaurant data from API");
     }
+  }
+
+  Future<List<RestaurantModel>> getAllRestaurants() async{
+    List<RestaurantModel> restaurants = await _getAllRestaurants();
+    return restaurants;
   }
 
   Future<RestaurantModel> getRestaurantsByCategory(String uid) async{
