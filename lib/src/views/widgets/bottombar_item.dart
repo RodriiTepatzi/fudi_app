@@ -19,7 +19,7 @@ class BottomBarItem extends StatelessWidget {
       AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.fastOutSlowIn,
-        padding: EdgeInsets.all(7),
+        padding: const EdgeInsets.all(7),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: bottomBarItemBackground,

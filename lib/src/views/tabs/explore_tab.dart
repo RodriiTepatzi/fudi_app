@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/models/user_app.dart';
+import 'package:fudi_app/src/services/category_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/filters/category_view.dart';
@@ -26,10 +27,11 @@ class _ExploreTabState extends State<ExploreTab> {
   List<Widget> _recomended = [];
   List<Widget> _popular = [];
   List<Widget> filterSelectionWidget = [Container()];
-  
+  List<CategoryModel> _categories = [];
+
   @override
   void initState(){ 
-    if(_recomended.isNotEmpty && _popular.isNotEmpty){
+    if(_recomended.isNotEmpty && _popular.isNotEmpty && _categories.isNotEmpty){
       filterSelectionWidget = [
         HomeFilter(popular: _popular, recomended: _recomended,),
       ];  
@@ -43,10 +45,12 @@ class _ExploreTabState extends State<ExploreTab> {
     if(!_alreadySet){
       var temp = await ExploreController().getRecomendations(context);
       var temp2 = await ExploreController().getRecomendations(context);
+      var categoriesTemp = await CategoryService().getCategories();
       setState(() {
         _recomended = temp;
-        _popular = temp2;  
-        if(_recomended.isNotEmpty && _popular.isNotEmpty){
+        _popular = temp2;
+        _categories = categoriesTemp;
+        if(_recomended.isNotEmpty && _popular.isNotEmpty && _categories.isNotEmpty){
           filterSelectionWidget = [
             HomeFilter(popular: _popular, recomended: _recomended,),
           ];  
@@ -245,28 +249,20 @@ class _ExploreTabState extends State<ExploreTab> {
   }
 
   List<Widget> generateCategories(){
-    List<CategoryModel> categories = <CategoryModel>[
-      CategoryModel(categoryName: "Pizzas"),
-      CategoryModel(categoryName: "Hamburguesas"),
-      CategoryModel(categoryName: "Comida Mexicana"),
-      CategoryModel(categoryName: "Categoria 4"),
-      CategoryModel(categoryName: "Categoria 5"),
-      CategoryModel(categoryName: "Categoria 6")
-    ];
 
     List<Widget> categoryItems = <Widget>[];
     int counter = 1;
 
-    for (var item in categories) {
+    for (var item in _categories) {
       categoryItems.add(NavbarCategoryButton(
-        item.categoryName,
+        item.name,
         counter, 
         setFilterIndex)
       );
       counter++;
     }
 
-    _generateCategoriesFilters(categories);
+    _generateCategoriesFilters(_categories);
     return categoryItems;
   }
 

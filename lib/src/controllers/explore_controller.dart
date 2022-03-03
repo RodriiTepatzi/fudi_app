@@ -17,4 +17,16 @@ class ExploreController {
       // add validation
     return widgets;
   }
+
+  Future<List<Widget>> getCategoryRestaurants(BuildContext context, String category) async {
+    List<RestaurantModel> restaurants = await _service.getRestaurantsByCategory(category);
+    List<Widget> widgets = [];
+
+    for(RestaurantModel restaurant in restaurants){
+      widgets.add(SmallRestaurantCard(context, restaurant));
+    }
+
+      // add validation
+    return widgets;
+  }
 }

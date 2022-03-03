@@ -84,14 +84,61 @@ class RestaurantService{
     return restaurants;
   }
 
-  Future<RestaurantModel> getRestaurantsByCategory(String uid) async{
-    final response = await http.get(Uri.parse(apiUrl + '/restaurants/$uid'));
+  Future<List<RestaurantModel>> _getRestaurantsByCategories(String category) async{
+    // We make the call to the API
+    final response = await http.get(Uri.parse(apiUrl + '/restaurants/category/$category' ));
+
+    // If the response has statusCode of 200
     if(response.statusCode == 200){
-      return RestaurantModel.fromJson(jsonDecode(response.body));
+      // Initialize an empty restaurant list. This could or not be filled later.
+      List<RestaurantModel> restaurants = [];
+
+      // We get the data from json. List<String>
+      var tagsJson = json.decode(response.body)['\$values'];
+
+      // We map the data to get a dynamic List from the map.
+      List<dynamic> restaurantsFromJson = tagsJson.map((modelJson) => RestaurantModel.fromJson(jsonDecode(modelJson))).toList();
+
+      // We iterate to set the models to our List of RestaurantModel
+      for(int i = 0; i < restaurantsFromJson.length; i++){
+        // We check if the content at this position is a RestaurantModel
+        if (restaurantsFromJson[i] is RestaurantModel){
+          // We check that the RestaurantModel is not null
+          if(restaurantsFromJson[i] != null){
+            // At this point everything is validated and can be added to list.
+            restaurants.add(restaurantsFromJson[i]);
+          }
+        }
+      }
+
+      // To avoid errors. We prefer not to use nested json strings.
+      // So we make more calls to API to get the remaining data.
+      // In this case we need to call our API to get the products List.
+      // So we use the _productsService to access the method to get the data.
+
+      // We check that the list of restaurants is not neither empty nor null.
+      if(restaurants.isNotEmpty && restaurants != null){
+        // If not, then we iterate for every item in the list
+        for (var restaurant in restaurants) {
+          // We check if the restaurant.uid is not null or empty
+          if(restaurant.uid != null && restaurant.uid.toString().isNotEmpty){
+            // We set the products from the method in _productService using the restaurant's uid.
+            restaurant.products = await _productService.getProductsFromRestaurantId(restaurant.uid.toString());
+          }
+        }
+      }
+      // Once everything is completed we return the list.
+      return restaurants;
     }
     else{
-      throw Exception("Failed on getting the user data from API");
+      // If not then we throw and exception.
+      throw Exception("Failed on getting the restaurant data from API");
     }
+  }
+
+  Future<List<RestaurantModel>> getRestaurantsByCategory(String category) async{
+    List<RestaurantModel> restaurants = await _getRestaurantsByCategories(category);
+    return restaurants;
   }
 
   Future<RestaurantModel> getSingleRestaurant(String uid) async{

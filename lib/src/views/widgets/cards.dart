@@ -91,7 +91,7 @@ Widget LargeRestaurantCard(BuildContext context){
 Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
   return GestureDetector(
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: [])));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: restaurant.products!)));
 
     },
     child: Row(

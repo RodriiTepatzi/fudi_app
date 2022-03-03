@@ -1,5 +1,9 @@
 class CategoryModel{
-  String categoryName;
+  String name;
 
-  CategoryModel({required this.categoryName});
+  CategoryModel({required this.name});
+
+  CategoryModel.fromJson(Map<String, dynamic> jsonData) : this(
+    name : jsonData['name'],
+  );
 }

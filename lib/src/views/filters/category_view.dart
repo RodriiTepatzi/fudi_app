@@ -1,30 +1,96 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:fudi_app/src/controllers/explore_controller.dart';
 import 'package:fudi_app/src/models/category.dart';
+import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
-// This class represents the partial-view when clicking on x category button at ExploreTab()
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends StatefulWidget {
+  final CategoryModel categoryModel;
   const CategoryView({Key? key, required this.categoryModel}) : super(key: key);
 
-  // Here goes something to get the category.
+  @override
+  State<CategoryView> createState() => _CategoryViewState();
+}
 
-  final CategoryModel categoryModel;
+// This class represents the partial-view when clicking on x category button at ExploreTab()
+class _CategoryViewState extends State<CategoryView> {
+
+  // Here goes something to get the category.
+  bool _alreadySet = false;
+  String _categoryName = "";
+  List<Widget> _restaurants = [];
+  
+  @override
+  void initState(){
+    _categoryName = "";
+    super.initState();
+  }
+
+  Future setData(BuildContext context) async{
+    if(_categoryName != widget.categoryModel.name){
+      _alreadySet = false;
+    }
+
+    if(!_alreadySet){
+      if(mounted){
+        _categoryName = widget.categoryModel.name;
+        var categoriesTemp = await ExploreController().getCategoryRestaurants(context, _categoryName);
+
+        setState(() {
+          _restaurants = categoriesTemp;
+          if(_restaurants.isNotEmpty){
+            _alreadySet = true;
+          }  
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20.0),
-          alignment: Alignment.centerLeft,
-          child: headerText(categoryModel.categoryName, Colors.black, 28.0, FontWeight.bold)
-        ),
-
-        //...categoryModel.items,
-
-        // Here we get the widgets to display. It must be all the restaurants that match this category.
-        //...getTestCards(context, categoryModel.categoryName),
-      ],
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: accentColorApp,
+      )
     );
+    setData(context);
+    if(_categoryName == widget.categoryModel.name && _restaurants.isNotEmpty && _alreadySet){
+      return AnimationLimiter(
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20.0),
+              alignment: Alignment.centerLeft,
+              child: headerText(widget.categoryModel.name, Colors.black, 28.0, FontWeight.bold)
+            ),
+            ...AnimationConfiguration.toStaggeredList(
+              duration: const Duration(milliseconds: 500),
+              childAnimationBuilder: (widget) => SlideAnimation(
+                child: FadeInAnimation(
+                  child: widget,
+                )
+              ),
+              children: _restaurants,
+            ),
+          ],
+        ),
+      );
+    }
+    else{
+      return Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20.0),
+            alignment: Alignment.centerLeft,
+            child: headerText(widget.categoryModel.name, Colors.black, 28.0, FontWeight.bold),
+            
+          ),
+          Text("Cargando...")
+        ],
+      );
+    }
   }
 }

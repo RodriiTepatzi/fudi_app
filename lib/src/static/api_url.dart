@@ -1,1 +1,1 @@
-const String apiUrl = "https://fudiwebapp.azurewebsites.net/api";
+const String apiUrl = "https://fudiwebapp.azurewebsites.net/api/v1";

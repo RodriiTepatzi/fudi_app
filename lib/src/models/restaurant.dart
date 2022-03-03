@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fudi_app/src/models/product.dart';
 
 /// This model is the one used to represent a restaurant and its products.
@@ -31,7 +29,7 @@ class RestaurantModel {
     required this.category,
     required this.status,
     required this.startDate,
-    this.products,
+    this.products, 
   });
 
   RestaurantModel.fromJson(Map<String, dynamic> jsonData)

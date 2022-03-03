@@ -8,6 +8,7 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:fudi_app/src/views/widgets/cards.dart';
 class RestaurantView extends StatelessWidget {
   const RestaurantView({Key? key, required this.restaurant, required this.products}) : super(key: key);
   final RestaurantModel restaurant;
@@ -143,7 +144,7 @@ class RestaurantView extends StatelessWidget {
                             child: AnimationLimiter(
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
-                                itemCount: 5,
+                                itemCount: products.length,
                                 itemBuilder: (BuildContext context, int index){
                                   return AnimationConfiguration.staggeredList(
                                     position: index, 
@@ -151,7 +152,7 @@ class RestaurantView extends StatelessWidget {
                                     child: SlideAnimation(
                                       horizontalOffset: 50.0,
                                       child: FadeInAnimation(
-                                        child: Container(),
+                                        child: ProductCard(context, products[index]),
                                       ),
                                     ),
                                   );

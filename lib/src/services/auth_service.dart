@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/user_app.dart';
@@ -82,8 +81,8 @@ class AuthService{
   /// This methods creates a new user and return a success or error messages as `String`.
   static Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, String birthday, String password) async {
     User? user;
-    UserCredential userCredential;
-    bool usernameAvailable = await UserService.checkUsername(username);
+    /*UserCredential userCredential;
+    bool usernameAvailable = await UserService.checkUsername(username);*/
     
     //if(usernameAvailable){
       try{
