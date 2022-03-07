@@ -1,9 +1,11 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
+import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
@@ -14,10 +16,17 @@ class HomeFilter extends StatelessWidget {
   List<Widget> recomended;
   List<Widget> popular;
   HomeFilter({Key? key, required this.recomended, required this.popular}) : super(key: key);
-
+  
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: accentColorApp,
+      )
+    );  
+    
     return Column(
       children: [
         Container(

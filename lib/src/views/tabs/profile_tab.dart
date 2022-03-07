@@ -39,6 +39,7 @@ class _ProfileTabState extends State<ProfileTab> {
           child: ListView(
             children: [
               Container(
+                margin: const EdgeInsets.all(marginWidget),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(roundedCornersValue),
@@ -59,12 +60,13 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: Text(
                         widget.userApp.fullname,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
                         ),
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: marginWidget),
+                      margin: const EdgeInsets.all(marginWidget / 2),
                       child: Text(
                         widget.userApp.email,
                         style: TextStyle(
@@ -92,7 +94,8 @@ class _ProfileTabState extends State<ProfileTab> {
                         child: Text(
                           "Editar perfil",
                           style: TextStyle(
-                            color: Colors.white
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -101,26 +104,28 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(marginWidget),
-                /*decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(roundedCornersValue),
-                ),*/
+                margin: const EdgeInsets.only(left: marginWidget, right: marginWidget),
                 child: Column(
                   children: [
                     GestureDetector(
                       onTap: (){
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(top: marginWidget),
                         decoration: BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.circular(roundedCornersValue),
                         ),
                         child: Row(
                           children:  [
                             Container(
                               margin: const EdgeInsets.all(marginWidget),
-                              child: Text("Ordenes")
+                              child: Text(
+                                "Ordenes",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             Spacer(),
                             Icon(Icons.arrow_right)
@@ -136,13 +141,18 @@ class _ProfileTabState extends State<ProfileTab> {
                         margin: const EdgeInsets.only(top: marginWidget),
                         decoration: BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.circular(roundedCornersValue),
                         ),
                         child: Row(
                           children: [
                             Container(
                               margin: const EdgeInsets.all(marginWidget),
                               child: Text(
-                                "Salir"
+                                "Salir",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             Spacer(),

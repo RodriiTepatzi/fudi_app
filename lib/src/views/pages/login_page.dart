@@ -3,15 +3,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/forms/login_form.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
 
 class LoginPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context){
-
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
         statusBarIconBrightness: Brightness.light,
@@ -57,18 +56,18 @@ class LoginPage extends StatelessWidget {
                         child: Center(
                           child: Column(
                             children: [
-                              Text(
+                              const Text(
                                 'Bienvenido de vuelta',
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: accentColorApp,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30.0,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Inicia sesión',
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: accentColorApp,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.0,
                                 ),

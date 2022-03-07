@@ -14,12 +14,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     
@@ -29,8 +28,6 @@ class MyApp extends StatelessWidget {
         statusBarColor: Colors.transparent,
       )
     );
-
-    
 
     // Here we start the App, calling LoginController()    
 

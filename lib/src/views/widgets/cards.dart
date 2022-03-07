@@ -400,7 +400,7 @@ Widget OrderCard(BuildContext context, Order order){
       Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(order: order)));
     },
     child: Container(
-      margin: const EdgeInsets.all(marginWidget),
+      /*margin: const EdgeInsets.all(marginWidget),
       decoration: BoxDecoration(
         color: bgCardApp,
         borderRadius: BorderRadius.circular(roundedCornersValue),
@@ -494,7 +494,7 @@ Widget OrderCard(BuildContext context, Order order){
             ),
           ],
         ),
-      ),
+      ),*/
     ),
   );
 }

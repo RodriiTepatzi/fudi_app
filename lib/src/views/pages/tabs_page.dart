@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/views/tabs/search_tab.dart';
@@ -14,8 +15,7 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 class TabsPage extends StatefulWidget {
-
-  TabsPage({Key? key}) : super(key: key);
+  TabsPage({Key? key,}) : super(key: key);
 
   @override
   _TabsPageState createState() => _TabsPageState();

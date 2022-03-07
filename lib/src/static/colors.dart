@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-const Color accentColorApp = Color.fromRGBO(255, 59, 33, 1.0);
-const Color accentColorOpaApp = Color.fromRGBO(255, 59, 33, 1.0);
+const Color accentColorApp = Color.fromRGBO(255, 109, 11, 1.0);
+const Color accentColorOpaApp = Color.fromRGBO(255, 109, 11, 1.0);
 const Color buttonColorApp = Color.fromRGBO(0, 122, 255, 1.0);
 const Color disabledColorApp = Color.fromRGBO(142, 142, 147, 1.0);
 const Color textFieldColorApp = Color.fromRGBO(240, 240, 240, 1.0);

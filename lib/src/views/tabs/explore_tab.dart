@@ -6,10 +6,12 @@ import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/category_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/filters/category_view.dart';
+import 'package:fudi_app/src/views/tabs/filters/category_view.dart';
 import 'package:fudi_app/src/views/tabs/filters/home_filter.dart';
+import 'package:fudi_app/src/views/widgets/loader.dart';
 import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 class ExploreTab extends StatefulWidget {
   UserApp userApp;
@@ -24,6 +26,7 @@ class _ExploreTabState extends State<ExploreTab> {
   int _filterItemSelected = 0;
   final ScrollController _scrollController = ScrollController();
   bool _alreadySet = false;
+  bool _colorBarSet = false;
   List<Widget> _recomended = [];
   List<Widget> _popular = [];
   List<Widget> filterSelectionWidget = [Container()];
@@ -37,7 +40,6 @@ class _ExploreTabState extends State<ExploreTab> {
       ];  
     }
     _scrollController.addListener(_scrollListener);
-    setBar();
     super.initState();
   }
 
@@ -77,18 +79,26 @@ class _ExploreTabState extends State<ExploreTab> {
         );
       });
     }
-    else if(_scrollController.offset < 235 && !_scrollController.position.outOfRange){
-      setBar();
+    else if(_scrollController.offset  < 235){
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: accentColorApp,
+        )
+      );
     }
   }
 
   void setBar(){
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        statusBarIconBrightness: Brightness.light,
-        statusBarColor: accentColorApp,
-      )
-    );
+    if(!_colorBarSet){
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light.copyWith(
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: accentColorApp,
+        )
+      );
+      _colorBarSet = true;
+    }
   }
 
   @override
@@ -134,7 +144,16 @@ class _ExploreTabState extends State<ExploreTab> {
       );
     }
     else{
-      return Container();
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: loader(),
+          ),
+        ],
+      );
     }
   }
 

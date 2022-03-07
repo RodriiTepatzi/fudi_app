@@ -103,9 +103,12 @@ class _QuantityFormState extends State<QuantityForm> {
                               changeQuantityValue(minusQuantity());
                             },
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: accentColorApp,
-                                borderRadius: BorderRadius.circular(roundedCornersValue),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(roundedCornersValue),
+                                  bottomLeft: Radius.circular(roundedCornersValue)
+                                ),
                               ),
                               padding: const EdgeInsets.all(marginWidget),
                               child: const Text(
@@ -127,9 +130,12 @@ class _QuantityFormState extends State<QuantityForm> {
                               changeQuantityValue(plusQuantity());
                             },
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: accentColorApp,
-                                borderRadius: BorderRadius.circular(roundedCornersValue),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(roundedCornersValue),
+                                  bottomRight: Radius.circular(roundedCornersValue)
+                                ),
                               ),
                               padding: const EdgeInsets.all(marginWidget),
                               child: const Text(

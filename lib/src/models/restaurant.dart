@@ -35,15 +35,15 @@ class RestaurantModel {
   RestaurantModel.fromJson(Map<String, dynamic> jsonData)
     : this(
       uid : jsonData['uid'],
-      restaurantName: jsonData['restaurantName']!,
-      restaurantAddress: jsonData['restaurantAddress']!,
-      restaurantSlogan: jsonData['restaurantSlogan']!,
-      restaurantUrl: jsonData['restaurantUrl']!,
-      stars: jsonData['stars']!,
-      cost: jsonData['cost']! ,
-      category: jsonData['category']!,
-      status: jsonData['status']!,
-      startDate: jsonData['startDate']!,
+      restaurantName: jsonData['restaurantName'],
+      restaurantAddress: jsonData['restaurantAddress'],
+      restaurantSlogan: jsonData['restaurantSlogan'],
+      restaurantUrl: jsonData['restaurantUrl'],
+      stars: jsonData['stars'],
+      cost: jsonData['cost'],
+      category: jsonData['category'],
+      status: jsonData['status'],
+      startDate: jsonData['startDate'],
     );
 
   Map<String, Object?> toJson(){

@@ -5,6 +5,8 @@ import 'package:fudi_app/src/controllers/explore_controller.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
+import 'package:fudi_app/src/views/widgets/loader.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 class CategoryView extends StatefulWidget {
   final CategoryModel categoryModel;
@@ -83,12 +85,9 @@ class _CategoryViewState extends State<CategoryView> {
       return Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 20.0),
-            alignment: Alignment.centerLeft,
-            child: headerText(widget.categoryModel.name, Colors.black, 28.0, FontWeight.bold),
-            
-          ),
-          Text("Cargando...")
+            alignment: Alignment.center,
+            child: loader(),
+          )
         ],
       );
     }
