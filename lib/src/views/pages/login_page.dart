@@ -59,7 +59,7 @@ class LoginPage extends StatelessWidget {
                               const Text(
                                 'Bienvenido de vuelta',
                                 style: TextStyle(
-                                  color: accentColorApp,
+                                  color: textColorApp,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30.0,
                                 ),
@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
                               const Text(
                                 'Inicia sesión',
                                 style: TextStyle(
-                                  color: accentColorApp,
+                                  color: textColorApp,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.0,
                                 ),

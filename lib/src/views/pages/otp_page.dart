@@ -20,6 +20,7 @@ class _OTPPageState extends State<OTPPage> {
 
   @override
   Widget build(BuildContext context) {
+    //AuthService.signOut();
     getTelephone();
     return Scaffold(
       body: Column(

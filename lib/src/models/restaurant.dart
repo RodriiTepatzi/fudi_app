@@ -10,11 +10,11 @@ class RestaurantModel {
   String restaurantAddress;
   String restaurantUrl;
   String restaurantSlogan;
-  String stars;
+  int stars;
   String cost;
   String category;
   String status;
-  String startDate;
+  DateTime startDate;
   List<Product>? products;
 
 
@@ -43,7 +43,7 @@ class RestaurantModel {
       cost: jsonData['cost'],
       category: jsonData['category'],
       status: jsonData['status'],
-      startDate: jsonData['startDate'],
+      startDate: DateTime.parse(jsonData['startDate']),
     );
 
   Map<String, Object?> toJson(){

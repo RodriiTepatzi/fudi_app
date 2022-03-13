@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
@@ -33,7 +32,7 @@ class ForgotPasswordFormState extends State<ForgotPasswordForm> {
         children: <Widget>[
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (input) => input.toString().isValidEmail() ? null : "Email no valido.",
+            //validator: (input) => input.toString().isValidEmail() ? null : "Email no valido.",
             keyboardType: TextInputType.emailAddress,
             cursorColor: accentColorApp,
             decoration: const InputDecoration(

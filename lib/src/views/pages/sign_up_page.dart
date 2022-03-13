@@ -36,10 +36,10 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Crear una cuenta.',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: textColorApp,
                     fontWeight: FontWeight.bold,
                     fontSize: 28.0,
                   ),

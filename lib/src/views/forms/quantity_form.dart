@@ -161,7 +161,7 @@ class _QuantityFormState extends State<QuantityForm> {
             child: Row(
               children: [
                 Text(
-                  "Total: \$" + doubleFormater.format((double.parse(widget.product.productPrice) * _quantityValue)),
+                  "Total: \$" + doubleFormater.format((widget.product.productPrice * _quantityValue)),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22.0,

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/services/validations.dart';
+import 'package:flutter/services.dart';
+import 'package:fudi_app/src/controllers/sign_up_controller.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/services/extensions.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:date_field/date_field.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 // Define a custom Form widget.
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -23,28 +27,43 @@ class SignUpFormState extends State<SignUpForm> {
 
   @override
   void initState() {
+    initializeDateFormatting("es_MX");
+    errorMessage = "x";
     super.initState();
+  }
+
+  void setMessage(String message){
+    setState(() {
+      errorMessage = message.toString();  
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    errorMessage = "";
+    final maskFormatter = MaskTextInputFormatter(
+      mask: ' ###-###-####', 
+      filter: { "#": RegExp(r'[0-9]') },
+      type: MaskAutoCompletionType.lazy
+    );
+    SignUpController _signUpController = SignUpController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController fullnameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
-    String flag = "";
-    String telephone = "";
     TextEditingController telephoneController = TextEditingController();
     TextEditingController birthdayController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    String _countryCode = "";
+    String _telephone = "";
+    DateTime birthday = DateTime.now();
 
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
           TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (input) => Validations().validateUsername(input.toString()),
+            onSaved: (value) => "xd",
+            autovalidateMode: AutovalidateMode.always,
+            validator: (input) => _signUpController.validateUsername(input.toString()),
             controller: usernameController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
@@ -63,7 +82,7 @@ class SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (input) => Validations().validateUsername(input.toString()),
+            validator: (input) => _signUpController.validateFullname(input.toString()),
             controller: fullnameController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
@@ -82,13 +101,7 @@ class SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (input){
-              if(input != null)  {
-                if(!input.toString().isValidEmail()){
-                  "Formato no valido.";
-                }
-              }
-            },
+            validator: (input) => _signUpController.validateEmail(input.toString()),
             controller: emailController,
             keyboardType: TextInputType.text,
             cursorColor: accentColorApp,
@@ -104,16 +117,21 @@ class SignUpFormState extends State<SignUpForm> {
               ),
             ),
           ),
-          const SizedBox(height: formFieldHeightGap,),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: TextInputType.phone,
-            cursorColor: accentColorApp,
+          const SizedBox(height: formFieldHeightGap),
+          IntlPhoneField(
+            inputFormatters: [
+              maskFormatter,
+            ],
             controller: telephoneController,
+            keyboardType: TextInputType.phone,
+            autoValidate: false,
+            dropDownArrowColor: accentColorApp,
+            countryCodeTextColor: accentColorApp,
+            searchText: "Busqueda por país",
             decoration: const InputDecoration(
+              labelText: 'Número de telefono',
               filled: true,
               fillColor: textFieldColorApp,
-              hintText: 'Número de telefono',
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(
@@ -121,63 +139,44 @@ class SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
-          ),
-          /*IntlPhoneField(
-            onSaved: (phone){
-              setState(() {
-                  telephone = phone.completeNumber;
-              });
-            },
-            searchText: "Busque un país o por código",
-            decoration: const InputDecoration(
-                labelText: 'Número de telefono',
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                ),
-            ),
             initialCountryCode: 'MX',
             onChanged: (phone) {
-                setState(() {
-                  telephone = phone.completeNumber;
-                });
+              _countryCode = phone.countryCode;
+              maskFormatter.updateMask(mask: ' ###-###-####');
             },
-          ),*/
+          ),
+          const SizedBox(height: formFieldHeightGap,),
+          DateTimeFormField(
+            dateFormat: DateFormat.yMMMMd('es_MX'),
+            decoration: const InputDecoration(
+              filled: true,
+              fillColor: textFieldColorApp,
+              hintStyle: TextStyle(
+                color: accentColorApp
+              ),
+              errorStyle: TextStyle(
+                color: accentColorApp
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(roundedCornersValue),
+                ),
+              ),
+              suffixIcon: Icon(Icons.event_note),
+              labelText: 'Fecha de nacimiento',
+            ),
+            lastDate: DateTime.now().subtract(const Duration(days: 4745)),
+            mode: DateTimeFieldPickerMode.date,
+            autovalidateMode: AutovalidateMode.always,
+            onDateSelected: (DateTime value) {
+              birthday = value;
+            },
+          ),
           const SizedBox(height: formFieldHeightGap,),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             //validator: (input) => Validations().validateUsername(input.toString()),
-            controller: birthdayController,
-            keyboardType: TextInputType.datetime,
-            cursorColor: accentColorApp,
-            decoration: const InputDecoration(
-              filled: true,
-              fillColor: textFieldColorApp,
-              hintText: 'Fecha de nacimiento',
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(roundedCornersValue),
-                ),
-              ),
-            ),
-            onTap: () async {
-              DateTime? pickedDate = await showDatePicker(
-                  context: context, //context of current state
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                  lastDate: DateTime(2101)
-              );
-
-              if(pickedDate != null ){
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-              }else{
-              }
-            },
-          ),
-          const SizedBox(height: formFieldHeightGap,),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (input) => Validations().validateUsername(input.toString()),
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             controller: passwordController,
@@ -205,20 +204,28 @@ class SignUpFormState extends State<SignUpForm> {
             ),
           ),
           ElevatedButton(
-            onPressed: (){
+            onPressed: () async {
               if (_formKey.currentState!.validate()){
-                  (AuthService.createNewUser(
-                    context,
-                    emailController.text, 
-                    fullnameController.text,
-                    usernameController.text, 
-                    telephoneController.text, 
-                    birthdayController.text,
-                    passwordController.text,
-                  )
-                  ).then(
-                    (value) => errorMessage = value.toString()
-                  );
+                if(usernameController.text.isNotEmpty 
+                    /*&& fullnameController.text.isNotEmpty 
+                    && emailController.text.isNotEmpty 
+                    && telephoneController.text.isNotEmpty
+                    && birthdayController.text.isNotEmpty
+                    && passwordController.text.isNotEmpty*/){
+                  String? message = await _signUpController.validateUserBeforeCreating(context,
+                      emailController.text, 
+                      fullnameController.text,
+                      usernameController.text, 
+                      telephoneController.text, 
+                      birthday,
+                      passwordController.text,
+                      _countryCode,
+                    );
+                  setMessage(message.toString());
+                }
+                else{
+                  errorMessage = "Hay campos vacíos.";
+                }
               }
             },
             style: ElevatedButton.styleFrom(

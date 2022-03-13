@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/profile_controller.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
 class ProfileTab extends StatefulWidget {
-  final UserApp userApp;
+  UserApp? userApp;
   ProfileTab({Key? key, required this.userApp}) : super(key: key);
 
   @override
@@ -15,7 +16,13 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  late final ProfileController _profileController = ProfileController(widget.userApp);
 
+  @override
+  void initState() {
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,13 +59,13 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: ClipRRect(
                         clipBehavior: Clip.hardEdge,
                         borderRadius: BorderRadius.circular(100),
-                        child: widget.userApp.photoURL.isNotEmpty ? Image(width: 100, height: 100, fit: BoxFit.cover, image: NetworkImage(widget.userApp.photoURL)) : 
+                        child: _profileController.getURLProfileImage().isNotEmpty ? Image(width: 100, height: 100, fit: BoxFit.cover, image: NetworkImage(_profileController.getURLProfileImage())) : 
                           Image(width: 100, height: 100, fit: BoxFit.cover, image: AssetImage("assets/images/user.png"))
                       ),
                     ),
                     Container(
                       child: Text(
-                        widget.userApp.fullname,
+                        _profileController.getFullName(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
@@ -68,7 +75,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     Container(
                       margin: const EdgeInsets.all(marginWidget / 2),
                       child: Text(
-                        widget.userApp.email,
+                        _profileController.getEmail(),
                         style: TextStyle(
                           color: Colors.grey
                         ),
@@ -76,7 +83,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     ),
                     Container(
                       child: Text(
-                        widget.userApp.telephone,
+                        _profileController.getTelephone(),
                         style: TextStyle(
                           color: Colors.grey
                         ),

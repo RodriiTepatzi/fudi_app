@@ -1,26 +1,34 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
+import 'package:fudi_app/src/models/user_app.dart';
+import 'package:fudi_app/src/services/cart_service.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class MyOrderTab extends StatefulWidget {
-  MyOrderTab({Key? key}) : super(key: key);
+class CartTab extends StatefulWidget {
+  UserApp? userApp;
+  CartTab({Key? key, required this.userApp}) : super(key: key);
 
   
 
   @override
-  _MyOrderTabState createState() => _MyOrderTabState();
+  _CartTabState createState() => _CartTabState();
 }
 
-class _MyOrderTabState extends State<MyOrderTab> {
-
+class _CartTabState extends State<CartTab> {
+  
   //List<Order> orders = [getSingleOrder()];
-
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       children: [
         Container(

@@ -4,5 +4,6 @@ import 'package:fudi_app/src/models/restaurant.dart';
 class OrderItem{
   RestaurantModel restaurant;
   List<OrderProduct> products;
-  OrderItem(this.restaurant, this.products);
+  String id;
+  OrderItem(this.restaurant, this.products, this.id);
 }

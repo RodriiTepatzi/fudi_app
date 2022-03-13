@@ -79,7 +79,7 @@ class AuthService{
   }
 
   /// This methods creates a new user and return a success or error messages as `String`.
-  static Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, String birthday, String password) async {
+  static Future<String?> createNewUser(BuildContext context, String email, String fullname, String username, String telephone, DateTime birthday, String password) async {
     User? user;
     /*UserCredential userCredential;
     bool usernameAvailable = await UserService.checkUsername(username);*/

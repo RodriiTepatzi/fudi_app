@@ -171,7 +171,7 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
                         Container(
                           padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
                           child: Text(
-                            restaurant.stars,
+                            restaurant.stars.toString(),
                             style: const TextStyle(
                               color: textColorApp2,
                               fontWeight: FontWeight.w400,
@@ -350,7 +350,7 @@ Widget ProductCard(BuildContext context, Product product){
                         Container(
                           padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 5.0),
                           child: Text(
-                            product.productLikes,
+                            product.productLikes.toString(),
                             style: const TextStyle(
                               color: textColorApp,
                               fontWeight: FontWeight.w400,
@@ -503,7 +503,7 @@ String buildTotalProducts(Order order){
 
   int totalProducts = 0;
 
-  for (var item in order.orderItem){
+  for (var item in order.orderItems){
     totalProducts += item.products.length;
   }
 

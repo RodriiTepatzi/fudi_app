@@ -53,7 +53,7 @@ class UserService{
       headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(data),
+      body: jsonEncode(jsonData),
     );
 
     if(response.statusCode == 200 || response.statusCode == 201){
@@ -83,9 +83,30 @@ class UserService{
     }
   }
 
-  static Future<bool> checkUsername(String username) async {
-    var data = FirebaseFirestore.instance.collection("users").where('username', isEqualTo: username).get();
-
-    return await data.asStream().isEmpty;
+  Future<bool> isNumberRegistered(String number) async {
+    final response = await http.get(Uri.parse(apiUrl + '/users/telephone/$number'));
+    if(response.statusCode == 200){
+      UserApp user = UserApp.fromJson(jsonDecode(response.body));
+      if(user.telephone.isNotEmpty){
+        return true;
+      }
+      return false;
+    }
+    else{
+      return false;
+    }
+  }
+  Future<bool> isUsernameRegistered(String username) async {
+    final response = await http.get(Uri.parse(apiUrl + '/users/username/$username'));
+    if(response.statusCode == 200){
+      UserApp user = UserApp.fromJson(jsonDecode(response.body));
+      if(user.username.isNotEmpty){
+        return true;
+      }
+      return false;
+    }
+    else{
+      return false;
+    }
   }
 }

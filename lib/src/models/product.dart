@@ -2,9 +2,9 @@ class Product{
   String productId;
   String productName;
   String productDescription;
-  String productPrice;
+  double productPrice;
   String productUrl;
-  String productLikes;
+  int productLikes;
   String productUnit;
 
   Product({
@@ -19,12 +19,12 @@ class Product{
   );
 
   Product.fromJson(Map<String, dynamic> json) : this(
-    productId : json['productId']! as String,
-    productName : json['productName'] as String,
-    productDescription : json['productDescription']! as String,
-    productPrice : json['productPrice']! as String,
-    productUrl : json['productUrl']! as String,
-    productLikes : json['productLikes']! as String,
-    productUnit : json['productUnit']! as String,
+    productId : json['productId'],
+    productName : json['productName'],
+    productDescription : json['productDescription'],
+    productPrice : json['productPrice'],
+    productUrl : json['productUrl'],
+    productLikes : json['productLikes'],
+    productUnit : json['productUnit'],
   );
 }

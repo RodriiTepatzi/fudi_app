@@ -14,7 +14,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:loading_animations/loading_animations.dart';
 
 class ExploreTab extends StatefulWidget {
-  UserApp userApp;
+  UserApp? userApp;
   ExploreTab({Key? key, required this.userApp}) : super(key: key);
 
   @override
@@ -172,7 +172,7 @@ class _ExploreTabState extends State<ExploreTab> {
                 child: Container(
                   margin: const EdgeInsets.only(top: marginWidget * 3, bottom: marginWidget * 3, left: marginWidget * 2, right: marginWidget * 2),
                   child: Text(
-                    "Bienvenido, ${_getFirstName(widget.userApp.fullname)}\n ¿Qué ordenarás hoy?",
+                    "Bienvenido, ${_getFirstName(widget.userApp?.fullname)}\n ¿Qué ordenarás hoy?",
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -291,7 +291,7 @@ class _ExploreTabState extends State<ExploreTab> {
     }
   }
 
-  String _getFirstName(String fullname){
-    return fullname.split(" ").elementAt(0);
+  String _getFirstName(String? fullname){
+    return fullname != null ? fullname.split(" ").elementAt(0).toString() : "";
   }
 }

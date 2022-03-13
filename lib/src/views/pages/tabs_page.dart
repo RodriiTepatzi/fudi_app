@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/tabs/explore_tab.dart';
 import 'package:fudi_app/src/views/tabs/favorites_tab.dart';
-import 'package:fudi_app/src/views/tabs/my_order_tab.dart';
+import 'package:fudi_app/src/views/tabs/cart_tab.dart';
 import 'package:fudi_app/src/views/tabs/profile_tab.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
@@ -24,6 +24,7 @@ class TabsPage extends StatefulWidget {
 class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
 
   final _auth = FirebaseAuth.instance;
+  bool _setData = false;
   int _selectedWidgetIndex = 0;
   List barItems = [
     {
@@ -62,19 +63,12 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
     curve: Curves.fastOutSlowIn,
   );
 
-
-  late UserApp _userApp;
-  
-  @override
-  void initState() {
+  void getUser() async{
     User? userData = _auth.currentUser;
     if(userData != null){
       if(userData.uid != null){
-        UserService().getUser(userData.uid.toString()).then((value){
-          setState(() {
-            _userApp = value;
-          });
-        }).whenComplete((){
+        if(!_setData){
+          UserApp _userApp = await UserService().getUser(userData.uid.toString());
           setState(() {
             if(_userApp != null){
               barItems = [
@@ -91,7 +85,7 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
                 {
                   "icon" : "assets/icons/bag.svg",
                   "active_icon" : "assets/icons/bag.svg",
-                  "page" : MyOrderTab(),
+                  "page" : CartTab(userApp: _userApp),
                 },
                 {
                   "icon" : "assets/icons/heart.svg",
@@ -104,15 +98,18 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
                   "page" : ProfileTab(userApp: _userApp),
                 },
               ];
-              
-              
-                //MyOrderTab(),
-                
             }
+
           });
-        });
+          _setData = true;
+        }
       }
     }
+  }
+  
+  @override
+  void initState() {
+    
     super.initState();
     _controller.forward();
   }
@@ -173,6 +170,9 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    if(!_setData){
+      getUser();
+    }
     changeColorBar();
     return Scaffold(
       backgroundColor: bgApp,

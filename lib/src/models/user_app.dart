@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 /// This user class contains all the fields that are stored in the FireStore Database.
 /// 
 /// This should be exactly the same as the API model.
@@ -9,7 +11,7 @@ class UserApp{
   String photoURL;
   String fullname; 
   String email;
-  String birthday;
+  DateTime birthday;
 
   UserApp({
     required this.uid,
@@ -22,15 +24,15 @@ class UserApp{
     }
   );
 
-  UserApp.fromJson(Map<String, Object?> json)
+  UserApp.fromJson(Map<String, dynamic> json)
     : this(
-      uid: json['uid'] as String,
-      username: json['username'] as String,
-      fullname: json['fullname'] as String,
-      birthday: json['birthday'] as String,
-      email: json['email'] as String,
-      photoURL: json['photoURL'] as String,
-      telephone: json['telephone'] as String,
+      uid: json['uid'],
+      username: json['username'],
+      fullname: json['fullname'],
+      birthday: DateTime.parse(json['birthday']),
+      email: json['email'],
+      photoURL: json['photoURL'],
+      telephone: json['telephone'],
     );
 
   Map<String, dynamic> toJson(){
@@ -38,7 +40,7 @@ class UserApp{
       'uid' : uid,
       'username' : username,
       'fullname' : fullname,
-      'birthday' : birthday,
+      'birthday' : birthday.toIso8601String(),
       'email' : email,
       'photoURL' : photoURL,
       'telephone' : telephone,
