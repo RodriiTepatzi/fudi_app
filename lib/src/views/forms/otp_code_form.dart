@@ -18,7 +18,15 @@ class OTPCodeForm extends StatefulWidget {
 
 class _OTPCodeFormState extends State<OTPCodeForm> {
 
-  late String phoneNo = widget.phoneNumber;    
+  String phoneNo = "";    
+  @override
+  void initState() {
+    phoneNo = widget.phoneNumber;
+    super.initState();
+  }
+
+
+  
   late String smsCode;    
   late String verificationId;    
   String errorMessage = '';   

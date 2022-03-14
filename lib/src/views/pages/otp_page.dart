@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/otp_controller.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/services/user_service.dart';
@@ -16,12 +17,40 @@ class OTPPage extends StatefulWidget {
 }
 
 class _OTPPageState extends State<OTPPage> {
+  
+  final OTPController _otpController = OTPController(FirebaseAuth.instance.currentUser);
   String phoneNumber = "";
+  bool _dataSet = false;
+  bool _isCorrect = false;
+
+  @override
+  void initState() {
+    _dataSet = false;
+    _isCorrect = false;
+    phoneNumber = "";
+    super.initState();
+  }
+
+  void setPhonenumber() async{
+    if(!_dataSet){
+      this.phoneNumber = await _otpController.getUserPhonenumber();
+      if(phoneNumber != "Usuario no encontrado." && phoneNumber != "Error-117." && phoneNumber.isNotEmpty){
+        setState(() {
+          _isCorrect = true;  
+        });
+      }
+      setState(() {
+        _dataSet = true;  
+      });
+    } 
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
-    //AuthService.signOut();
-    getTelephone();
+    setPhonenumber();
+    if(_dataSet && _isCorrect){
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,25 +84,18 @@ class _OTPPageState extends State<OTPPage> {
                 margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
                 height: 120,
                 width: MediaQuery.of(context).size.width,
-                child: phoneNumber.isNotEmpty ? OTPCodeForm(phoneNumber) : Container(),
+                child: OTPCodeForm(phoneNumber),
               ),
             ],
           ),
         ],
       ),
     );
-  }
-
-  Future<void> getTelephone() async{
-    String phone = "";
-    var data = widget.user;
-    if(data != null){
-      if(data.uid != null){
-        await UserService().fetchUser(data.uid).then((value) => phone = value.telephone);
-        setState(() {
-          phoneNumber = phone;
-        });
-      }
+    }
+    else{
+      return Container(
+        color: Colors.white,
+      );
     }
   }
 }

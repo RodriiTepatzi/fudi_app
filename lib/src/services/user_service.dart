@@ -24,7 +24,7 @@ import 'package:http/http.dart' as http;
 /// ```
 class UserService{
   /// This method gets the data as json and return a Future<UserApp>
-  Future<UserApp> fetchUser(String uid) async{
+  Future<UserApp> _fetchUser(String uid) async{
     final response = await http.get(Uri.parse(apiUrl + '/users/$uid'));
     if(response.statusCode == 200){
       return UserApp.fromJson(jsonDecode(response.body));
@@ -40,7 +40,7 @@ class UserService{
   /// Future<UserApp> fetchUser(String uid)
   /// ```
   Future<UserApp> getUser(String uid) async {
-    UserApp userApp = await fetchUser(uid);
+    UserApp userApp = await _fetchUser(uid);
     return userApp;
   }
 

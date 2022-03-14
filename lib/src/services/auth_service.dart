@@ -38,7 +38,7 @@ class AuthService{
     .authStateChanges()
     .listen((User? user) {
       if (user == null) {
-        Navigator.pushAndRemoveUntil(
+        Navigator.                   pushAndRemoveUntil(
           context, 
           MaterialPageRoute(
             builder: (context) => WelcomePage()
