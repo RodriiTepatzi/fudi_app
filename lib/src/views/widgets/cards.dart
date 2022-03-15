@@ -92,7 +92,6 @@ Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
   return GestureDetector(
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: restaurant.products!)));
-
     },
     child: Row(
       children: [
@@ -400,7 +399,7 @@ Widget OrderCard(BuildContext context, Order order){
       Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(order: order)));
     },
     child: Container(
-      /*margin: const EdgeInsets.all(marginWidget),
+     /* margin: const EdgeInsets.all(marginWidget),
       decoration: BoxDecoration(
         color: bgCardApp,
         borderRadius: BorderRadius.circular(roundedCornersValue),

@@ -9,13 +9,29 @@ class Order{
   double total;
   String orderStatus;
   
-  Order(
-    this.id,
-    this.userId,
-    this.deliverId,
-    this.restaurantId,
-    this.orderItems,
-    this.total,
-    this.orderStatus
+  Order({
+    required this.id,
+    required this.userId,
+    required this.deliverId,
+    required this.restaurantId,
+    required this.orderItems,
+    required this.total,
+    required this.orderStatus
+  });
+
+  Order.fromJson(Map<String, dynamic> json) : this(
+    id: json['id'],
+    userId: json['userId'],
+    deliverId : json['deliverId'],
+    restaurantId : json['restaurantId'],
+    orderItems : _parseJsonToList(json['orderItems']),
+    total: json['total'],
+    orderStatus : json['orderStatus']
   );
+
+  static List<OrderItem> _parseJsonToList(List<dynamic> json){
+    List<OrderItem> itemsList = List<OrderItem>.from(json.map((i) => OrderItem.fromJson(i)));
+
+    return itemsList;
+  }
 }

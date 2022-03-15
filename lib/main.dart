@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/firebase_options.dart';
 import 'package:fudi_app/src/controllers/login_controller.dart';
+import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/routes/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +37,6 @@ class MyApp extends StatelessWidget {
       routes: routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        cursorColor: accentColorApp,
         textTheme: GoogleFonts.montserratTextTheme(
           Theme.of(context).textTheme,
         ),
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       
       // LoginController() will detect either the user has logged in or not returning a widget.
       // LoginController() can be find at Controllers.
-      home: const LoginController(), 
+      home: LoginController(), 
     );
   }
 }

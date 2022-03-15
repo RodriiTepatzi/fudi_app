@@ -38,7 +38,7 @@ class AuthService{
     .authStateChanges()
     .listen((User? user) {
       if (user == null) {
-        Navigator.                   pushAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
           context, 
           MaterialPageRoute(
             builder: (context) => WelcomePage()
@@ -47,7 +47,8 @@ class AuthService{
         );
       }
       else {
-        if(user.phoneNumber != null && user.phoneNumber.toString().isNotEmpty){
+        String? phoneNumber = user.phoneNumber;
+        if(user.phoneNumber != null && phoneNumber.toString().isNotEmpty){
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(

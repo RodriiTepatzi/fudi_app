@@ -6,7 +6,6 @@ import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 import 'package:fudi_app/src/views/widgets/loader.dart';
-import 'package:loading_animations/loading_animations.dart';
 
 class CategoryView extends StatefulWidget {
   final CategoryModel categoryModel;

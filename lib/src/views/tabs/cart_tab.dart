@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/user_app.dart';
-import 'package:fudi_app/src/services/cart_service.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fudi_app/src/views/widgets/cart_preview.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 class CartTab extends StatefulWidget {
   UserApp? userApp;
@@ -20,41 +22,67 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  
+  final CartController _cartController = CartController();
   //List<Order> orders = [getSingleOrder()];
+  bool _cartIsSet = false;
+  Cart? cartW;
+  
+
   @override
   void initState() {
+    _cartIsSet = false;
     super.initState();
   }
+
+  void getCart() async{
+    if(!_cartIsSet){
+      Cart cart = await _cartController.getCart(widget.userApp?.uid ?? "");
+      cartW = cart;
+      setState(() {
+        if(cartW != null){
+          _cartIsSet = true;  
+        }
+      });
+      
+    }
+    
+  }
+  
   @override
   Widget build(BuildContext context) {
-    
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          height: 60,
-          padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
-          child: Text(
-            'Mis ordenes',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
+    getCart();
+    if(_cartIsSet){
+      return Column(
+        children: [
+          Container(
+            alignment: Alignment.topLeft,
+            height: 60,
+            padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
+            child: Text(
+              'Carrito',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height - 135,
-          width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: [
-              //...getOrderCards(getOrders()),
-            ],
-          ),
-        )
-      ],
-    );
+          SizedBox(
+            height: MediaQuery.of(context).size.height - 135,
+            width: MediaQuery.of(context).size.width,
+            child: ListView(
+              children: [
+                ...generateCartPreview(context,cartW!),
+              ],
+            ),
+          )
+        ],
+      );
+    }
+    else{
+      return LoadingFadingLine.circle();
+    }
+    
   }
   
   Widget emptyOrders(){
@@ -84,21 +112,5 @@ class _CartTabState extends State<CartTab> {
       ),
     );
   }
-
-  List<Widget> getOrderCards(List<Order> orders){
-
-    List<Widget> widgets = []; 
-
-    if(orders.isEmpty){
-      return [emptyOrders()];
-    }
-
-    for (var item in orders) {
-      widgets.add(OrderCard(context, item));
-    }
-
-    return widgets;
-  }
-
 }
 

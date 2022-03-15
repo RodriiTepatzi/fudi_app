@@ -5,7 +5,7 @@ import 'package:fudi_app/src/models/product.dart';
 /// List of [Products] should be filled separately after getting restaurant data.
 /// 
 class RestaurantModel {
-  String? uid;
+  String uid;
   String restaurantName;
   String restaurantAddress;
   String restaurantUrl;
@@ -19,7 +19,7 @@ class RestaurantModel {
 
 
   RestaurantModel({
-    this.uid,
+    required this.uid,
     required this.restaurantName, 
     required this.restaurantAddress, 
     required this.restaurantSlogan, 

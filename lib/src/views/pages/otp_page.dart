@@ -17,7 +17,7 @@ class OTPPage extends StatefulWidget {
 }
 
 class _OTPPageState extends State<OTPPage> {
-  
+  User? _user = FirebaseAuth.instance.currentUser;
   final OTPController _otpController = OTPController(FirebaseAuth.instance.currentUser);
   String phoneNumber = "";
   bool _dataSet = false;

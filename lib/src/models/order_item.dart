@@ -5,5 +5,22 @@ class OrderItem{
   RestaurantModel restaurant;
   List<OrderProduct> products;
   String id;
-  OrderItem(this.restaurant, this.products, this.id);
+  OrderItem({
+    required this.restaurant, 
+    required this.products, 
+    required this.id
+  });
+
+  
+  OrderItem.fromJson(Map<String, dynamic> json) : this(
+    restaurant : RestaurantModel.fromJson(json['restaurant']),
+    products: _parseJsonToList(json['products']),
+    id : json['id'],
+  );
+
+  static List<OrderProduct> _parseJsonToList(List<dynamic> json){
+    List<OrderProduct> itemsList = List<OrderProduct>.from(json.map((i) => OrderProduct.fromJson(i)));
+
+    return itemsList;
+  }
 }
