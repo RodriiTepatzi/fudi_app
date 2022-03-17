@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 
@@ -8,7 +10,6 @@ class Cart {
   DateTime openedDate;
   DateTime closedDate;
   List<Order> orders;
-  bool needsToReload = false;
   Cart({
     required this.uid,
     required this.total,
@@ -24,7 +25,17 @@ class Cart {
       openedDate: DateTime.parse(json['openedDate']),
       closedDate: DateTime.parse(json['closedDate']),
       orders: _parseJsonToList(json['orders']),
-    );
+  );
+
+  Map<String, dynamic> toJson(){
+    return{
+      "uid" : uid,
+      "total" : total,
+      "openedDate" : openedDate.toIso8601String(),
+      "closedDate" : closedDate.toIso8601String(),
+      "orders" : jsonEncode(orders),
+    };
+  }
 
   static List<Order> _parseJsonToList(List<dynamic> json){
     List<Order> itemsList = List<Order>.from(json.map((i) => Order.fromJson(i)));
@@ -38,7 +49,6 @@ class Cart {
   }
 
   void addOrder(Order order){
-    needsToReload = true;
     orders.add(order);
   }
 }

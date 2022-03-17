@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fudi_app/src/models/order_product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 
@@ -17,6 +19,14 @@ class OrderItem{
     products: _parseJsonToList(json['products']),
     id : json['id'],
   );
+
+  Map<String, dynamic> toJson(){
+    return {
+      "restaurant" : restaurant.toJson(),
+      "products" : jsonEncode(products),
+      "id" : id,
+    };
+  }
 
   static List<OrderProduct> _parseJsonToList(List<dynamic> json){
     List<OrderProduct> itemsList = List<OrderProduct>.from(json.map((i) => OrderProduct.fromJson(i)));

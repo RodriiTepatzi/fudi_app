@@ -27,4 +27,16 @@ class Product{
     productLikes : json['productLikes'],
     productUnit : json['productUnit'],
   );
+
+  Map<String, dynamic> toJson(){
+    return {
+      "productId" : productId,
+      "productName" : productName,
+      "productDescription" : productDescription,
+      "productPrice" : productPrice,
+      "productUrl" : productUrl,
+      "productLikes" : productLikes,
+      "productUnit" : productUnit,
+    };
+  }
 }

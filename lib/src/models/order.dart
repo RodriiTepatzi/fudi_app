@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fudi_app/src/models/order_item.dart';
 
 class Order{
@@ -28,6 +30,18 @@ class Order{
     total: json['total'],
     orderStatus : json['orderStatus']
   );
+
+  Map<String, dynamic> toJson(){
+    return {
+      "id" : id,
+      "userId" : userId,
+      "deliverId" : deliverId,
+      "restaurantId" : restaurantId,
+      "orderItems" : jsonEncode(orderItems),
+      "total" : total,
+      "orderStatus" : orderStatus
+    };
+  }
 
   static List<OrderItem> _parseJsonToList(List<dynamic> json){
     List<OrderItem> itemsList = List<OrderItem>.from(json.map((i) => OrderItem.fromJson(i)));
