@@ -27,6 +27,9 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
   final _auth = FirebaseAuth.instance;
   bool _setData = false;
   int _selectedWidgetIndex = 0;
+  final bool _cartIsSet = false;
+  final CartController _cartController = CartController.instance;
+
   List barItems = [
     {
       "icon" : "assets/icons/home.svg",
@@ -54,8 +57,6 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
       "page" : Container(),
     },
   ];
-  bool _cartIsSet = false;
-  final CartController _cartController = CartController();
   
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 500),
@@ -84,8 +85,8 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
           UserApp _userApp = await UserService().getUser(userData.uid.toString());
           if(!_cartIsSet){
             setState(() {
-              
               if(_userApp != null){
+                _cartController.initializeCart(_userApp.uid);
                 barItems = [
                   {
                     "icon" : "assets/icons/home.svg",

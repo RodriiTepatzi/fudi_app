@@ -19,7 +19,7 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  final CartController _cartController = CartController();
+  final CartController _cartController = CartController.instance;
   //List<Order> orders = [getSingleOrder()];
   bool _cartIsSet = false;
   Cart? cartW;
