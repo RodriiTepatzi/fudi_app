@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 /// This user class contains all the fields that are stored in the FireStore Database.
 /// 
 /// This should be exactly the same as the API model.

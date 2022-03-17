@@ -3,10 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/cart.dart';
-import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/user_app.dart';
+import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/widgets/cards.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fudi_app/src/views/widgets/cart_preview.dart';
 import 'package:loading_animations/loading_animations.dart';
@@ -14,8 +13,6 @@ import 'package:loading_animations/loading_animations.dart';
 class CartTab extends StatefulWidget {
   UserApp? userApp;
   CartTab({Key? key, required this.userApp}) : super(key: key);
-
-  
 
   @override
   _CartTabState createState() => _CartTabState();
@@ -26,7 +23,6 @@ class _CartTabState extends State<CartTab> {
   //List<Order> orders = [getSingleOrder()];
   bool _cartIsSet = false;
   Cart? cartW;
-  
 
   @override
   void initState() {
@@ -43,15 +39,13 @@ class _CartTabState extends State<CartTab> {
           _cartIsSet = true;  
         }
       });
-      
     }
-    
   }
   
   @override
   Widget build(BuildContext context) {
     getCart();
-    if(_cartIsSet){
+    if(_cartIsSet && cartW!.orders.isNotEmpty){
       return Column(
         children: [
           Container(
@@ -68,21 +62,71 @@ class _CartTabState extends State<CartTab> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height - 135,
+            height: MediaQuery.of(context).size.height - 185,
             width: MediaQuery.of(context).size.width,
             child: ListView(
               children: [
-                ...generateCartPreview(context,cartW!),
+                CartPreview(cart: cartW!),
               ],
             ),
-          )
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: marginWidget),
+            height: 50,
+            child: Row(
+              children: [
+                Text(
+                  "Total: \$${getTotalCart()}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22.0,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: marginWidget),
+                    padding: const EdgeInsets.only(left: marginWidget * 2, right: marginWidget * 2),
+                    alignment: Alignment.center,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: accentColorApp,
+                      borderRadius: BorderRadius.circular(roundedCornersValue),
+                    ),
+                    child: const Text(
+                      "Pagar",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       );
     }
     else{
       return LoadingFadingLine.circle();
+    } 
+  }
+
+  String getTotalCart(){
+    double total = 0;
+    for (var order in cartW!.orders){
+      for (var orderItem in order.orderItems) {
+        for (var product in orderItem.products) {
+          total += product.product.productPrice * product.quantity;
+        }
+      }
     }
-    
+
+    return total.toString();
   }
   
   Widget emptyOrders(){

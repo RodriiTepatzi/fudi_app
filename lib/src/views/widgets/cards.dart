@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
+import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/forms/quantity_form.dart';
@@ -88,10 +90,14 @@ Widget LargeRestaurantCard(BuildContext context){
   );
 }
 
-Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant){
+Widget SmallRestaurantCard(BuildContext context, RestaurantModel restaurant,UserApp user){
   return GestureDetector(
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(restaurant: restaurant, products: restaurant.products!)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantView(
+        restaurant: restaurant, 
+        products: restaurant.products!,
+        user: user,)
+      ));
     },
     child: Row(
       children: [
@@ -260,7 +266,7 @@ Widget _discountTicket(String ticketText){
   );
 }
 
-Widget ProductCard(BuildContext context, Product product){
+Widget ProductCard(BuildContext context, Product product, RestaurantModel restaurant, UserApp user){
 
   return GestureDetector(
     onTap: (){
@@ -276,7 +282,11 @@ Widget ProductCard(BuildContext context, Product product){
           ),
         ),
         builder: (context){
-          return QuantityForm(product: product);
+          return QuantityForm(
+            product: product, 
+            restaurant: restaurant, 
+            userId: user.uid,
+          );
         }
       );
     },

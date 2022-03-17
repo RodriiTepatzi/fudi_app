@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/models/cart.dart';
+import 'package:fudi_app/src/models/order.dart';
+import 'package:fudi_app/src/models/order_item.dart';
+import 'package:fudi_app/src/models/order_product.dart';
 import 'package:fudi_app/src/models/product.dart';
+import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:intl/intl.dart';
 
 class QuantityForm extends StatefulWidget {
   final Product product;
-
-  QuantityForm({Key? key, required this.product}) : super(key: key);
+  RestaurantModel restaurant;
+  String userId;
+  QuantityForm({Key? key, required this.product, required this.restaurant, required this.userId}) : super(key: key);
 
   @override
   State<QuantityForm> createState() => _QuantityFormState();
@@ -16,7 +22,6 @@ class QuantityForm extends StatefulWidget {
 class _QuantityFormState extends State<QuantityForm> {
 
   final doubleFormater = NumberFormat("#######.00");
-
   int _quantityValue = 1;
 
   void changeQuantityValue(int value){
@@ -170,7 +175,33 @@ class _QuantityFormState extends State<QuantityForm> {
                 const Spacer(),
                 GestureDetector(
                   onTap: (){
+                    List<OrderProduct> orderProducts = [];
+                    orderProducts.add(OrderProduct(
+                        product: widget.product, 
+                        quantity: _quantityValue
+                      ),
+                    );
+                    List<OrderItem> orderItems = [];
+                    orderItems.add(OrderItem(
+                        restaurant: widget.restaurant, 
+                        products: orderProducts,
+                        id: ""
+                      )
+                    );
                     Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        dismissDirection: DismissDirection.horizontal,
+                        backgroundColor: accentColorApp,
+                        elevation: 0.8,
+                        content: Text(
+                          "Producto agregado al carrito.",
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                      )
+                    );
                   },
                   child: Container(
                     margin: const EdgeInsets.only(right: marginWidget),

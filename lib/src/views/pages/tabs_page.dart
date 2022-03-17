@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/user_service.dart';
@@ -53,7 +54,9 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
       "page" : Container(),
     },
   ];
-
+  bool _cartIsSet = false;
+  final CartController _cartController = CartController();
+  
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 500),
     vsync: this,
@@ -63,45 +66,57 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
     curve: Curves.fastOutSlowIn,
   );
 
+  void getCart(UserApp? userApp) async{
+    if(!_cartIsSet){
+      Cart cart = await _cartController.getCart(userApp?.uid ?? "");
+      
+      setState(() {
+        
+      });
+    }
+  }
+
   void getUser() async{
     User? userData = _auth.currentUser;
     if(userData != null){
       if(userData.uid != null){
         if(!_setData){
           UserApp _userApp = await UserService().getUser(userData.uid.toString());
-          setState(() {
-            if(_userApp != null){
-              barItems = [
-                {
-                  "icon" : "assets/icons/home.svg",
-                  "active_icon" : "assets/icons/home.svg",
-                  "page" : ExploreTab(userApp: _userApp),
-                },
-                {
-                  "icon" : "assets/icons/search.svg",
-                  "active_icon" : "assets/icons/search.svg",
-                  "page" : const SearchTab(),
-                },
-                {
-                  "icon" : "assets/icons/bag.svg",
-                  "active_icon" : "assets/icons/bag.svg",
-                  "page" : CartTab(userApp: _userApp),
-                },
-                {
-                  "icon" : "assets/icons/heart.svg",
-                  "active_icon" : "assets/icons/heart.svg",
-                  "page" : FavoritesTab(),
-                },
-                {
-                  "icon" : "assets/icons/profile.svg",
-                  "active_icon" : "assets/icons/profile.svg",
-                  "page" : ProfileTab(userApp: _userApp),
-                },
-              ];
-            }
-
-          });
-          _setData = true;
+          if(!_cartIsSet){
+            setState(() {
+              
+              if(_userApp != null){
+                barItems = [
+                  {
+                    "icon" : "assets/icons/home.svg",
+                    "active_icon" : "assets/icons/home.svg",
+                    "page" : ExploreTab(userApp: _userApp),
+                  },
+                  {
+                    "icon" : "assets/icons/search.svg",
+                    "active_icon" : "assets/icons/search.svg",
+                    "page" : const SearchTab(),
+                  },
+                  {
+                    "icon" : "assets/icons/bag.svg",
+                    "active_icon" : "assets/icons/bag.svg",
+                    "page" : CartTab(userApp: _userApp),
+                  },
+                  {
+                    "icon" : "assets/icons/heart.svg",
+                    "active_icon" : "assets/icons/heart.svg",
+                    "page" : FavoritesTab(),
+                  },
+                  {
+                    "icon" : "assets/icons/profile.svg",
+                    "active_icon" : "assets/icons/profile.svg",
+                    "page" : ProfileTab(userApp: _userApp),
+                  },
+                ];
+              }
+            });
+            _setData = true;
+          }
         }
       }
     }

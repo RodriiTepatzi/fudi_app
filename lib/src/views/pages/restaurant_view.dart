@@ -2,15 +2,18 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
+import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/widgets/back_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fudi_app/src/views/widgets/cards.dart';
 class RestaurantView extends StatelessWidget {
-  const RestaurantView({Key? key, required this.restaurant, required this.products}) : super(key: key);
+  const RestaurantView({Key? key, required this.restaurant, required this.products, required this.user}) : super(key: key);
+  final UserApp user;
   final RestaurantModel restaurant;
   final List<Product> products;
 
@@ -152,7 +155,7 @@ class RestaurantView extends StatelessWidget {
                                     child: SlideAnimation(
                                       horizontalOffset: 50.0,
                                       child: FadeInAnimation(
-                                        child: ProductCard(context, products[index]),
+                                        child: ProductCard(context, products[index], restaurant, user),
                                       ),
                                     ),
                                   );

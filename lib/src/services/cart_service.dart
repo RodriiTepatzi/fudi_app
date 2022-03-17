@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class CartService{
   
-  Future<Cart> GetCart(String userId) async{
+  Future<Cart> getCart(String userId) async{
     final response = await http.get(Uri.parse("$apiUrl/users/$userId/cart"));
     if(response.statusCode == 200){
       List<Cart> carts = [];
@@ -24,7 +24,7 @@ class CartService{
           }
         }
       }
-      return carts.length > 0 ? carts[0] : throw Exception("Failed on getting the user data from API");
+      return carts.isNotEmpty ? carts[0] : throw Exception("Failed on getting the user data from API");
     }
     else{
       throw Exception("Failed on getting the user data from API");

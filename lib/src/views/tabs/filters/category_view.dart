@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/category.dart';
+import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/widgets/header.dart';
 import 'package:fudi_app/src/views/widgets/loader.dart';
 
 class CategoryView extends StatefulWidget {
   final CategoryModel categoryModel;
-  const CategoryView({Key? key, required this.categoryModel}) : super(key: key);
+  final UserApp user;
+  const CategoryView({Key? key, required this.categoryModel, required this.user}) : super(key: key);
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
@@ -37,7 +40,7 @@ class _CategoryViewState extends State<CategoryView> {
     if(!_alreadySet){
       if(mounted){
         _categoryName = widget.categoryModel.name;
-        var categoriesTemp = await ExploreController().getCategoryRestaurants(context, _categoryName);
+        var categoriesTemp = await ExploreController().getCategoryRestaurants(context, _categoryName, widget.user);
 
         setState(() {
           _restaurants = categoriesTemp;

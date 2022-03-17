@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/category_service.dart';
@@ -45,8 +46,8 @@ class _ExploreTabState extends State<ExploreTab> {
 
   Future setData(BuildContext context) async{
     if(!_alreadySet){
-      var temp = await ExploreController().getRecomendations(context);
-      var temp2 = await ExploreController().getRecomendations(context);
+      var temp = await ExploreController().getRecomendations(context, widget.userApp!);
+      var temp2 = await ExploreController().getRecomendations(context, widget.userApp!);
       var categoriesTemp = await CategoryService().getCategories();
       setState(() {
         _recomended = temp;
@@ -287,7 +288,7 @@ class _ExploreTabState extends State<ExploreTab> {
 
   void _generateCategoriesFilters(List<CategoryModel> categories){
     for (var item in categories) {
-      filterSelectionWidget.add(CategoryView(categoryModel: item));
+      filterSelectionWidget.add(CategoryView(categoryModel: item, user: widget.userApp!));
     }
   }
 

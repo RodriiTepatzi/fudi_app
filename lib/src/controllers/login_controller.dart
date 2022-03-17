@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/views/pages/otp_page.dart';
 import 'package:fudi_app/src/views/pages/tabs_page.dart';

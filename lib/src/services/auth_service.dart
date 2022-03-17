@@ -131,6 +131,7 @@ class AuthService{
   /// This method should be called, when trying to login with email and password.
   static Future<String?> signInWithEmail(String email, String password) async {
     try {
+      // ignore: unused_local_variable
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password

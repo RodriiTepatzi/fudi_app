@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 
 class Cart {
@@ -9,7 +8,7 @@ class Cart {
   DateTime openedDate;
   DateTime closedDate;
   List<Order> orders;
-
+  bool needsToReload = false;
   Cart({
     required this.uid,
     required this.total,
@@ -28,9 +27,18 @@ class Cart {
     );
 
   static List<Order> _parseJsonToList(List<dynamic> json){
-    List<Order> orders = [];
     List<Order> itemsList = List<Order>.from(json.map((i) => Order.fromJson(i)));
 
     return itemsList;
+  }
+
+  void deleteOrder(String uid){
+    orders.removeWhere((element) => element.id == uid);
+    CartController.deleteOrderInCart(uid);
+  }
+
+  void addOrder(Order order){
+    needsToReload = true;
+    orders.add(order);
   }
 }
