@@ -8,7 +8,10 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fudi_app/src/views/widgets/cart_preview.dart';
+import 'package:fudi_app/src/views/widgets/loader.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:provider/provider.dart';
 
 class CartTab extends StatefulWidget {
   UserApp? userApp;
@@ -19,114 +22,171 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  final CartController _cartController = CartController.instance;
-  //List<Order> orders = [getSingleOrder()];
-  bool _cartIsSet = false;
-  Cart? cartW;
+  final doubleFormater = NumberFormat("#####.00");
+  bool carIsSet = false;
 
   @override
   void initState() {
-    _cartIsSet = false;
     super.initState();
-  }
-
-  void getCart() async{
-    if(!_cartIsSet){
-      Cart cart = await _cartController.getCart(widget.userApp?.uid ?? "");
-      cartW = cart;
-      setState(() {
-        if(cartW != null){
-          _cartIsSet = true;  
-        }
-      });
-    }
   }
   
   @override
   Widget build(BuildContext context) {
-    getCart();
-    if(_cartIsSet && cartW!.orders.isNotEmpty){
-      return Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            height: 60,
-            padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
-            child: Text(
-              'Carrito',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 185,
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              children: [
-                CartPreview(cart: cartW!),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: marginWidget),
-            height: 50,
-            child: Row(
-              children: [
-                Text(
-                  "Total: \$${getTotalCart()}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.0,
+    
+    return Consumer<CartController>(
+      builder: (context, data, child){
+        return Column(
+          children: [
+            Container(
+                  alignment: Alignment.topLeft,
+                  height: 60,
+                  padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
+                  child: Text(
+                    'Carrito',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(right: marginWidget),
-                    padding: const EdgeInsets.only(left: marginWidget * 2, right: marginWidget * 2),
-                    alignment: Alignment.center,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: accentColorApp,
-                      borderRadius: BorderRadius.circular(roundedCornersValue),
-                    ),
-                    child: const Text(
-                      "Pagar",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+              Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 185,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
+                    children: [
+                      CartPreview(cart: data.cart),
+                    ],
                   ),
-                )
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: marginWidget),
+                  height: 50,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Total: \$${getTotalCart(data.cart)}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22.0,
+                        ),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: marginWidget),
+                          padding: const EdgeInsets.only(left: marginWidget * 2, right: marginWidget * 2),
+                          alignment: Alignment.center,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: accentColorApp,
+                            borderRadius: BorderRadius.circular(roundedCornersValue),
+                          ),
+                          child: const Text(
+                            "Pagar",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
+          ],
+        );
+      }
+    );
+    
+    /*if(cart != null){
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          height: 60,
+          padding: EdgeInsets.only(top: marginWidget*2, bottom: marginWidget, left: marginWidget),
+          child: Text(
+            'Carrito',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ],
-      );
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 185,
+          width: MediaQuery.of(context).size.width,
+          child: ListView(
+            children: [
+              CartPreview(cart: cart!),
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: marginWidget),
+          height: 50,
+          child: Row(
+            children: [
+              Text(
+                "Total: \$${getTotalCart()}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22.0,
+                ),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: marginWidget),
+                  padding: const EdgeInsets.only(left: marginWidget * 2, right: marginWidget * 2),
+                  alignment: Alignment.center,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: accentColorApp,
+                    borderRadius: BorderRadius.circular(roundedCornersValue),
+                  ),
+                  child: const Text(
+                    "Pagar",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
     }
     else{
-      return LoadingFadingLine.circle();
-    } 
+      return Container();
+    }*/
   }
 
-  String getTotalCart(){
+  String getTotalCart(Cart cartData){
     double total = 0;
-    for (var order in cartW!.orders){
+    for (var order in cartData.orders){
       for (var orderItem in order.orderItems) {
         for (var product in orderItem.products) {
           total += product.product.productPrice * product.quantity;
         }
       }
     }
-
-    return total.toString();
+    return doubleFormater.format(total);
   }
   
   Widget emptyOrders(){

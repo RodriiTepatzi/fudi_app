@@ -30,13 +30,13 @@ class Product{
 
   Map<String, dynamic> toJson(){
     return {
-      "productId" : productId,
-      "productName" : productName,
-      "productDescription" : productDescription,
-      "productPrice" : productPrice,
-      "productUrl" : productUrl,
-      "productLikes" : productLikes,
-      "productUnit" : productUnit,
+      'productId' : productId,
+      'productName' : productName,
+      'productDescription' : productDescription,
+      'productPrice' : productPrice,
+      'productUrl' : productUrl,
+      'productLikes' : productLikes,
+      'productUnit' : productUnit,
     };
   }
 }

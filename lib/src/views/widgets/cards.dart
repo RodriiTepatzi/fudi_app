@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
@@ -403,7 +402,6 @@ Widget ProductCard(BuildContext context, Product product, RestaurantModel restau
 }
 
 Widget OrderCard(BuildContext context, Order order){
-  final doubleFormater = NumberFormat("#####.00");
   return GestureDetector(
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(order: order)));

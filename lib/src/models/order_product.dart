@@ -16,8 +16,8 @@ class OrderProduct{
 
   Map<String, dynamic> toJson(){
     return {
-      "product" : product.toJson(),
-      "quantity" : quantity,
+      'product' : product.toJson(),
+      'quantity' : quantity,
     };
   }
 

@@ -3,11 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/firebase_options.dart';
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/controllers/login_controller.dart';
+import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/views/routes/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,22 +35,25 @@ class MyApp extends StatelessWidget {
 
     // Here we start the App, calling LoginController()    
 
-    return MaterialApp(
-      routes: routes,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(
-          Theme.of(context).textTheme,
+    return ChangeNotifierProvider<CartController>(
+      create: (context) => CartController.instance,
+      child: MaterialApp(
+        routes: routes,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textTheme: GoogleFonts.montserratTextTheme(
+            Theme.of(context).textTheme,
+          ),
+          accentColor: accentColorApp,
+          buttonColor: buttonColorApp,
+          disabledColor: disabledColorApp,
+          scaffoldBackgroundColor: bgApp,
         ),
-        accentColor: accentColorApp,
-        buttonColor: buttonColorApp,
-        disabledColor: disabledColorApp,
-        scaffoldBackgroundColor: bgApp,
+        
+        // LoginController() will detect either the user has logged in or not returning a widget.
+        // LoginController() can be find at Controllers.
+        home: LoginController(), 
       ),
-      
-      // LoginController() will detect either the user has logged in or not returning a widget.
-      // LoginController() can be find at Controllers.
-      home: LoginController(), 
     );
   }
 }

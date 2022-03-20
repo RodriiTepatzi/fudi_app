@@ -22,9 +22,9 @@ class OrderItem{
 
   Map<String, dynamic> toJson(){
     return {
-      "restaurant" : restaurant.toJson(),
-      "products" : jsonEncode(products),
-      "id" : id,
+      'restaurant' : restaurant.toJson(),
+      'products' : jsonEncode(products),
+      'id' : id,
     };
   }
 

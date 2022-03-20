@@ -44,8 +44,7 @@ class Cart {
   }
 
   void deleteOrder(String uid){
-    orders.removeWhere((element) => element.id == uid);
-    CartController.deleteOrderInCart(uid);
+    CartController.instance.deleteOrderInCart(uid);
   }
 
   void addOrder(Order order){

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/order_item.dart';
@@ -187,6 +188,9 @@ class _QuantityFormState extends State<QuantityForm> {
                         products: orderProducts,
                         id: ""
                       )
+                    );
+                    CartController.instance.addOrder(
+                      widget.userId, Order(id: "test", userId: widget.userId, deliverId: "a", restaurantId: widget.restaurant.uid, orderItems: orderItems, total: 10.0, orderStatus: "En camino"),
                     );
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(

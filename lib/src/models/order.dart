@@ -33,13 +33,13 @@ class Order{
 
   Map<String, dynamic> toJson(){
     return {
-      "id" : id,
-      "userId" : userId,
-      "deliverId" : deliverId,
-      "restaurantId" : restaurantId,
-      "orderItems" : jsonEncode(orderItems),
-      "total" : total,
-      "orderStatus" : orderStatus
+      'id' : id,
+      'userId' : userId,
+      'deliverId' : deliverId,
+      'restaurantId' : restaurantId,
+      'orderItems' : json.encode(orderItems),
+      'total' : total,
+      'orderStatus' : orderStatus
     };
   }
 

@@ -6,6 +6,7 @@ import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/views/tabs/search_tab.dart';
 import 'package:fudi_app/src/views/widgets/bottombar_item.dart';
+import 'package:fudi_app/src/views/widgets/loader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/tabs/explore_tab.dart';
@@ -27,7 +28,7 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
   final _auth = FirebaseAuth.instance;
   bool _setData = false;
   int _selectedWidgetIndex = 0;
-  final bool _cartIsSet = false;
+  bool _cartIsSet = false;
   final CartController _cartController = CartController.instance;
 
   List barItems = [
@@ -62,20 +63,11 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
     duration: const Duration(milliseconds: 500),
     vsync: this,
   );
+  
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controller,
     curve: Curves.fastOutSlowIn,
   );
-
-  void getCart(UserApp? userApp) async{
-    if(!_cartIsSet){
-      Cart cart = await _cartController.getCart(userApp?.uid ?? "");
-      
-      setState(() {
-        
-      });
-    }
-  }
 
   void getUser() async{
     User? userData = _auth.currentUser;
@@ -114,9 +106,12 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
                     "page" : ProfileTab(userApp: _userApp),
                   },
                 ];
+                if(CartController.instance.cart != null){
+                  _cartIsSet = true;
+                  _setData = true;
+                }
               }
             });
-            _setData = true;
           }
         }
       }
@@ -186,15 +181,19 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    if(!_setData){
-      getUser();
-    }
+    getUser();
     changeColorBar();
+    if(_setData){
+    
     return Scaffold(
       backgroundColor: bgApp,
       bottomNavigationBar: getBottomBar(),
       body: getBarPage()
     );
+    }
+    else{
+      return Scaffold(body: loader());
+    }
   }
 
   Widget getBarPage(){

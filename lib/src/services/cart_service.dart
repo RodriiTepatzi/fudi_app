@@ -1,11 +1,12 @@
 import 'package:fudi_app/src/models/cart.dart';
+import 'package:fudi_app/src/models/order.dart';
 import 'package:http/http.dart' as http;
 import 'package:fudi_app/src/static/api_url.dart';
 import 'dart:convert';
 
 class CartService{
   
-  Future<Cart> getCart(String userId) async{
+  Future<Cart> getCartAsync(String userId) async{
     final response = await http.get(Uri.parse("$apiUrl/users/$userId/cart"));
     if(response.statusCode == 200){
       List<Cart> carts = [];
@@ -29,5 +30,23 @@ class CartService{
     else{
       throw Exception("Failed on getting the user data from API");
     }
+  }
+
+  void addOrderAsync(String userId, Order order) async{
+    final jsonData = jsonEncode(order);
+    final response = await http.post(Uri.parse("$apiUrl/users/$userId/cart/add"),
+    headers: <String, String> {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(jsonData),
+    );
+
+    if(response.statusCode == 200 || response.statusCode == 201){
+      
+    }
+    else{
+      throw Exception("Failed to create user");
+    }
+
   }
 }

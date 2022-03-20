@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/models/order.dart';
@@ -6,6 +7,7 @@ import 'package:fudi_app/src/models/order_item.dart';
 import 'package:fudi_app/src/models/order_product.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:intl/intl.dart';
 
 
 class CartPreview extends StatefulWidget {
@@ -17,17 +19,15 @@ class CartPreview extends StatefulWidget {
 }
 
 class _CartPreviewState extends State<CartPreview> {
-  late Cart _cart = widget.cart;
-
+  final doubleFormater = NumberFormat("#####.00");
   @override
   void initState() {
-    _cart = widget.cart;
     super.initState();    
   }
 
   void _removeOrder(String orderId){
     setState(() {
-      _cart.orders.removeWhere((element) => element.id == orderId);
+      CartController.instance.deleteOrderInCart(orderId);
     });
   }
 
@@ -35,7 +35,7 @@ class _CartPreviewState extends State<CartPreview> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ...generateCartPreview(context, _cart)
+        ...generateCartPreview(context, widget.cart)
       ],
     );
   }
@@ -211,7 +211,7 @@ class _CartPreviewState extends State<CartPreview> {
               const Spacer(),
               SizedBox(
                 child: Text(
-                  "\$${product.product.productPrice.toString()}",
+                  "\$${doubleFormater.format(product.product.productPrice)}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold
                   ),
@@ -233,7 +233,7 @@ class _CartPreviewState extends State<CartPreview> {
       }
     }
 
-    return total.toString();
+    return doubleFormater.format(total);
   }
 }
 
