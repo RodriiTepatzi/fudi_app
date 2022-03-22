@@ -20,5 +20,4 @@ class OrderProduct{
       'quantity' : quantity,
     };
   }
-
 }

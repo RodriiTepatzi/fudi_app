@@ -33,19 +33,21 @@ class CartService{
   }
 
   void addOrderAsync(String userId, Order order) async{
-    final jsonData = jsonEncode(order);
+    final jsonData = order.toJson();
+    final jsonEncoded = json.encode(jsonData).replaceAll(r"\", "").replaceAll("\"[", "[").replaceAll("]\"", "]");
+    //print(jsonEncoded);
     final response = await http.post(Uri.parse("$apiUrl/users/$userId/cart/add"),
     headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(jsonData),
+      body: jsonEncoded,
     );
 
     if(response.statusCode == 200 || response.statusCode == 201){
       
     }
     else{
-      throw Exception("Failed to create user");
+      throw Exception("Failed on adding a new order to cart.");
     }
 
   }

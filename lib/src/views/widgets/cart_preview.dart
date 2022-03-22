@@ -65,30 +65,6 @@ class _CartPreviewState extends State<CartPreview> {
       margin: const EdgeInsets.all(marginWidget),
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.all(marginWidget),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "id: ${order.id}",
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      order.orderStatus,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
           ...orderItemsPreview(order.orderItems),
           Container(
             alignment: Alignment.centerRight,

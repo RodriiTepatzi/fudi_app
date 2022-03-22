@@ -46,8 +46,9 @@ class RestaurantModel {
       startDate: DateTime.parse(jsonData['startDate']),
     );
 
-  Map<String, Object?> toJson(){
+  Map<String, dynamic> toJson(){
     return{
+      'uid' : uid,
       'restaurantName' : restaurantName, 
       'restaurantAddress' : restaurantAddress,
       'restaurantSlogan' : restaurantSlogan,
@@ -56,7 +57,7 @@ class RestaurantModel {
       'cost' : cost,
       'category' : category,
       'status' : status,
-      'startDate' : startDate,
+      'startDate' : startDate.toIso8601String()
     };
   }
 }
