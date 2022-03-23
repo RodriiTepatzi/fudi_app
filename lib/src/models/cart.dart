@@ -43,9 +43,6 @@ class Cart {
     return itemsList;
   }
 
-  void deleteOrder(String uid){
-    CartController.instance.deleteOrderInCart(uid);
-  }
 
   void addOrder(Order order){
     orders.add(order);

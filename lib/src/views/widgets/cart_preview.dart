@@ -25,12 +25,6 @@ class _CartPreviewState extends State<CartPreview> {
     super.initState();    
   }
 
-  void _removeOrder(String orderId){
-    setState(() {
-      CartController.instance.deleteOrderInCart(orderId);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +66,7 @@ class _CartPreviewState extends State<CartPreview> {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () => _removeOrder(order.id),
+                  onTap: () => CartController.instance.deleteOrderInCart(order.restaurantId),
                   child:  SvgPicture.asset(
                     'assets/icons/trash.svg',
                     width: 25,

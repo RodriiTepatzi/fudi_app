@@ -190,7 +190,7 @@ class _QuantityFormState extends State<QuantityForm> {
                       )
                     );
                     CartController.instance.addOrder(
-                      widget.userId, Order(id: "test", userId: widget.userId, deliverId: "a", restaurantId: widget.restaurant.uid, orderItems: orderItems, total: 10.0, orderStatus: "En camino"),
+                      widget.userId, widget.restaurant.uid, Order(id: "test", userId: widget.userId, deliverId: "a", restaurantId: widget.restaurant.uid, orderItems: orderItems, total: 10.0, orderStatus: "En camino"),
                     );
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
