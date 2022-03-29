@@ -23,7 +23,7 @@ class _MapViewState extends State<MapView> {
           }
         ),
       ),
-      //body: MapController(),
+      body: MapController(),
     );
   }
 }

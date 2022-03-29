@@ -1,18 +1,20 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/category_service.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
+import 'package:fudi_app/src/views/pages/map_view.dart';
 import 'package:fudi_app/src/views/tabs/filters/category_view.dart';
 import 'package:fudi_app/src/views/tabs/filters/home_filter.dart';
+import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 import 'package:fudi_app/src/views/widgets/loader.dart';
 import 'package:fudi_app/src/views/widgets/navbar_category_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:loading_animations/loading_animations.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ExploreTab extends StatefulWidget {
   UserApp? userApp;
@@ -44,6 +46,36 @@ class _ExploreTabState extends State<ExploreTab> {
     super.initState();
   }
 
+  Future<void> _checkPermission() async {
+    final serviceStatus = await Permission.locationWhenInUse.serviceStatus;
+    final isGpsOn = serviceStatus == ServiceStatus.enabled;
+    if (!isGpsOn) {
+      print('Turn on location services before requesting permission.');
+      return;
+    }
+    
+    final status = await Permission.location.request();
+    //await Permission.locationWhenInUse.request();
+    if (status == PermissionStatus.granted) {
+      print('Permission granted');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MapView()
+        ),
+      );
+    } 
+    else if (status == PermissionStatus.denied) {
+      showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
+      await openAppSettings();
+    } 
+    else if (status == PermissionStatus.permanentlyDenied) {
+      showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
+      print('Take the user to the settings page.');
+      await openAppSettings();
+    }
+  }
+  
   Future setData(BuildContext context) async{
     if(!_alreadySet){
       var temp = await ExploreController().getRecomendations(context, widget.userApp!);
@@ -171,7 +203,7 @@ class _ExploreTabState extends State<ExploreTab> {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 50,
                 child: Container(
-                  margin: const EdgeInsets.only(top: marginWidget * 3, bottom: marginWidget * 3, left: marginWidget * 2, right: marginWidget * 2),
+                  margin: const EdgeInsets.only(top: marginWidget * 3, bottom: marginWidget, left: marginWidget * 2, right: marginWidget * 2),
                   child: Text(
                     "Bienvenido, ${_getFirstName(widget.userApp?.fullname)}\n ¿Qué ordenarás hoy?",
                     style: const TextStyle(
@@ -182,38 +214,35 @@ class _ExploreTabState extends State<ExploreTab> {
                   ),
                 ),
               ),
-              /*Container(
-                width: 40.0,
-                height: 40.0,
-                margin: const EdgeInsets.only(left: 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.shopping_cart,
-                    size: 20.0,
-                    color: accentColorApp
-                  ),
-                  onPressed: (){
-
-                  },
-                ),
-              ),*/
             ],
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(bottom: marginWidget, left: marginWidget * 2, right: marginWidget * 2),
-            child: const Text(
-              "Francisco I. Madero 150, Contla de Juan Cuamatzi",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+          GestureDetector(
+            onTap: (){
+              _checkPermission();
+              /*Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MapView()
+                ),
+              );*/
+            },
+            child: Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(bottom: marginWidget, left: marginWidget * 2, right: marginWidget * 2),
+              padding: const EdgeInsets.all(marginWidget),
+              decoration: BoxDecoration(
+                color: accentColorLightApp,
+                borderRadius: BorderRadius.circular(roundedCornersValue),
               ),
-              textAlign: TextAlign.start,
+              child: const Text(
+                "Francisco I. Madero 150, Contla de Juan Cuamatzi",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.0,
+                ),
+                textAlign: TextAlign.start,
+              ),
             ),
           )
         ],
@@ -295,4 +324,9 @@ class _ExploreTabState extends State<ExploreTab> {
   String _getFirstName(String? fullname){
     return fullname != null ? fullname.split(" ").elementAt(0).toString() : "";
   }
+  Future _askLocation(BuildContext context) async{
+    showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
+    
+  }
 }
+

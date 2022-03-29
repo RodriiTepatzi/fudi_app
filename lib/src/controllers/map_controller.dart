@@ -1,5 +1,7 @@
-/*import 'dart:async';
-
+import 'dart:async';
+import 'package:fudi_app/src/static/colors.dart';
+import 'package:fudi_app/src/views/widgets/back_button.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,35 +14,43 @@ class MapController extends StatefulWidget {
 
 class _MapControllerState extends State<MapController> {
   
-    Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-   static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  CameraPosition _initialPosition = CameraPosition(target: LatLng(26.8206, 30.8025));
+  Completer<GoogleMapController> _controller = Completer();
+  void _onMapCreated(GoogleMapController controller) {
+      _controller.complete(controller);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unnecessary_new
-    return  Container(
-        child: GoogleMap(
-          mapType: MapType.hybrid,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ),
-      );
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            child: Text(
+              "Hola"
+            ),
+          ),
+          GoogleMap(    
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: _initialPosition,
+          ),
+        ],
+      )
+    );
+    /*return Scaffold(
+      appBar: AppBar(
+      title: Text('Maps in Flutter'),
+      centerTitle: true,
+    ),
+    body: Stack(
+      children: <Widget>[
+        Container(child: 
+        Text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),),
+        /*GoogleMap(    
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: _initialPosition,
+        ),*/
+      ],
+    ));*/
   }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
-}*/
+}

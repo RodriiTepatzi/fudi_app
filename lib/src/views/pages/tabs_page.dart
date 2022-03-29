@@ -1,20 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/cart_controller.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/user_service.dart';
 import 'package:fudi_app/src/views/tabs/search_tab.dart';
 import 'package:fudi_app/src/views/widgets/bottombar_item.dart';
 import 'package:fudi_app/src/views/widgets/loader.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/views/tabs/explore_tab.dart';
 import 'package:fudi_app/src/views/tabs/favorites_tab.dart';
 import 'package:fudi_app/src/views/tabs/cart_tab.dart';
 import 'package:fudi_app/src/views/tabs/profile_tab.dart';
 import 'package:fudi_app/src/static/colors.dart';
-import 'package:fudi_app/src/views/widgets/alert_dialog.dart';
 
 class TabsPage extends StatefulWidget {
   TabsPage({Key? key,}) : super(key: key);
@@ -24,7 +21,6 @@ class TabsPage extends StatefulWidget {
 }
 
 class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
-
   final _auth = FirebaseAuth.instance;
   bool _setData = false;
   int _selectedWidgetIndex = 0;
@@ -242,9 +238,6 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin{
     );
   }
 
-  Future _askLocation(BuildContext context) async{
-    showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
-    Permission.location.request();
-  }
+  
 }
 
