@@ -50,14 +50,14 @@ class _ExploreTabState extends State<ExploreTab> {
     final serviceStatus = await Permission.locationWhenInUse.serviceStatus;
     final isGpsOn = serviceStatus == ServiceStatus.enabled;
     if (!isGpsOn) {
-      print('Turn on location services before requesting permission.');
+      //print('Turn on location services before requesting permission.');
       return;
     }
     
     final status = await Permission.location.request();
     //await Permission.locationWhenInUse.request();
     if (status == PermissionStatus.granted) {
-      print('Permission granted');
+      //print('Permission granted');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -71,7 +71,7 @@ class _ExploreTabState extends State<ExploreTab> {
     } 
     else if (status == PermissionStatus.permanentlyDenied) {
       showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
-      print('Take the user to the settings page.');
+      //print('Take the user to the settings page.');
       await openAppSettings();
     }
   }

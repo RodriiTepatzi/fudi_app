@@ -1,6 +1,5 @@
 import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/order.dart';
-import 'package:fudi_app/src/models/order_item.dart';
 import 'package:fudi_app/src/models/order_product.dart';
 import 'package:http/http.dart' as http;
 import 'package:fudi_app/src/static/api_url.dart';

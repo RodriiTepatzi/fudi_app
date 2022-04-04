@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fudi_app/src/controllers/explore_controller.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/category.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';

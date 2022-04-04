@@ -8,7 +8,7 @@ import 'package:fudi_app/src/views/pages/welcome_page.dart';
 /// This widget handles whenever the user logs in or logs out.
 
 class LoginController extends StatelessWidget {
-  LoginController({Key? key,}) : super(key: key);
+  const LoginController({Key? key,}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {

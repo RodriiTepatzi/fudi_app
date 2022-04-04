@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fudi_app/src/models/cart.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/services/restaurant_service.dart';

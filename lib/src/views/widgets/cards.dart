@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:fudi_app/src/controllers/addon_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 import 'package:fudi_app/src/models/product.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
@@ -10,7 +11,6 @@ import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:fudi_app/src/views/forms/quantity_form.dart';
 import 'package:fudi_app/src/views/pages/order_page.dart';
 import 'package:fudi_app/src/views/pages/restaurant_view.dart';
-import 'package:intl/intl.dart';
 
 Widget LargeRestaurantCard(BuildContext context){
   return IntrinsicHeight(
@@ -281,11 +281,12 @@ Widget ProductCard(BuildContext context, Product product, RestaurantModel restau
           ),
         ),
         builder: (context){
-          return QuantityForm(
+          return AddonController.getAddonForm(product, restaurant, user.uid);
+          /*return QuantityForm(
             product: product, 
             restaurant: restaurant, 
             userId: user.uid,
-          );
+          );*/
         }
       );
     },

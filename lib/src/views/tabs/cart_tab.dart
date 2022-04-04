@@ -8,9 +8,7 @@ import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fudi_app/src/views/widgets/cart_preview.dart';
-import 'package:fudi_app/src/views/widgets/loader.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
 
 class CartTab extends StatefulWidget {
