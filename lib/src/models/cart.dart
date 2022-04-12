@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/order.dart';
 
 class Cart {

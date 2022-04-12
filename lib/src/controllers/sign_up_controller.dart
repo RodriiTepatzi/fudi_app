@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:flutter/cupertino.dart';
 import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:fudi_app/src/services/user_service.dart';

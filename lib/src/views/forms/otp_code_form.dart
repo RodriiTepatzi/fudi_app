@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: prefer_function_declarations_over_variables, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,8 +25,6 @@ class _OTPCodeFormState extends State<OTPCodeForm> {
     super.initState();
   }
 
-
-  
   late String smsCode;    
   late String verificationId;    
   String errorMessage = '';   

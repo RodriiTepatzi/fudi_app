@@ -1,7 +1,6 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'dart:async';
-import 'package:fudi_app/src/static/colors.dart';
-import 'package:fudi_app/src/views/widgets/back_button.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -14,10 +13,10 @@ class MapController extends StatefulWidget {
 
 class _MapControllerState extends State<MapController> {
   
-  CameraPosition _initialPosition = CameraPosition(target: LatLng(26.8206, 30.8025));
-  Completer<GoogleMapController> _controller = Completer();
+  final CameraPosition _initialPosition = const CameraPosition(target: LatLng(26.8206, 30.8025), zoom: 11.0);
+  final Completer<GoogleMapController> _mapController = Completer();
   void _onMapCreated(GoogleMapController controller) {
-      _controller.complete(controller);
+      _mapController.complete(controller);
   }
 
   @override
@@ -25,12 +24,10 @@ class _MapControllerState extends State<MapController> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            child: Text(
-              "Hola"
-            ),
+          const Text(
+            "Hola"
           ),
-          GoogleMap(    
+          GoogleMap(
             onMapCreated: _onMapCreated,
             initialCameraPosition: _initialPosition,
           ),

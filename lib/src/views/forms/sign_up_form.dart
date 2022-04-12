@@ -1,9 +1,9 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/sign_up_controller.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/services/auth_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -50,10 +50,8 @@ class SignUpFormState extends State<SignUpForm> {
     TextEditingController fullnameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController telephoneController = TextEditingController();
-    TextEditingController birthdayController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     String _countryCode = "";
-    String _telephone = "";
     DateTime birthday = DateTime.now();
 
     return Form(

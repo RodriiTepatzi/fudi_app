@@ -12,11 +12,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  // We initialize Firebase services. It uses the firebase_options.dart file.
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   
+  // We run the app.
   runApp(MyApp());
 }
 
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
         statusBarIconBrightness: Brightness.light,
@@ -32,9 +33,11 @@ class MyApp extends StatelessWidget {
       )
     );
 
-    // Here we start the App, calling LoginController()    
+    // We create a ChangeNotifierProvider since the CartController is a singleton. 
+    // Every change in cart will be updated from here.
 
     return ChangeNotifierProvider<CartController>(
+      // Create the value that we are listening to.
       create: (context) => CartController.instance,
       child: MaterialApp(
         routes: routes,
@@ -49,8 +52,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: bgApp,
         ),
         
-        // LoginController() will detect either the user has logged in or not returning a widget.
-        // LoginController() can be find at Controllers.
+        // LoginController() detects everything about the user when initializing the app.
+        // It detects if the user is logged in or not. Also if the user has confirmed his phone number.
         home: const LoginController(), 
       ),
     );

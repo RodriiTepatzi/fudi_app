@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/controllers/cart_controller.dart';
 import 'package:fudi_app/src/models/order.dart';

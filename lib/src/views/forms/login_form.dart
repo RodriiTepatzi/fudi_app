@@ -22,12 +22,6 @@ class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     errorMessage = "";
     // Build a Form widget using the _formKey created above.

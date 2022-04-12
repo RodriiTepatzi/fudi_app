@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -324,9 +326,9 @@ class _ExploreTabState extends State<ExploreTab> {
   String _getFirstName(String? fullname){
     return fullname != null ? fullname.split(" ").elementAt(0).toString() : "";
   }
-  Future _askLocation(BuildContext context) async{
+  
+  /*Future _askLocation(BuildContext context) async{
     showAlertDialog(context, Icons.gps_fixed, 'Active su ubicación', 'Es necesario tener acceso a su ubicación para ofrecerle una mejor experiencia de usuario.', 'Entendido');
-    
-  }
+  }*/
 }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, prefer_const_constructors_in_immutables, non_constant_identifier_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:fudi_app/src/controllers/cart_controller.dart';

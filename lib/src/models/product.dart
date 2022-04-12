@@ -8,9 +8,7 @@ class Product{
   String productUrl;
   int productLikes;
   String productUnit;
-  bool allowOnlyOneRequiredAddon;
   List<Addon> requiredAddons;
-  bool allowOnlyOneOptionalAddon;
   List<Addon> optionalAddons;
 
   Product({
@@ -21,9 +19,7 @@ class Product{
     required this.productUrl,
     required this.productLikes,
     required this.productUnit,
-    required this.allowOnlyOneRequiredAddon,
     required this.requiredAddons,
-    required this.allowOnlyOneOptionalAddon,
     required this.optionalAddons
     }
   );
@@ -36,8 +32,6 @@ class Product{
     productUrl : json['productUrl'],
     productLikes : json['productLikes'],
     productUnit : json['productUnit'],
-    allowOnlyOneOptionalAddon : json['allowOnlyOneOptionalAddon'],
-    allowOnlyOneRequiredAddon: json['allowOnlyOneRequiredAddon'],
     requiredAddons : json['requiredAddons'] != null ? _parseJsonToList(json['requiredAddons']) : [],
     optionalAddons : json['optionalAddons'] != null ? _parseJsonToList(json['optionalAddons']) : [],
   );
@@ -51,8 +45,6 @@ class Product{
       'productUrl' : productUrl,
       'productLikes' : productLikes,
       'productUnit' : productUnit,
-      'allowOnlyOneOptionalAddon' : allowOnlyOneOptionalAddon,
-      'allowOnlyOneRequiredAddon' : allowOnlyOneRequiredAddon,
       'requiredAddons' : requiredAddons,
       'optionalAddons' : optionalAddons,
     };

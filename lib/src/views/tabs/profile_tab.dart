@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/controllers/profile_controller.dart';

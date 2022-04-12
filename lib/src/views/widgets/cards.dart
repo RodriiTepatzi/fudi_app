@@ -8,7 +8,6 @@ import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/models/user_app.dart';
 import 'package:fudi_app/src/static/colors.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
-import 'package:fudi_app/src/views/forms/quantity_form.dart';
 import 'package:fudi_app/src/views/pages/order_page.dart';
 import 'package:fudi_app/src/views/pages/restaurant_view.dart';
 

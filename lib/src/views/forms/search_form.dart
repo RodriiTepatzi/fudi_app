@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -118,7 +118,7 @@ class SearchFormState extends State<SearchForm> {
   );
 }
 
-  Widget _recents(BuildContext context, String restaurantName, String restaurantAddress, String imageURL){
+  /*Widget _recents(BuildContext context, String restaurantName, String restaurantAddress, String imageURL){
   return Column(
     children: [
       Container(
@@ -210,5 +210,5 @@ class SearchFormState extends State<SearchForm> {
     ],
   );
 }
-
+*/
 }

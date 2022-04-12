@@ -1,12 +1,12 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fudi_app/src/models/restaurant.dart';
 import 'package:fudi_app/src/services/product_service.dart';
 import 'package:fudi_app/src/static/api_url.dart';
 import 'package:http/http.dart' as http;
 
 class RestaurantService{
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final ProductService _productService = ProductService();
   
   /// Call this method whenever need to get all the restaurants in the database.
@@ -149,13 +149,5 @@ class RestaurantService{
     else{
       throw Exception("Failed on getting the user data from API");
     }
-  }
-
-  getSingleRestaurantData(String id) async {
-    await _firestore.collection("restaurants");
-  }
-
-  getMultipleRestaurants(int start, int end) async{
-    await _firestore.collection("restaurants");
   }
 }

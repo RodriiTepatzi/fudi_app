@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:fudi_app/src/static/widget_properties.dart';
 
@@ -30,7 +32,8 @@ class _FavoritesTabState extends State<FavoritesTab> {
           height: MediaQuery.of(context).size.height - 135,
           width: MediaQuery.of(context).size.width,
           child: ListView(
-            children: [
+            children: const [
+              SizedBox()
             ],
           ),
         )

@@ -12,7 +12,11 @@ class LoginController extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    // We call the hanldeAuth service to check if the user is logged in or not.
     AuthService.handleAuth(context);
+
+    // We create a stream builder.
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, userSnapshot) {
@@ -25,7 +29,7 @@ class LoginController extends StatelessWidget {
                 return TabsPage();
               }
               else{
-                return OTPPage();
+                return const OTPPage();
               }
             }
           }
