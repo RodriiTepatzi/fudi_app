@@ -43,7 +43,6 @@ class _AddonsFormState extends State<AddonsForm> {
                 Column(
                   children: [
                     requiredSections(widget.product),
-                    const Text("data")
                   ],
                 ),
               ],
@@ -56,7 +55,7 @@ class _AddonsFormState extends State<AddonsForm> {
               }
             },
             child: Container(
-              margin: const EdgeInsets.only(right: marginWidget),
+              margin: const EdgeInsets.only(left: marginWidget, right: marginWidget),
               padding: const EdgeInsets.only(left: marginWidget * 2, right: marginWidget * 2),
               alignment: Alignment.center,
               height: 40,
@@ -94,7 +93,7 @@ class _AddonsFormState extends State<AddonsForm> {
   List<Widget> requiredAddons(List<Addon> addons){
     List<Widget> widgets = [];
     for (var addon in addons) {
-      if(!addon.allowMultiple){
+      if(addon.allowMultiple){
         widgets.add(
           Column(
             children: [
@@ -110,14 +109,89 @@ class _AddonsFormState extends State<AddonsForm> {
                   ),
                 ),
               ),
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: const EdgeInsets.only(left: marginWidget),
+                    child: const Text(
+                      "Obligatorio",
+                      style: TextStyle(
+                        color: accentColorApp,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: const EdgeInsets.only(right: marginWidget),
+                    child: const Text(
+                      "Multiple",
+                      style: TextStyle(
+                        color: accentColorApp,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               ...switchGenerator(addon),
             ],
           ),
         );
-        
       }
       else{
-
+        widgets.add(
+          Column(
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.only(left: marginWidget, top: marginWidget),
+                child: Text(
+                  addon.addonSection,
+                  style: const TextStyle(
+                    color: accentColorApp,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: const EdgeInsets.only(left: marginWidget),
+                    child: const Text(
+                      "Opcional",
+                      style: TextStyle(
+                        color: accentColorApp,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: const EdgeInsets.only(right: marginWidget),
+                    child: const Text(
+                      "Uno",
+                      style: TextStyle(
+                        color: accentColorApp,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ...switchGenerator(addon),
+            ],
+          ),
+        );
       }
     }
     return widgets;
@@ -125,18 +199,45 @@ class _AddonsFormState extends State<AddonsForm> {
 
   List<Widget> switchGenerator(Addon addon){
     List<Widget> widgets = [];
-    AddonChecker addonChecker = AddonChecker(addonSection: addon.addonSection, selectedValues: []);
+    
+    AddonChecker addonChecker = requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList().isNotEmpty ? 
+      requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0] : AddonChecker(addonSection: addon.addonSection, selectedValues: []);
+
     for (var item in addon.addons) {
       if(addon.allowMultiple){
-
-      }
-      else{
         if(addonChecker.selectedValues.where((element) => element.addonName == item).toList().isEmpty){
+
           AddonCheckerItem addonCheckerItem = AddonCheckerItem(addonName: item, isSelected: false);
           addonChecker.selectedValues.add(addonCheckerItem);
-          setState(() {  
-            requiredSelectedValues.add(addonChecker);
-          });
+
+          if(requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList().isEmpty){
+            setState(() {  
+              requiredSelectedValues.add(addonChecker);
+            });
+          }
+          
+          widgets.add(
+            Container(
+              margin: const EdgeInsets.all(marginWidget),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(item),
+                  FlutterSwitch(
+                    activeColor: accentColorApp,
+                    value: requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0].selectedValues.where((element) => element.addonName == item).toList()[0].isSelected,
+                    onToggle: (val) {
+                      setState(() {
+                        requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0].selectedValues.where((element) => element.addonName == item).toList()[0].isSelected = val;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        else{
           widgets.add(
             Container(
               margin: const EdgeInsets.all(marginWidget),
@@ -159,7 +260,77 @@ class _AddonsFormState extends State<AddonsForm> {
           );
         }
       }
+      else{
+        if(addonChecker.selectedValues.where((element) => element.addonName == item).toList().isEmpty){
+
+          AddonCheckerItem addonCheckerItem = AddonCheckerItem(addonName: item, isSelected: false);
+          addonChecker.selectedValues.add(addonCheckerItem);
+
+          if(requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList().isEmpty){
+            setState(() {  
+              requiredSelectedValues.add(addonChecker);
+            });
+          }
+          
+          widgets.add(
+            Container(
+              margin: const EdgeInsets.all(marginWidget),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(item),
+                  FlutterSwitch(
+                    activeColor: accentColorApp,
+                    value: requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0].selectedValues.where((element) => element.addonName == item).toList()[0].isSelected,
+                    onToggle: (val) {
+                      setState(() {
+                        requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0].selectedValues.where((element) => element.addonName == item).toList()[0].isSelected = val;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        else{
+          widgets.add(
+            Container(
+              margin: const EdgeInsets.all(marginWidget),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(item),
+                  FlutterSwitch(
+                    activeColor: accentColorApp,
+                    value: requiredSelectedValues.where((element) => element.addonSection == addon.addonSection).toList()[0].selectedValues.where((element) => element.addonName == item).toList()[0].isSelected,
+                    onToggle: (val) {
+                      checkObligatory(addon.addonSection, item);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      }
     }
     return widgets;
   }
+
+  void checkObligatory(String section, String addonName){
+    for (var item in requiredSelectedValues.where((element) => element.addonSection == section).toList()[0].selectedValues) {
+      if(item.addonName != addonName){
+        setState(() {
+          item.isSelected = false;
+        });
+      }
+      else{
+        setState(() {
+          item.isSelected = true;
+        });
+      }
+    }
+  }
+
 }
